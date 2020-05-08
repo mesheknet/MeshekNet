@@ -35,7 +35,7 @@ export default {
       password: null,
       alias: null,
       feedback: null,
-      slug: null,
+      slug: null
     }
   },
   methods: {
@@ -44,26 +44,26 @@ export default {
         this.slug = slugify(this.alias, {
           replacement: '-',
           remove: /[$]/g,
-          lower: true,
+          lower: true
         })
         //כאן צריך להוסיף את המשתנים הנוספים של המשתמש - לשנות מהALIAS
         let ref = fb.usersCollection.doc(this.slug)
-        ref.get().then((doc) => {
+        ref.get().then(doc => {
           if (doc.exists) {
             this.feedback = 'הכינוי כבר קיים'
           } else {
             fb.auth
               .createUserWithEmailAndPassword(this.email, this.password)
-              .then((cred) => {
+              .then(cred => {
                 ref.set({
                   alias: this.alias,
-                  user_id: cred.user.uid,
+                  user_id: cred.user.uid
                 })
               })
               .then(() => {
                 this.$router.push({ name: 'Notifications' })
               })
-              .catch((err) => {
+              .catch(err => {
                 console.log(err)
                 this.feedback = err.message
               })
@@ -73,8 +73,8 @@ export default {
       } else {
         this.feedback = 'חייב להכניס את כל השדות'
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

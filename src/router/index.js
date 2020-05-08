@@ -10,24 +10,24 @@ const routes = [
   {
     path: '/',
     name: 'Notifications',
-    component: Notifications,
+    component: Notifications
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: Signup,
+    component: Signup
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
-  },
+    component: Login
+  }
 ]
 
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 })
 
 export default router

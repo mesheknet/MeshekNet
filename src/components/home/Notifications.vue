@@ -1,5 +1,12 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    <h1>משק.נט</h1>
+    <p>
+      מערכת זאת מיודעת לשמש בעלי משקים ולהוות עבורם מקור מהימן למידע מקצועי.<br />
+      המערכת עוזרת בכל הקשור לאירגון מידע ולתזכורות למשימות השונות שבעלי המשקים
+      צריכים לבצע
+    </p>
+  </div>
 </template>
 
 <script>
@@ -13,7 +20,7 @@ export default {
   },
   mounted() {
     console.log(fb.currentUser)
-  },
+  }
 }
 </script>
 

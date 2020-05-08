@@ -27,7 +27,7 @@ export default {
     return {
       email: null,
       password: null,
-      feedback: null,
+      feedback: null
     }
   },
   methods: {
@@ -35,11 +35,11 @@ export default {
       if (this.email && this.password) {
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
-          .then((cred) => {
+          .then(cred => {
             console.log(cred.user)
             this.$router.push({ name: 'Notifications' })
           })
-          .catch((err) => {
+          .catch(err => {
             this.feedback = err.message
           })
 
@@ -47,8 +47,8 @@ export default {
       } else {
         this.feedback = 'יש להכניס מייל וסיסמה'
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

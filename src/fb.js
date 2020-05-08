@@ -7,7 +7,7 @@ var config = {
   projectId: 'mesheknetapp',
   storageBucket: 'mesheknetapp.appspot.com',
   messagingSenderId: '250422026154',
-  appId: '1:250422026154:web:d7acdb4b15251b2a2ad5d3',
+  appId: '1:250422026154:web:d7acdb4b15251b2a2ad5d3'
 }
 // Initialize Firebase
 firebase.initializeApp(config)
@@ -19,7 +19,7 @@ const currentUser = auth.currentUser
 
 // date issue fix according to firebase
 const settings = {
-  timestampsInSnapshots: true,
+  timestampsInSnapshots: true
 }
 db.settings(settings)
 
@@ -29,4 +29,12 @@ const postsCollection = db.collection('posts')
 const commentsCollection = db.collection('comments')
 const likesCollection = db.collection('likes')
 
-export { db, auth, currentUser, usersCollection, postsCollection, commentsCollection, likesCollection }
+export {
+  db,
+  auth,
+  currentUser,
+  usersCollection,
+  postsCollection,
+  commentsCollection,
+  likesCollection
+}
