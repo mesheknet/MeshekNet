@@ -2,8 +2,8 @@
   <div class="navbar">
     <nav class=" light-green darken-4">
       <div class="container">
-        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
-          >משק.נט
+        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"><img src="@/assets/logo.png" alt="logo" height="60" width="60">
+         
         </router-link>
 
         <ul
@@ -49,8 +49,13 @@ export default {
 </script>
 
 <style>
+.navbar ul{
+position: relative;
+top:-10px
+}
 .navbar nav img {
   position: relative;
+  top:-10px;
   left: 7px;
 }
 </style>
