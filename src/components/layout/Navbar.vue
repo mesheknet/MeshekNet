@@ -3,7 +3,7 @@
     <nav class=" light-green darken-4">
       <div class="container">
         <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
-          ><img src="src/assets/logo" />
+          >משק.נט
         </router-link>
 
         <ul
