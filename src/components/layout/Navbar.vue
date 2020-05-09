@@ -2,8 +2,12 @@
   <div class="navbar">
     <nav class=" light-green darken-4">
       <div class="container">
-        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"><img src="@/assets/logo.png" alt="logo" height="60" width="60">
-         
+        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
+          ><img
+            src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2Flogo.PNG?alt=media&token=205d4fcf-6cdc-488c-95c9-13d16f18da35"
+            height="60"
+            width="60"
+          />
         </router-link>
 
         <ul
@@ -49,13 +53,13 @@ export default {
 </script>
 
 <style>
-.navbar ul{
-position: relative;
-top:-10px
+.navbar ul {
+  position: relative;
+  top: -10px;
 }
 .navbar nav img {
   position: relative;
-  top:-10px;
+  top: -10px;
   left: 7px;
 }
 </style>
