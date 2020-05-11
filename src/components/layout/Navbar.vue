@@ -1,27 +1,31 @@
 <template>
-  <v-toolbar app class="success">
-    <v-toolbar-title
-      ><v-img
-        max-height="100"
-        max-width="100"
-        src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2Flogo.PNG?alt=media&token=205d4fcf-6cdc-488c-95c9-13d16f18da35"
-      ></v-img
-    ></v-toolbar-title>
+  <nav>
+    <v-toolbar flat class="success">
+      <v-toolbar-side-icon
+        ><v-img
+          max-height="70"
+          max-width="70"
+          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
+        ></v-img
+      ></v-toolbar-side-icon>
 
-    <v-toolbar-items v-for="link in links" :key="link.name">
-      <v-btn class="success white--text" :to="{ name: link.route }">
-        <span>{{ link.name }}</span>
-      </v-btn>
-    </v-toolbar-items>
-    <v-spacer></v-spacer>
-    <v-btn :to="{ name: '' }">
-      <span>פרטי המשק</span>
-    </v-btn>
+      <v-toolbar-items v-for="link in links" :key="link.name">
+        <v-btn flat color="success" :to="{ name: link.route }">
+          <span>{{ link.name }}</span>
+        </v-btn>
+      </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn flat color="success" :to="{ name: '' }">
+          <span>פרטי המשק</span>
+        </v-btn>
 
-    <v-btn @click="logout">
-      <span>התנתק</span>
-    </v-btn>
-  </v-toolbar>
+        <v-btn flat color="success" @click="logout">
+          <span>התנתק</span>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+  </nav>
 </template>
 
 <script>
