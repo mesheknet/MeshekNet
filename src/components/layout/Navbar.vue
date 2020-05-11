@@ -1,37 +1,27 @@
 <template>
-  <div class="navbar">
-    <nav class=" light-green darken-4">
-      <div class="container">
-        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
-          ><img
-            src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2Flogo.PNG?alt=media&token=205d4fcf-6cdc-488c-95c9-13d16f18da35"
-            height="60"
-            width="60"
-          />
-        </router-link>
+  <v-toolbar app class="success">
+    <v-toolbar-title
+      ><v-img
+        max-height="100"
+        max-width="100"
+        src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2Flogo.PNG?alt=media&token=205d4fcf-6cdc-488c-95c9-13d16f18da35"
+      ></v-img
+    ></v-toolbar-title>
 
-        <ul
-          class="right"
-          v-if="this.$route.path !== '/signup' && this.$route.path !== '/login'"
-        >
-          <li>
-            <router-link :to="{ name: '' }">צור קשר עם איש מקצוע</router-link>
-          </li>
-          <li><router-link :to="{ name: '' }">מזג אויר</router-link></li>
-          <li><router-link :to="{ name: '' }">הגידולים שלי</router-link></li>
-          <li><router-link :to="{ name: '' }">הלול שלי</router-link></li>
-          <li>
-            <router-link :to="{ name: 'Notifications' }">התראות</router-link>
-          </li>
-        </ul>
-        <ul class="left">
-          <li><router-link :to="{ name: 'Login' }">כניסה</router-link></li>
-          <li><router-link :to="{ name: 'Signup' }">הרשמה</router-link></li>
-          <li><a @click="logout">התנתק</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+    <v-toolbar-items v-for="link in links" :key="link.name">
+      <v-btn class="success white--text" :to="{ name: link.route }">
+        <span>{{ link.name }}</span>
+      </v-btn>
+    </v-toolbar-items>
+    <v-spacer></v-spacer>
+    <v-btn :to="{ name: '' }">
+      <span>פרטי המשק</span>
+    </v-btn>
+
+    <v-btn @click="logout">
+      <span>התנתק</span>
+    </v-btn>
+  </v-toolbar>
 </template>
 
 <script>
@@ -40,7 +30,15 @@ const fb = require('@/fb.js')
 export default {
   name: 'Navbar',
   data() {
-    return {}
+    return {
+      links: [
+        { name: 'התראות', route: '/' },
+        { name: 'הגידולים שלי', route: '/' },
+        { name: 'הלול שלי', route: '/' },
+        { name: 'מזג אויר', route: '/' },
+        { name: 'צור קשר עם איש מקצוע', route: '/' }
+      ]
+    }
   },
   methods: {
     logout() {
