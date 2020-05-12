@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'LandingPage',
+  name: 'Landing',
   data() {
     return {}
   }

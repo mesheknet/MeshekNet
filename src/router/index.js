@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Signup from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
 import Notifications from '@/components/home/Notifications'
-import LandingPage from '@/components/home/LandingPage'
+import Landing from '@/components/home/Landing'
+import Weather from '@/components/home/Weather'
 
 Vue.use(Router)
 
@@ -25,8 +26,13 @@ const routes = [
   },
   {
     path: '/',
-    name: 'LandingPage',
-    component: LandingPage
+    name: 'Landing',
+    component: Landing
+  },
+  {
+    path: '/weather',
+    name: 'Weather',
+    component: Weather
   }
 ]
 
