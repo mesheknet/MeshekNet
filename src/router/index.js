@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import Signup from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
 import Notifications from '@/components/home/Notifications'
+import LandingPage from '@/components/home/LandingPage'
 
 Vue.use(Router)
 
 const routes = [
   {
-    path: '/',
+    path: '/Notifications',
     name: 'Notifications',
     component: Notifications
   },
@@ -21,6 +22,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/',
+    name: 'LandingPage',
+    component: LandingPage
   }
 ]
 

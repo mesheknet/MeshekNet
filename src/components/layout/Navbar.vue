@@ -3,6 +3,7 @@
     <v-toolbar flat class="success">
       <v-toolbar-side-icon
         ><v-img
+          :to="{ name: 'Notifications' }"
           max-height="70"
           max-width="70"
           src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
