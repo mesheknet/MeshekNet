@@ -12,8 +12,20 @@
       </div>
       <!-- כאן אפשר להוסיף משתנים שיישמרו למשתמש בדטבייס !-->
       <div class="field">
-        <label for="alias">כינוי:</label>
-        <input type="text" name="alias" v-model="alias" />
+        <label for="farmName">שם המשק:</label>
+        <input type="text" name="farmName" v-model="farmName" />
+      </div>
+      <div class="field">
+        <label for="address">כתובת המשק:</label>
+        <input type="text" name="address" v-model="address" />
+      </div>
+      <div class="field">
+        <label for="birthDate">תאריך לידה:</label>
+        <input type="date" name="birthDate" v-model="birthDate" />
+      </div>
+      <div class="field">
+        <label for="phone">מספר טלפון:</label>
+        <input type="tel" name="phone" v-model="phone" />
       </div>
       <p class="red-text center" v-if="feedback">{{ feedback }}</p>
       <div class="field center">
@@ -33,7 +45,10 @@ export default {
     return {
       email: null,
       password: null,
-      alias: null,
+      farmName: null,
+      address: null,
+      birthDate: null,
+      phone: null,
       feedback: null,
       slug: null
     }
