@@ -1,8 +1,5 @@
 <template>
-  <v-container>
-    <v-list> </v-list>
-    <p>stationName:{{ this.stationName }}</p>
-  </v-container>
+  <div></div>
 </template>
 
 <script>

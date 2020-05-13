@@ -1,5 +1,5 @@
-<template
-  ><div class="login container">
+<template >
+  <div class="login container">
     <form @submit.prevent="login" class="card-panel">
       <h2 class="center green-text">כניסה</h2>
       <div class="field">
@@ -52,4 +52,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.login .field label {
+  float: right;
+}
+</style>
