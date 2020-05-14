@@ -1,10 +1,8 @@
 <template>
-  <v-app class="grey lighten-3 appFont">
-    <v-content>
-      <Navbar />
-      <router-view> </router-view>
-    </v-content>
-  </v-app>
+  <div class="grey lighten-3 appFont">
+    <Navbar />
+    <router-view> </router-view>
+  </div>
 </template>
 
 <script>

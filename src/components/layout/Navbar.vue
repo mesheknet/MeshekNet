@@ -1,32 +1,37 @@
 <template>
-  <nav>
-    <v-toolbar flat class="success">
-      <v-toolbar-side-icon
-        ><v-img
-          :to="{ name: 'Notifications' }"
-          max-height="70"
-          max-width="70"
-          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
-        ></v-img
-      ></v-toolbar-side-icon>
-
-      <v-toolbar-items v-for="link in links" :key="link.name">
-        <v-btn flat color="success" :to="{ name: link.route }">
-          <span>{{ link.name }}</span>
-        </v-btn>
-      </v-toolbar-items>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn flat color="success" :to="{ name: '' }">
-          <span>פרטי המשק</span>
-        </v-btn>
-
-        <v-btn flat color="success" @click="logout">
-          <span>התנתק</span>
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-  </nav>
+  <div class="navbar">
+    <nav class=" light-green darken-4 container_fluid ">
+      <div class="column_img">
+        <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
+          ><img src="@/assets/logo.png" alt="logo" height="60" width="65" />
+        </router-link>
+      </div>
+      <figure class="column_icon right" @click="toggleNav">
+        &#9776;
+      </figure>
+      <div class="column_right">
+        <ul
+          v-if="this.$route.path !== '/signup' && this.$route.path !== '/login'"
+          ref="nav"
+        >
+          <li
+            @click="toggleNav"
+            v-for="link in links.slice().reverse()"
+            :key="link.name"
+          >
+            <router-link :to="{ name: link.route }">{{
+              link.name
+            }}</router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="column_left">
+        <ul>
+          <li><a @click="logout">התנתק</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -37,7 +42,7 @@ export default {
   data() {
     return {
       links: [
-        { name: 'התראות', route: '/' },
+        { name: 'התראות', route: 'Notifications' },
         { name: 'הגידולים שלי', route: '/' },
         { name: 'הלול שלי', route: '/' },
         { name: 'מזג אויר', route: '/' },
@@ -50,19 +55,66 @@ export default {
       fb.auth.signOut().then(() => {
         this.$router.push({ name: 'Login' })
       })
+    },
+    toggleNav() {
+      const nav = this.$refs.nav.classList
+      nav.contains('active') ? nav.remove('active') : nav.add('active')
     }
   }
 }
 </script>
 
 <style>
-.navbar ul {
-  position: relative;
-  top: -10px;
+.container_fluid {
+  width: 100%;
 }
-.navbar nav img {
+.navbar .column_img {
   position: relative;
-  top: -10px;
   left: 7px;
+}
+.navbar .column_icon {
+  margin-right: 100px;
+  display: none;
+}
+
+.navbar .column_right ul {
+  float: right;
+  margin-right: 100px;
+}
+.navbar .column_left {
+  float: left;
+}
+
+@media screen and (max-width: 759px) {
+  nav .column_right ul {
+    top: 56px;
+    background: #33691e;
+    position: absolute;
+    width: 200px;
+    flex-direction: column;
+    transform: rotate(180deg);
+
+    display: none;
+  }
+
+  nav .column_right ul.active {
+    display: block;
+  }
+
+  nav .column_right ul li {
+    transform: rotate(-180deg);
+    width: 100%;
+  }
+
+  .navbar .column_icon {
+    margin-right: 100px;
+    position: relative;
+    top: -42px;
+    font-size: 40px;
+    display: block;
+  }
+  .navbar figure {
+    cursor: pointer;
+  }
 }
 </style>
