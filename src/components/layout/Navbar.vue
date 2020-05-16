@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar white-text">
     <nav class=" light-green darken-4 container_fluid ">
       <div class="column_img">
         <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
@@ -11,7 +11,11 @@
       </figure>
       <div class="column_right">
         <ul
-          v-if="this.$route.path !== '/signup' && this.$route.path !== '/login'"
+          v-if="
+            this.$route.path !== '/signup' &&
+              this.$route.path !== '/login' &&
+              this.$route.path !== '/'
+          "
           ref="nav"
         >
           <li
@@ -25,7 +29,15 @@
           </li>
         </ul>
       </div>
-      <div class="column_left">
+      <div
+        v-if="
+          this.$route.path !== '/signup' &&
+            this.$route.path !== '/login' &&
+            this.$route.path !== '/'
+        "
+        ref="nav"
+        class="column_left"
+      >
         <ul>
           <li><a @click="logout">התנתק</a></li>
         </ul>
@@ -53,7 +65,7 @@ export default {
   methods: {
     logout() {
       fb.auth.signOut().then(() => {
-        this.$router.push({ name: 'Login' })
+        this.$router.push({ name: 'Landing' })
       })
     },
     toggleNav() {
