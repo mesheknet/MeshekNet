@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar white-text">
+  <div class="navbar">
     <nav class=" light-green darken-4 container_fluid ">
       <div class="column_img">
         <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
@@ -23,7 +23,7 @@
             v-for="link in links.slice().reverse()"
             :key="link.name"
           >
-            <router-link :to="{ name: link.route }">{{
+            <router-link class="white-text" :to="{ name: link.route }">{{
               link.name
             }}</router-link>
           </li>
@@ -35,11 +35,10 @@
             this.$route.path !== '/login' &&
             this.$route.path !== '/'
         "
-        ref="nav"
         class="column_left"
       >
         <ul>
-          <li><a @click="logout">התנתק</a></li>
+          <li><a class="white-text" @click="logout">התנתק</a></li>
         </ul>
       </div>
     </nav>
