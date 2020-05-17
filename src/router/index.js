@@ -5,6 +5,7 @@ import Login from '@/components/auth/Login'
 import Notifications from '@/components/home/Notifications'
 import Landing from '@/components/home/Landing'
 import Weather from '@/components/home/Weather'
+import MyCrops from '@/components/home/MyCrops'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/weather',
     name: 'Weather',
     component: Weather
+  },
+  {
+    path: '/MyCrops',
+    name: 'MyCrops',
+    component: MyCrops
   }
 ]
 

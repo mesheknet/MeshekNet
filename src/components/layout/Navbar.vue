@@ -54,7 +54,7 @@ export default {
     return {
       links: [
         { name: 'התראות', route: 'Notifications' },
-        { name: 'הגידולים שלי', route: '/' },
+        { name: 'הגידולים שלי', route: 'MyCrops' },
         { name: 'הלול שלי', route: '/' },
         { name: 'מזג אויר', route: '/' },
         { name: 'צור קשר עם איש מקצוע', route: '/' }
