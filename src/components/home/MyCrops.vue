@@ -9,12 +9,18 @@
        content
         </div>
        <div class="container_list">
-           list
+           
            <div class="container_list_title">
                <h5> בחר גידול:</h5>
                </div>
            <div class="container_list_item">
-               item
+             
+               <div class="container_list_item_img">
+                    
+                </div>
+               <div class="container_list_item_title">
+
+                    </div>
                </div>
        
       </div>
@@ -53,6 +59,7 @@ export default {
    border-style: solid;
    grid-template-columns: repeat(3,1fr);
    grid-gap: 1em;
+   padding: 15px;
  
 }
 
@@ -60,7 +67,7 @@ export default {
     border-style: solid;
   grid-column: 1/4;
   height: 100px;
-  margin-top: 20px;
+  
     text-align: center;
 }
 .container_title h1{
@@ -71,24 +78,34 @@ export default {
 }
 
 .container_list{
-   grid-column: 1/1 ;
+   
    grid-row: 2/4;
-      border-style: solid;
+      
       height: 500px;
+       border: 1px solid;
+ 
+  box-shadow: 5px 10px 8px #888888;
 
 }
 
 .container_add{
-  grid-column: 1/1;
+  
   height: 80px;
-   border-style: solid;
+   border: 1px solid;
+ 
+  box-shadow: 5px 10px 8px #888888;
    
 }
 .container_content{
   grid-column: 2/4;
   grid-row: 2/5;
-   border-style: solid;
+  
+   border: 1px solid;
+ 
+  box-shadow: 5px 10px 8px #888888;
+   
 }
+
 .container_list_title{
     width: 95%;
     height:40px;
@@ -102,7 +119,18 @@ height: 75px;
 
     margin:5px auto;
      border-style: solid;
+    
+     
+     }
+.container_list_item_img{
+    margin-top: 4px;
+    margin-right: 2px;
+    height: 90%;
+    width: 15%;
+    border-style: solid;
 }
+
+
 .container_list .container_list_title h5{
     margin: 0;
 }
