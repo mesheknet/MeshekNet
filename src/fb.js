@@ -24,17 +24,51 @@ const settings = {
 db.settings(settings)
 
 // firebase collections
-const usersCollection = db.collection('users')
-const postsCollection = db.collection('posts')
-const commentsCollection = db.collection('comments')
-const likesCollection = db.collection('likes')
+const user = db.collection('user')
+const weather = db.collection('weather')
+const chickCycle = db.collection('chickCycle')
+const coop = db.collection('coop')
+const crop = db.collection('crop')
+const cropCycle = db.collection('cropCycle')
+const cycleData = db.collection('cycleData')
+const disease = db.collection('disease')
+const drug = db.collection('drug')
+const farm = db.collection('farm')
+const farmOwner = db.collection('farmOwner')
+const fertilizer = db.collection('fertilizer')
+const field = db.collection('field')
+const fieldCycle = db.collection('fieldCycle')
+const notification = db.collection('notification')
+const pest = db.collection('pest')
+const pesticide = db.collection('pesticide')
+const service = db.collection('service')
+const sysAdmin = db.collection('sysAdmin')
+const treatType = db.collection('treatType')
+const treatment = db.collection('treatment')
 
 export {
   db,
   auth,
   currentUser,
-  usersCollection,
-  postsCollection,
-  commentsCollection,
-  likesCollection
+  user,
+  weather,
+  chickCycle,
+  coop,
+  crop,
+  cropCycle,
+  cycleData,
+  disease,
+  drug,
+  farm,
+  farmOwner,
+  fertilizer,
+  field,
+  fieldCycle,
+  notification,
+  pest,
+  pesticide,
+  service,
+  sysAdmin,
+  treatType,
+  treatment
 }

@@ -12,16 +12,16 @@
       </div>
       <!-- כאן אפשר להוסיף משתנים שיישמרו למשתמש בדטבייס !-->
       <div class="field">
+        <label for="farmName">שם בעל המשק:</label>
+        <input type="text" name="farmOwner" v-model="farmOwner" />
+      </div>
+      <div class="field">
         <label for="farmName">שם המשק:</label>
         <input type="text" name="farmName" v-model="farmName" />
       </div>
       <div class="field">
         <label for="address">כתובת המשק:</label>
         <input type="text" name="address" v-model="address" />
-      </div>
-      <div class="field">
-        <label for="birthDate">תאריך לידה:</label>
-        <input type="date" name="birthDate" v-model="birthDate" />
       </div>
       <div class="field">
         <label for="phone">מספר טלפון:</label>
@@ -36,43 +36,56 @@
 </template>
 
 <script>
-import slugify from 'slugify'
+import moment from 'moment'
 const fb = require('@/fb.js')
 
 export default {
   name: 'Signup',
   data() {
     return {
+      userId: null,
       email: null,
       password: null,
+      farmOwner: null,
       farmName: null,
       address: null,
-      birthDate: null,
       phone: null,
-      feedback: null,
-      slug: null
+      feedback: null
     }
   },
   methods: {
     signup() {
-      if (this.alias && this.email && this.password) {
-        this.slug = slugify(this.alias, {
-          replacement: '-',
-          remove: /[$]/g,
-          lower: true
-        })
+      if (this.email && this.password) {
         //כאן צריך להוסיף את המשתנים הנוספים של המשתמש - לשנות מהALIAS
-        let ref = fb.usersCollection.doc(this.slug)
+        let ref = fb.user.doc(this.email)
+        let refOwner = fb.farmOwner.doc()
+        let refFarm = fb.farm.doc()
         ref.get().then(doc => {
           if (doc.exists) {
-            this.feedback = 'הכינוי כבר קיים'
+            this.feedback = 'משתמש קיים במערכת'
           } else {
             fb.auth
               .createUserWithEmailAndPassword(this.email, this.password)
               .then(cred => {
+                this.userId = cred.user.uid
                 ref.set({
-                  alias: this.alias,
-                  user_id: cred.user.uid
+                  email: this.email,
+                  userId: this.userId,
+                  regDate: moment().unix(),
+                  phone: this.phone
+                })
+              })
+              .then(() => {
+                refOwner.set({
+                  userId: this.userId,
+                  name: this.farmOwner
+                })
+              })
+              .then(() => {
+                refFarm.set({
+                  name: this.farmName,
+                  address: this.address,
+                  userId: this.userId
                 })
               })
               .then(() => {
@@ -82,7 +95,6 @@ export default {
                 console.log(err)
                 this.feedback = err.message
               })
-            this.feedback = 'הכינוי זמין'
           }
         })
       } else {

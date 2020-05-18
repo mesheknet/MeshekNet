@@ -1,21 +1,39 @@
 <template>
   <div class="container">
     <h1>משק.נט</h1>
+    <h4>ברוכים הבאים, {{ this.currentUser }}</h4>
+    <h4>{{ this.farmName }}</h4>
+    <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
     <p></p>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+moment.locale('he')
 const fb = require('@/fb.js')
 
 export default {
   name: 'Notifications',
-  currentUser: null,
   data() {
-    return {}
+    return {
+      lastSignIn: null,
+      currentUser: null,
+      farmName: null
+    }
   },
   mounted() {
-    console.log(fb.currentUser)
+    fb.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
+        let farmRef = fb.farm.where('userId', '==', user.uid)
+        farmRef.get().then(snapshot => {
+          snapshot.forEach(doc => {
+            this.farmName = doc.data().name
+          })
+        })
+      }
+    })
   }
 }
 </script>

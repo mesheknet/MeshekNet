@@ -7,16 +7,25 @@
     <div class="container_content">
       content
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
     <div class="container_list">
       <div class="container_list_title">
         <h5>בחר גידול:</h5>
       </div>
+<<<<<<< HEAD
       <div  class="container_list_item" v-for="(Crop,index) in Crops" :key="Crop.id" :style="{ background: changbackground(index)}">
           
         <div  class="container_list_item_img" ><span class="dot"><h4>{{FirstLetter(Crop.titel)}}</h4></span></div>
         <div class="container_list_item_title">{{Crop.titel}}</div>
         <div class="container_list_item_Description">{{Crop.Description}}</div>
+=======
+      <div class="container_list_item">
+        <div class="container_list_item_img"></div>
+        <div class="container_list_item_title"></div>
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
       </div>
     </div>
 
@@ -70,21 +79,36 @@ export default {
 .container_fluid {
   display: grid;
   border-style: solid;
+<<<<<<< HEAD
   grid-template-columns: repeat(5, 1fr);
+=======
+  grid-template-columns: repeat(3, 1fr);
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
   grid-gap: 1em;
   padding: 15px;
 }
 
 .container_title {
   border-style: solid;
+<<<<<<< HEAD
   grid-column: 1/6;
   height: 100px;
   text-align: center;
+=======
+  grid-column: 1/4;
+  height: 100px;
+
+  text-align: center;
+}
+.container_title h1 {
+  margin: 0;
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
 }
 .container_title h1 {
   margin: 0;
 }
 
+<<<<<<< HEAD
 
 .container_list {
   grid-row: 2/4;
@@ -93,18 +117,33 @@ min-width: 200px;
   height: 620px;
   border: 1px solid;
   overflow:auto;
+=======
+.container_list {
+  grid-row: 2/4;
+
+  height: 500px;
+  border: 1px solid;
+
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
   box-shadow: 5px 10px 8px #888888;
 }
 
 .container_add {
+<<<<<<< HEAD
     width:100%;
+=======
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
   height: 80px;
   border: 1px solid;
 
   box-shadow: 5px 10px 8px #888888;
 }
 .container_content {
+<<<<<<< HEAD
   grid-column: 2/6;
+=======
+  grid-column: 2/4;
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
   grid-row: 2/5;
 
   border: 1px solid;
@@ -115,6 +154,7 @@ min-width: 200px;
 .container_list_title {
   width: 95%;
   height: 40px;
+<<<<<<< HEAD
 
   margin: 15px auto;
   border-style: solid;
@@ -153,8 +193,17 @@ min-width: 200px;
   margin: 0;
 }
 .dot{
+=======
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
 
+  margin: 15px auto;
+  border-style: solid;
+}
+.container_list_item {
+  width: 95%;
+  height: 75px;
 
+<<<<<<< HEAD
   height: 58px;
   width: 58px;
   background-color: #bbb;
@@ -174,4 +223,20 @@ min-width: 200px;
 }
 
 
+=======
+  margin: 5px auto;
+  border-style: solid;
+}
+.container_list_item_img {
+  margin-top: 4px;
+  margin-right: 2px;
+  height: 90%;
+  width: 15%;
+  border-style: solid;
+}
+
+.container_list .container_list_title h5 {
+  margin: 0;
+}
+>>>>>>> 670736e1875a2c321a2a7766551bda90b7ff0a77
 </style>
