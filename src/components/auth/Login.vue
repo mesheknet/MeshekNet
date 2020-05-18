@@ -1,4 +1,4 @@
-<template >
+<template>
   <div class="login container">
     <form @submit.prevent="login" class="card-panel">
       <h2 class="center green-text">כניסה</h2>

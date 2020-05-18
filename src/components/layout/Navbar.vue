@@ -3,7 +3,12 @@
     <nav class=" light-green darken-4 container_fluid ">
       <div class="column_img">
         <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
-          ><img src="@/assets/logo.png" alt="logo" height="60" width="65" />
+          ><img
+            src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
+            alt="logo"
+            height="60"
+            width="65"
+          />
         </router-link>
       </div>
       <figure class="column_icon right" @click="toggleNav">
