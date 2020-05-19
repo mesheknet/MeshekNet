@@ -71,7 +71,7 @@ export default {
                 ref.set({
                   email: this.email,
                   userId: this.userId,
-                  regDate: moment().unix(),
+                  regDate: moment().format('L'),
                   phone: this.phone
                 })
               })

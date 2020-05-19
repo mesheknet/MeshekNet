@@ -31,17 +31,18 @@
     </div>
 
     <div class="container_add">
-      add
+      <addCrop />
     </div>
   </div>
 </template>
 
 <script>
 const fb = require('@/fb.js')
+import addCrop from './AddCrop'
 
 export default {
   name: 'MyCrops',
-  currentUser: null,
+  components: { addCrop },
   data() {
     return {
       Crops: [
@@ -164,4 +165,3 @@ export default {
   margin-top: 15%;
 }
 </style>
-
