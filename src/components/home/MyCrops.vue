@@ -190,9 +190,10 @@ background-color:snow;
         height: 100%;
         background-color:snow;
 
-        display: grid;
+        display: grid; 
+        
         grid-template-columns: repeat(5, 1fr);
-
+   
       }
 
                   .container_content_details{
