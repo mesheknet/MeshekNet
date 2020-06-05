@@ -125,12 +125,13 @@ export default {
   .navbar .column_icon {
     margin-right: 100px;
     position: relative;
-    top: -42px;
+    
     font-size: 40px;
     display: block;
   }
   .navbar figure {
     cursor: pointer;
+    margin: 0;
   }
 }
 </style>

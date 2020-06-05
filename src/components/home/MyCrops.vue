@@ -1,15 +1,22 @@
 <template>
   <div class="container_fluid">
     <div class="container_title">
-      <h1>הגידולים שלי</h1>
+      <span class="siztitle">הגידולים שלי</span>
+ <div class="iconlist">
+      <a class="btn-floating pulse" @click='toggle = !toggle'><i class="material-icons">menu</i></a>
     </div>
+      
+      
+    </div>
+    
 
     <div class="container_content">
+     
       <div class="container_content_details">
         <div class="container_content_details_title"><span>סוג גידול:</span><br>זית א</div>
         <div class="container_content_details_kind"><span>זן:</span><br>סורי</div>
         <div class="container_content_details_dateStart"><span>תאריך התחלה:</span><br>30/03/2019</div>
-        <div class="container_content_details_dateFinish"><span>תאריך סיום משוער:</span><br>01/10/2019</div>
+        <div class="container_content_details_dateFinish"><span>תאריך סיום:</span><br>01/10/2019</div>
         <div class="container_content_details_areaSize"><span>גודל שטח:</span><br>47 דונם</div>
         <div class="container_content_details_btnEdit"><a class="btn-floating cyan pulse"><i class="material-icons">edit</i></a></div>
 
@@ -26,12 +33,12 @@
       
     </div>
 
-    <div class="container_list">
+    <div class="container_list" v-if="this.toggle==true || this.windowWidth>760">
       <div class="container_list_title">
         <h5>בחר גידול</h5>
       </div>
       <div
-        class="container_list_item"
+        class="container_list_item" @click='toggle = !toggle'
         v-for="(Crop, index) in Crops"
         :key="Crop.id"
         :style="{ background: changbackground(index) }"
@@ -48,7 +55,7 @@
       </div>
     </div>
 
-    <div class="container_add">
+    <div class="container_add" v-if="this.toggle==true || this.windowWidth>760">
       <addCrop />
     </div>
   </div>
@@ -63,6 +70,8 @@ export default {
   components: { addCrop },
   data() {
     return {
+       windowWidth: window.innerWidth,
+      toggle: true,
       Crops: [
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 1 },
         { titel: 'אבטיח', Description: 'שדה 1,20 דונם', id: 2 },
@@ -78,20 +87,33 @@ export default {
     }
   },
   mounted() {
-    console.log(fb.currentUser)
+    console.log(fb.currentUser),
+
+    
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
+        
   },
+
   methods: {
     FirstLetter(string) {
       return string.charAt(0).toUpperCase()
     },
     changbackground(index) {
       return index % 2 == false ? '#e2e2e2' : '#fafafa'
-    }
+    },
+    
+  
   }
 }
 </script>
 
 <style scoped>
+.iconlist{
+  display: none;
+
+}
 .container_fluid {
   display: grid;
 background-color: #74A748;
@@ -108,8 +130,8 @@ background-color: #74A748;
         text-align: center;
         
       }
-                .container_title h1 {
-                  margin: 0;
+                .container_title .siztitle {
+                  font-size:50px;
                 }
 
       .container_list {
@@ -307,6 +329,83 @@ background-color:snow;
                           }
 
 
+     /*  ------------media-----------   */                
+
+@media screen and (max-width: 759px) {
+.container_fluid{
+height:600px;
+
+}
+  .iconlist{
+    display: inline;
+    position: absolute;
+    right: 0px;
+    top: 150px;
+    z-index:2 ;
+    
+  }
+
+  .container_title .siztitle {
+                  font-size:35px;
+                }
+
+.container_content{
+  grid-column: 1/6;
+   grid-template-columns: repeat(5, 1fr);
+
+}
+.container_content_btn {
+grid-column: 5/6;
+margin-top: 0px;
+grid-row: 1/2;
+margin-bottom: 0px;
+
+}
+
+
+.container_content_btndel {
+  grid-row: 2/3;
+ 
+ margin: 0;
+
+}
+.container_content_btndel .button {
+  
+ top: 500px;
+ margin-bottom: 0;
+
+}
+
+
+.container_content_details{
+  grid-column: 1/5;
+
+}
+.container_content_details_dateFinish{
+  margin-right: 10px;
+}
+
+
+
+
+.container_list{
+   grid-column: 1/4;
+   grid-row: 2/3;
+   z-index: 1;
+   
+   
+   
+
+}
+.container_add{
+  grid-column: 1/4;
+  grid-row: 3/5;
+  z-index: 1;
+  width: 200px;
+}
+
+
+}
 
 
 
