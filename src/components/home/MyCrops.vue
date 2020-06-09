@@ -1,7 +1,10 @@
 <template>
+<!--  container_fluid- for all main grid    -->
   <div class="container_fluid">
+    <!-- container_title- main grid in container_fluid, Controls for title  -->
     <div class="container_title">
       <span class="siztitle">הגידולים שלי</span>
+    <!--  icon for open the list in condition media-->
  <div class="iconlist">
       <a class="btn-floating pulse" @click='toggle = !toggle'><i class="material-icons">menu</i></a>
     </div>
@@ -9,9 +12,9 @@
       
     </div>
     
-
+<!--  container_content- main grid in container_fluid,  Controls left side under title -->
     <div class="container_content">
-     
+     <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details">
         <div class="container_content_details_title"><span>סוג גידול:</span><br>זית א</div>
         <div class="container_content_details_kind"><span>זן:</span><br>סורי</div>
@@ -21,40 +24,46 @@
         <div class="container_content_details_btnEdit"><a class="btn-floating cyan pulse"><i class="material-icons">edit</i></a></div>
 
       </div>
+      <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
           <button class="button">השקיה</button>
           <button class="button">דישון</button>
           <button class="button">הדברה</button>
           <button class="button">היסטוריה גידול</button>
       </div>
+      <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
           <button class="button">מחק</button>
       </div>
       
     </div>
-
+<!--  container_list- main grid in container_fluid,  Controls the crop list on the right -->
     <div class="container_list" v-if="this.toggle==true || this.windowWidth>760">
       <div class="container_list_title">
         <h5>בחר גידול</h5>
       </div>
+      <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
         class="container_list_item" @click='toggle = !toggle'
         v-for="(Crop, index) in Crops"
         :key="Crop.id"
         :style="{ background: changbackground(index) }"
       >
+      <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
           <span class="dot"
             ><h4>{{ FirstLetter(Crop.titel) }}</h4></span
           >
         </div>
+        <!-- container_list_item_title- Controls the title within the item -->
         <div class="container_list_item_title">{{ Crop.titel }}</div>
+        <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
           {{ Crop.Description }}
         </div>
       </div>
     </div>
-
+<!-- container_add-main grid in container_fluid,  Controls open window add crops -->
     <div class="container_add" v-if="this.toggle==true || this.windowWidth>760">
       <addCrop />
     </div>
@@ -110,10 +119,12 @@ export default {
 </script>
 
 <style scoped>
+/*  ------------icon for open the list in condition media-----------   */    
 .iconlist{
   display: none;
 
 }
+/*  ------------container for all main grid-----------   */  
 .container_fluid {
   display: grid;
 background-color: #74A748;
@@ -122,7 +133,7 @@ background-color: #74A748;
   padding: 15px;
   height:90vh;
 }
-
+/*  ------------main grid for title-----------   */ 
       .container_title {
        
         grid-column: 1/6;
@@ -133,7 +144,8 @@ background-color: #74A748;
                 .container_title .siztitle {
                   font-size:50px;
                 }
-
+ 
+/*  ------------main grid for list-----------   */ 
       .container_list {
         grid-row: 2/4;
         width: 100%;
@@ -168,6 +180,7 @@ background-color: #74A748;
              box-shadow: 10px 5px 5px 0px rgba(0, 0, 0, 0.75);
              margin-bottom: 15px;
              padding: 5px;
+             cursor: pointer;
             }
                     .container_list_item_img {
                       grid-column: 1/1;
@@ -196,7 +209,7 @@ background-color: #74A748;
                       margin-right: 33%;
                       margin-top: 15%;
                     }
-
+/*  ------------main grid for add-----------   */ 
       .container_add {
         width: 100%;
         height: 100%;
@@ -204,6 +217,7 @@ background-color: #74A748;
 background-color:snow;
         box-shadow: 5px 10px 8px #888888;
       }
+      /*  ------------main grid for content-----------   */ 
       .container_content {
         grid-column: 2/6;
         grid-row: 2/5;
@@ -336,6 +350,7 @@ background-color:snow;
 height:600px;
 
 }
+/*  ------------icon gor open the list in condition media-----------   */  
   .iconlist{
     display: inline;
     position: absolute;

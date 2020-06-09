@@ -62,7 +62,7 @@ export default {
         { name: 'הגידולים שלי', route: 'MyCrops' },
         { name: 'הלול שלי', route: '/' },
         { name: 'מזג אויר', route: '/' },
-        { name: 'צור קשר עם איש מקצוע', route: '/' }
+        { name: 'צור קשר', route: '/' }
       ]
     }
   },
@@ -83,6 +83,7 @@ export default {
 <style>
 .container_fluid {
   width: 100%;
+  
 }
 .navbar .column_img {
   position: relative;
@@ -115,6 +116,7 @@ export default {
 
   nav .column_right ul.active {
     display: block;
+    z-index: 99;
   }
 
   nav .column_right ul li {
