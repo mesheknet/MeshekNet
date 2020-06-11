@@ -54,9 +54,9 @@ export default {
     }
   },
   methods: {
+    //create new user and save data fields to firebase
     signup() {
       if (this.email && this.password) {
-        //כאן צריך להוסיף את המשתנים הנוספים של המשתמש - לשנות מהALIAS
         let ref = fb.user.doc(this.email)
         let refOwner = fb.farmOwner.doc()
         let refFarm = fb.farm.doc()

@@ -35,8 +35,7 @@ export default {
       if (this.email && this.password) {
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
-          .then(cred => {
-            console.log(cred.user)
+          .then(() => {
             this.$router.push({ name: 'Notifications' })
           })
           .catch(err => {

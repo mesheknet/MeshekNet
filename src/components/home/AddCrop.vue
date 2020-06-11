@@ -7,7 +7,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="green lighten-2" primary-title>
+      <v-card-title class="green lighten-3" primary-title>
         הזנת פרטי גידול
       </v-card-title>
 
@@ -16,17 +16,18 @@
           <v-text-field
             label="שם השדה"
             v-model="fieldName"
-            :rules="inputRules"
+            :rules="nameRules"
           ></v-text-field>
           <v-select
             v-model="selectCrop"
-            :items="items"
+            :items="crops"
             label="סוג הגידול"
           ></v-select>
           <v-text-field
             suffix="דונם"
             label="גודל השדה"
             v-model="fieldArea"
+            :rules="sizeRules"
           ></v-text-field>
           <v-menu
             v-model="dateMenu"
@@ -43,13 +44,10 @@
                 label="תאריך התחלת גידול"
                 readonly
                 v-on="on"
+                @input="dateMenu = false"
               ></v-text-field>
             </template>
-            <v-date-picker
-              locale="he-il"
-              v-model="date"
-              @input="dateMenu = false"
-            ></v-date-picker>
+            <v-date-picker locale="he-il" v-model="startDate"></v-date-picker>
           </v-menu>
         </v-form>
       </v-card-text>
@@ -61,7 +59,7 @@
         <v-btn
           block
           dark
-          color="light-green darken-2"
+          color="light-green darken-3"
           @click="submit"
           :loading="loading"
         >
@@ -82,33 +80,75 @@ export default {
     return {
       userId: null,
       farmId: null,
-      dialog: null,
+      cropId: null,
       selectCrop: null,
       fieldName: null,
       fieldArea: null,
-      items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-      date: new Date().toISOString().substr(0, 10),
-      inputRules: [v => !!v || 'אנא הכנס שם שדה'],
+      crops: [],
+      startDate: new Date().toISOString().substr(0, 10),
+      nameRules: [v => !!v || 'אנא הכנס שם שדה'],
+      sizeRules: [v => !!v || 'אנא הזן גודל שדה'],
+      dialog: null,
+      dateMenu: false,
       valid: false,
       loading: false
     }
   },
-  mounted() {
-    this.userId = fb.currentUser.uid
-    this.farmId = fb.farm.where('userId', '==', this.userId)
+  //get local data from firebase
+  updated() {
+    fb.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.userId = user.uid
+      }
+    })
+    if (!this.farmId) {
+      fb.farm
+        .where('userId', '==', this.userId)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.farmId = doc.id
+          })
+        })
+    }
+    if (this.crops.length == 0) {
+      fb.crop.get().then(snapshot => {
+        snapshot.forEach(doc => {
+          this.crops.push(doc.data().name)
+        })
+      })
+    }
+    if (this.selectCrop) {
+      fb.crop
+        .where('name', '==', this.selectCrop)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.cropId = doc.id
+          })
+        })
+    }
   },
+
   methods: {
+    //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {
-        let cropCycle = fb.cropCycle.doc(this.farmId)
+        var doc = fb.field.doc()
+        doc.set({
+          name: this.fieldName,
+          area: this.fieldArea,
+          farmId: this.farmId
+        })
+        this.fieldId = doc.id
         this.loading = true
-        console.log(this.date)
-        cropCycle
+        fb.cropCycle
+          .doc()
           .set({
-            cropId: 'test',
+            cropId: this.cropId,
             farmId: this.farmId,
-            fieldId: 'test',
-            startDate: this.date
+            fieldId: this.fieldId,
+            startDate: moment(this.startDate).format('L')
           })
           .then(() => {
             this.loading = false
@@ -119,7 +159,7 @@ export default {
   },
   computed: {
     formattedDate() {
-      return this.date ? moment(this.date).format('L') : ''
+      return this.startDate ? moment(this.startDate).format('L') : ''
     }
   }
 }

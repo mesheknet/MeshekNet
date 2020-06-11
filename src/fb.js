@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import 'firebase/firestore'
 var config = {
   apiKey: 'AIzaSyAqy1fgjfl5WMVl_l7eAWmTg8enASNBdlo',
@@ -16,12 +17,6 @@ firebase.initializeApp(config)
 const db = firebase.firestore()
 const auth = firebase.auth()
 const currentUser = auth.currentUser
-
-// date issue fix according to firebase
-const settings = {
-  timestampsInSnapshots: true
-}
-db.settings(settings)
 
 // firebase collections
 const user = db.collection('user')
