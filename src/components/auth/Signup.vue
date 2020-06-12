@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <v-layout>
-      <v-flex xl2>
+    <v-layout row wrap>
+      <v-flex xs12 md12>
         <v-card class="mx-auto text-center">
           <v-card-title>
-            <h4 class="green-text darken-3">יצירת משתמש חדש</h4>
+            <h4 class="green--text darken-3">יצירת משתמש חדש</h4>
           </v-card-title>
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
@@ -57,8 +57,10 @@
               <v-spacer></v-spacer>
               <p>{{ this.feedback }}</p>
               <v-btn
+                block
+                dark
                 :disabled="!valid"
-                color="success"
+                color="#558B2F"
                 @click="signup"
                 :loading="loading"
               >

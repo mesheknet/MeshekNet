@@ -44,10 +44,13 @@
                 label="תאריך התחלת גידול"
                 readonly
                 v-on="on"
-                @input="dateMenu = false"
               ></v-text-field>
             </template>
-            <v-date-picker locale="he-il" v-model="startDate"></v-date-picker>
+            <v-date-picker
+              locale="he-il"
+              v-model="startDate"
+              @input="dateMenu = false"
+            ></v-date-picker>
           </v-menu>
         </v-form>
       </v-card-text>

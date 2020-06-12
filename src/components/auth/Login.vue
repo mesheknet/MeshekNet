@@ -28,8 +28,10 @@
               <v-spacer></v-spacer>
               <p>{{ this.feedback }}</p>
               <v-btn
+                block
+                dark
                 :disabled="!valid"
-                color="success"
+                color="#558B2F"
                 @click="login"
                 :loading="loading"
               >
