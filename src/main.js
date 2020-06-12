@@ -4,6 +4,8 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import VueResource from 'vue-resource'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'materialize-css/dist/css/materialize.css'
+import 'materialize-css/dist/js/materialize.min'
 
 Vue.use(VueResource)
 
