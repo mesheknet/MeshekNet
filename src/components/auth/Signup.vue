@@ -30,6 +30,7 @@
 
               <v-text-field
                 v-model="phone"
+                :type="'phone'"
                 label="מספר טלפון"
                 :counter="10"
                 :rules="phoneRules"
@@ -45,11 +46,16 @@
 
               <v-text-field
                 v-model="password"
+                :type="show ? 'text' : 'password'"
+                :append-icon="show ? 'visibility' : 'visibility_off'"
+                @click:append="show = !show"
+                :counter="8"
                 :rules="passwordRules"
                 label="בחר סיסמה"
                 required
               ></v-text-field>
-
+              <v-spacer></v-spacer>
+              <p>{{ this.feedback }}</p>
               <v-btn
                 :disabled="!valid"
                 color="success"
@@ -82,9 +88,10 @@ export default {
       ],
       passwordRules: [
         v => !!v || 'נא להזין סיסמה',
-        v => (v || '').length <= 8 || 'סיסמה בת 8 תווים לפחות'
+        v => v.length >= 8 || 'סיסמה בת 8 תווים לפחות'
       ],
       phoneRules: [v => !!v || 'נא להזין מספר טלפון'],
+      show: false,
       email: null,
       userId: null,
       password: null,
@@ -100,51 +107,47 @@ export default {
     //create new user and save data fields to firebase
     signup() {
       if (this.$refs.form.validate()) {
-        if (this.email && this.password) {
-          this.loading = true
-          let ref = fb.user.doc(this.email)
-          let refOwner = fb.farmOwner.doc()
-          let refFarm = fb.farm.doc()
-          ref.get().then(doc => {
-            if (doc.exists) {
-              this.feedback = 'משתמש קיים במערכת'
-            } else {
-              fb.auth
-                .createUserWithEmailAndPassword(this.email, this.password)
-                .then(cred => {
-                  this.userId = cred.user.uid
-                  ref.set({
-                    email: this.email,
-                    userId: this.userId,
-                    regDate: moment().format('L'),
-                    phone: this.phone
-                  })
+        this.loading = true
+        let ref = fb.user.doc(this.email)
+        let refOwner = fb.farmOwner.doc()
+        let refFarm = fb.farm.doc()
+        ref.get().then(doc => {
+          if (doc.exists) {
+            this.feedback = 'משתמש קיים במערכת'
+          } else {
+            fb.auth
+              .createUserWithEmailAndPassword(this.email, this.password)
+              .then(cred => {
+                this.userId = cred.user.uid
+                ref.set({
+                  email: this.email,
+                  userId: this.userId,
+                  regDate: moment().format('L'),
+                  phone: this.phone
                 })
-                .then(() => {
-                  refOwner.set({
-                    userId: this.userId,
-                    name: this.farmOwner
-                  })
+              })
+              .then(() => {
+                refOwner.set({
+                  userId: this.userId,
+                  name: this.farmOwner
                 })
-                .then(() => {
-                  refFarm.set({
-                    name: this.farmName,
-                    address: this.address,
-                    userId: this.userId
-                  })
+              })
+              .then(() => {
+                refFarm.set({
+                  name: this.farmName,
+                  address: this.address,
+                  userId: this.userId
                 })
-                .then(() => {
-                  this.$router.push({ name: 'Notifications' })
-                })
-                .catch(err => {
-                  console.log(err)
-                  this.feedback = err.message
-                })
-            }
-          })
-        } else {
-          this.feedback = 'חייב להכניס את כל השדות'
-        }
+              })
+              .then(() => {
+                this.$router.push({ name: 'Notifications' })
+              })
+              .catch(err => {
+                console.log(err)
+                this.feedback = err.message
+              })
+          }
+        })
       }
     }
   }

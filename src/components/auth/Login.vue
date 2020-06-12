@@ -1,21 +1,46 @@
 <template>
-  <div class="login container">
-    <form @submit.prevent="login" class="card-panel">
-      <h2 class="center green-text">כניסה</h2>
-      <div class="field">
-        <label for="email">כתובת מייל:</label>
-        <input type="email" name="email" v-model="email" />
-      </div>
-      <div class="field">
-        <label for="password">סיסמה:</label>
-        <input type="password" name="password" v-model="password" />
-      </div>
-      <p class="red-text center" v-if="feedback">{{ feedback }}</p>
-      <div class="field center">
-        <button class="btn green">היכנס</button>
-      </div>
-    </form>
-  </div>
+  <v-container>
+    <v-layout>
+      <v-flex xl2>
+        <v-card class="mx-auto text-center">
+          <v-card-title>
+            <h4 class="green-text darken-3">כניסה למערכת</h4>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                v-model="email"
+                :type="'email'"
+                :rules="emailRules"
+                label="כתובת מייל"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="password"
+                :type="show ? 'text' : 'password'"
+                :append-icon="show ? 'visibility' : 'visibility_off'"
+                @click:append="show = !show"
+                label="סיסמה"
+                :rules="passwordRules"
+                required
+              ></v-text-field>
+              <v-spacer></v-spacer>
+              <p>{{ this.feedback }}</p>
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                @click="login"
+                :loading="loading"
+              >
+                היכנס
+              </v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -27,12 +52,21 @@ export default {
     return {
       email: null,
       password: null,
-      feedback: null
+      feedback: null,
+      emailRules: [
+        v => !!v || 'נא להזין כתובת מייל',
+        v => /.+@.+\..+/.test(v) || 'נא להזין כתובת מייל חוקית'
+      ],
+      passwordRules: [v => !!v || 'נא להזין סיסמה'],
+      show: false,
+      valid: true,
+      loading: false
     }
   },
   methods: {
     login() {
-      if (this.email && this.password) {
+      if (this.$refs.form.validate()) {
+        this.loading = true
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
@@ -43,8 +77,6 @@ export default {
           })
 
         this.feedback = null
-      } else {
-        this.feedback = 'יש להכניס מייל וסיסמה'
       }
     }
   }
