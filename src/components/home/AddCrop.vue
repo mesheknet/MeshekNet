@@ -22,6 +22,7 @@
             v-model="selectCrop"
             :items="crops"
             label="סוג הגידול"
+            @input="getCropId"
           ></v-select>
           <v-text-field
             suffix="דונם"
@@ -98,13 +99,25 @@ export default {
     }
   },
   //get local data from firebase
-  updated() {
+  created() {
     fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.userId = user.uid
+        this.getFarmId()
+        this.getCrops()
       }
     })
-    if (!this.farmId) {
+  },
+
+  methods: {
+    getCrops() {
+      fb.crop.get().then(snapshot => {
+        snapshot.forEach(doc => {
+          this.crops.push(doc.data().name)
+        })
+      })
+    },
+    getFarmId() {
       fb.farm
         .where('userId', '==', this.userId)
         .get()
@@ -113,15 +126,8 @@ export default {
             this.farmId = doc.id
           })
         })
-    }
-    if (this.crops.length == 0) {
-      fb.crop.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.crops.push(doc.data().name)
-        })
-      })
-    }
-    if (this.selectCrop) {
+    },
+    getCropId() {
       fb.crop
         .where('name', '==', this.selectCrop)
         .get()
@@ -130,10 +136,7 @@ export default {
             this.cropId = doc.id
           })
         })
-    }
-  },
-
-  methods: {
+    },
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {

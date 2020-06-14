@@ -100,6 +100,8 @@ export default {
     return {
       windowWidth: window.innerWidth,
       toggle: true,
+      farmId: this.$store.state.farmId,
+      userId: this.$store.state.userId,
       Crops: [
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 1 },
         { titel: 'אבטיח', Description: 'שדה 1,20 דונם', id: 2 },
@@ -111,21 +113,47 @@ export default {
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 8 },
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 9 },
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 10 }
-      ]
+      ],
+      cropCycle: []
     }
   },
+  created() {},
+  updated() {
+    console.log(this.userId)
+    console.log(this.farmId)
+    console.log(this.cropCycle)
+  },
   mounted() {
-    fb.auth.onAuthStateChanged(user => {
-      if (user) {
-        console.log(user.uid)
-      }
-    }),
-      (window.onresize = () => {
-        this.windowWidth = window.innerWidth
-      })
+    //update the store objects to get current user id and farm id
+    this.$store.commit('updateCred')
+    this.getCropCycle()
+    window.onresize = () => {
+      this.windowWidth = window.innerWidth
+    }
   },
 
   methods: {
+    //get local data from firebase
+
+    getCropCycle() {
+      console.log(this.farmId)
+      fb.cropCycle
+        .where('farmId', '==', this.farmId)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.cropCycle.push({
+              cropCycleId: doc.id,
+              fieldId: doc.data().fieldId,
+              cropId: doc.data().cropId,
+              startDate: doc.data().startDate
+            })
+          })
+        })
+    },
+    getCrop() {},
+    getField() {},
+
     FirstLetter(string) {
       return string.charAt(0).toUpperCase()
     },

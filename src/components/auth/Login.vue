@@ -73,6 +73,7 @@ export default {
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.$router.push({ name: 'Notifications' })
+            this.$store.commit('updateCred')
           })
           .catch(err => {
             this.feedback = err.message

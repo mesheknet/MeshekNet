@@ -6,12 +6,14 @@ import VueResource from 'vue-resource'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize.min'
+import { store } from './store/store'
 
 Vue.use(VueResource)
 
 new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')
 
