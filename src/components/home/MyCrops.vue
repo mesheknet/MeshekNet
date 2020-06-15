@@ -114,6 +114,9 @@ export default {
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 9 },
         { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 10 }
       ],
+      fields: [],
+      crops: [],
+      tmpCycle: [],
       cropCycle: []
     }
   },
@@ -121,12 +124,18 @@ export default {
   updated() {
     console.log(this.userId)
     console.log(this.farmId)
-    console.log(this.cropCycle)
+    console.log(this.tmpCycle)
+    console.log(this.fields)
+    console.log(this.crops)
   },
   mounted() {
     //update the store objects to get current user id and farm id
     this.$store.commit('updateCred')
+    //get local data from firebase
+    this.getCrop()
+    this.getField()
     this.getCropCycle()
+
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
@@ -142,8 +151,12 @@ export default {
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            this.cropCycle.push({
+            this.tmpCycle.push({
               cropCycleId: doc.id,
+              cropName: this.crops.forEach(crop => {
+                return doc.data().cropId == crop.cropId ? crop.name : 'error'
+              }),
+              //cropArea:
               fieldId: doc.data().fieldId,
               cropId: doc.data().cropId,
               startDate: doc.data().startDate
@@ -151,8 +164,32 @@ export default {
           })
         })
     },
-    getCrop() {},
-    getField() {},
+
+    getCrop() {
+      fb.crop.get().then(snapshot => {
+        snapshot.forEach(doc => {
+          this.crops.push({
+            cropId: doc.id,
+            name: doc.data().name,
+            duration: doc.data().duration
+          })
+        })
+      })
+    },
+    getField() {
+      fb.field
+        .where('farmId', '==', this.farmId)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.fields.push({
+              fieldId: doc.id,
+              name: doc.data().name,
+              area: doc.data().area
+            })
+          })
+        })
+    },
 
     FirstLetter(string) {
       return string.charAt(0).toUpperCase()
