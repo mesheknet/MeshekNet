@@ -7,7 +7,12 @@
             <h4 class="green-text darken-3">כניסה למערכת</h4>
           </v-card-title>
           <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form
+              @keyup.native.enter="login"
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
               <v-text-field
                 v-model="email"
                 :type="'email'"

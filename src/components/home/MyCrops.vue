@@ -61,21 +61,21 @@
       <div
         class="container_list_item"
         @click="toggle = !toggle"
-        v-for="(Crop, index) in Crops"
-        :key="Crop.id"
+        v-for="(cycle, index) in cropCycle"
+        :key="index"
         :style="{ background: changbackground(index) }"
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
           <span class="dot"
-            ><h4>{{ FirstLetter(Crop.titel) }}</h4></span
+            ><h4>{{ FirstLetter(cycle.cropName) }}</h4></span
           >
         </div>
         <!-- container_list_item_title- Controls the title within the item -->
-        <div class="container_list_item_title">{{ Crop.titel }}</div>
+        <div class="container_list_item_title">{{ cycle.cropName }}</div>
         <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
-          {{ Crop.Description }}
+          {{ cycle.fieldName + ', ' + cycle.fieldArea + ' דונם' }}
         </div>
       </div>
     </div>
@@ -102,31 +102,19 @@ export default {
       toggle: true,
       farmId: this.$store.state.farmId,
       userId: this.$store.state.userId,
-      Crops: [
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 1 },
-        { titel: 'אבטיח', Description: 'שדה 1,20 דונם', id: 2 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 3 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 4 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 5 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 6 },
-        { titel: 'אבטיח', Description: 'שדה 1,20 דונם', id: 7 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 8 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 9 },
-        { titel: 'חיטה א', Description: 'שדה 1,20 דונם', id: 10 }
-      ],
       fields: [],
       crops: [],
       tmpCycle: [],
       cropCycle: []
     }
   },
-  created() {},
+  created() {
+    this.updateCropCycle()
+  },
   updated() {
+    this.updateCropCycle()
     console.log(this.userId)
-    console.log(this.farmId)
-    console.log(this.tmpCycle)
-    console.log(this.fields)
-    console.log(this.crops)
+    console.log(this.cropCycle)
   },
   mounted() {
     //update the store objects to get current user id and farm id
@@ -143,26 +131,28 @@ export default {
 
   methods: {
     //get local data from firebase
+    //in this case - on real time changes
 
+    //כאן להוסיף עריכה או מחיקה
     getCropCycle() {
-      console.log(this.farmId)
-      fb.cropCycle
-        .where('farmId', '==', this.farmId)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.tmpCycle.push({
-              cropCycleId: doc.id,
-              cropName: this.crops.forEach(crop => {
-                return doc.data().cropId == crop.cropId ? crop.name : 'error'
-              }),
-              //cropArea:
-              fieldId: doc.data().fieldId,
-              cropId: doc.data().cropId,
-              startDate: doc.data().startDate
+      fb.cropCycle.where('farmId', '==', this.farmId).onSnapshot(snapshot =>
+        snapshot.docChanges().forEach(change => {
+          if (change.type == 'added') {
+            this.cropCycle.push({
+              cropCycleId: change.doc.id,
+              fieldId: change.doc.data().fieldId,
+              cropId: change.doc.data().cropId,
+              cropName: '',
+              cropDuration: '',
+              fieldName: '',
+              fieldArea: '',
+              startDate: change.doc.data().startDate
             })
-          })
+            this.getField()
+            this.updateCropCycle()
+          }
         })
+      )
     },
 
     getCrop() {
@@ -189,6 +179,26 @@ export default {
             })
           })
         })
+    },
+
+    //add additional data using cropId
+    updateCropCycle() {
+      this.crops.forEach(crop => {
+        this.cropCycle.forEach(cycle => {
+          if (crop.cropId == cycle.cropId) {
+            cycle.cropName = crop.name
+            cycle.cropDuration = crop.duration
+          }
+        })
+      })
+      this.fields.forEach(field => {
+        this.cropCycle.forEach(cycle => {
+          if (field.fieldId == cycle.fieldId) {
+            cycle.fieldName = field.name
+            cycle.fieldArea = field.area
+          }
+        })
+      })
     },
 
     FirstLetter(string) {
