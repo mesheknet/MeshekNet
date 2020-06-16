@@ -103,87 +103,72 @@ export default {
     return {
       windowWidth: window.innerWidth,
       toggle: true,
-      farmId: this.$store.state.farmId,
-      userId: this.$store.state.userId,
-      fields: [],
-      crops: [],
-      cropCycle: [],
       currentCycle: {}
     }
   },
   created() {
+    //update the store objects to get current user id and farm id
+    this.$store.commit('updateCred')
+    //load data from firestore using store
+    this.$store.commit('loadCropCycle')
+    this.$store.commit('loadFields')
+    this.$store.commit('loadCrops')
+
     this.updateCropCycle()
+    console.log(this.crops)
   },
   updated() {
     this.updateCropCycle()
-    console.log(this.userId)
-    console.log(this.cropCycle)
   },
-  mounted() {
-    //update the store objects to get current user id and farm id
-    this.$store.commit('updateCred')
-    //get local data from firebase
-    this.getCrop()
-    this.getField()
-    this.getCropCycle()
-    this.updateCropCycle()
 
+  mounted() {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
   },
-
+  computed: {
+    //get local data from firestore using the store
+    farmId() {
+      return this.$store.state.farmId
+    },
+    userId() {
+      return this.$store.state.userId
+    },
+    cropCycle() {
+      return this.$store.state.cropCycle
+    },
+    fields() {
+      return this.$store.state.fields
+    },
+    crops() {
+      return this.$store.state.crops
+    }
+  },
   methods: {
     //get local data from firebase
     //in this case - on real time changes
 
     //כאן להוסיף עריכה או מחיקה
-    getCropCycle() {
-      fb.cropCycle.where('farmId', '==', this.farmId).onSnapshot(snapshot =>
-        snapshot.docChanges().forEach(change => {
-          if (change.type == 'added') {
-            this.cropCycle.push({
-              cropCycleId: change.doc.id,
-              fieldId: change.doc.data().fieldId,
-              cropId: change.doc.data().cropId,
-              cropName: '',
-              cropDuration: '',
-              fieldName: '',
-              fieldArea: '',
-              startDate: change.doc.data().startDate
-            })
-            this.getField()
-            this.updateCropCycle()
-          }
-        })
-      )
-    },
-
-    getCrop() {
-      fb.crop.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.crops.push({
-            cropId: doc.id,
-            name: doc.data().name,
-            duration: doc.data().duration
-          })
-        })
-      })
-    },
-    getField() {
-      fb.field
-        .where('farmId', '==', this.farmId)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.fields.push({
-              fieldId: doc.id,
-              name: doc.data().name,
-              area: doc.data().area
-            })
-          })
-        })
-    },
+    // getCropCycle() {
+    //   fb.cropCycle.where('farmId', '==', this.farmId).onSnapshot(snapshot =>
+    //     snapshot.docChanges().forEach(change => {
+    //       if (change.type == 'added') {
+    //         this.cropCycle.push({
+    //           cropCycleId: change.doc.id,
+    //           fieldId: change.doc.data().fieldId,
+    //           cropId: change.doc.data().cropId,
+    //           cropName: '',
+    //           cropDuration: '',
+    //           fieldName: '',
+    //           fieldArea: '',
+    //           startDate: change.doc.data().startDate
+    //         })
+    //         this.getField()
+    //         this.updateCropCycle()
+    //       }
+    //     })
+    //   )
+    // },
 
     //add additional data using cropId
     updateCropCycle() {
@@ -210,17 +195,22 @@ export default {
     },
 
     deleteCycle() {
-      fb.cropCycle.doc(this.currentCycle.cropCycleId).delete()
-      this.cropCycle.forEach(cycle => {
-        if ((cycle.cropCycleId = this.currentCycle.cropCycleId)) {
-          this.cropCycle.splice(this.cropCycle.indexOf(cycle), 1)
-        }
-      })
+      fb.cropCycle
+        .doc(this.currentCycle.cropCycleId)
+        .delete()
+        .then(
+          this.cropCycle.forEach(cycle => {
+            if ((cycle.cropCycleId = this.currentCycle.cropCycleId)) {
+              this.cropCycle.splice(this.cropCycle.indexOf(cycle), 1)
+            }
+          })
+        )
     },
 
     FirstLetter(string) {
-      return string.charAt(0).toUpperCase()
+      return string.charAt(0)
     },
+
     changbackground(index) {
       return index % 2 == false ? '#e2e2e2' : '#fafafa'
     }

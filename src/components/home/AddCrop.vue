@@ -82,13 +82,11 @@ export default {
   name: 'AddCrop',
   data() {
     return {
-      userId: null,
-      farmId: null,
       cropId: null,
+      crops: [],
       selectCrop: null,
       fieldName: null,
       fieldArea: null,
-      crops: [],
       startDate: new Date().toISOString().substr(0, 10),
       nameRules: [v => !!v || 'אנא הכנס שם שדה'],
       sizeRules: [v => !!v || 'אנא הזן גודל שדה'],
@@ -100,13 +98,7 @@ export default {
   },
   //get local data from firebase
   created() {
-    fb.auth.onAuthStateChanged(user => {
-      if (user) {
-        this.userId = user.uid
-        this.getFarmId()
-        this.getCrops()
-      }
-    })
+    this.getCrops()
   },
 
   methods: {
@@ -117,16 +109,7 @@ export default {
         })
       })
     },
-    getFarmId() {
-      fb.farm
-        .where('userId', '==', this.userId)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.farmId = doc.id
-          })
-        })
-    },
+
     getCropId() {
       fb.crop
         .where('name', '==', this.selectCrop)
@@ -137,6 +120,7 @@ export default {
           })
         })
     },
+
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {
@@ -158,12 +142,20 @@ export default {
           })
           .then(() => {
             this.loading = false
+            this.$store.commit('loadCropCycle')
             this.dialog = false
           })
       }
     }
   },
   computed: {
+    farmId() {
+      return this.$store.state.farmId
+    },
+    userId() {
+      return this.$store.state.userId
+    },
+
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
     }
