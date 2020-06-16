@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     userId: null,
-    farmId: null
+    farmId: null,
+    userData: []
   },
   mutations: {
     updateCred(state) {
@@ -24,6 +25,10 @@ export const store = new Vuex.Store({
             })
         }
       })
+    },
+
+    addData: (state, data) => {
+      state.userData = data
     }
   }
 })

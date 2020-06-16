@@ -46,7 +46,7 @@
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
-        <button class="button">מחק</button>
+        <button class="button" @click="deleteCycle">מחק</button>
       </div>
     </div>
     <!--  container_list- main grid in container_fluid,  Controls the crop list on the right -->
@@ -60,9 +60,12 @@
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
         class="container_list_item"
-        @click="toggle = !toggle"
         v-for="(cycle, index) in cropCycle"
         :key="index"
+        @click="
+          toggle = !toggle
+          setCurrentCycle(cycle)
+        "
         :style="{ background: changbackground(index) }"
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
@@ -104,8 +107,8 @@ export default {
       userId: this.$store.state.userId,
       fields: [],
       crops: [],
-      tmpCycle: [],
-      cropCycle: []
+      cropCycle: [],
+      currentCycle: {}
     }
   },
   created() {
@@ -123,6 +126,7 @@ export default {
     this.getCrop()
     this.getField()
     this.getCropCycle()
+    this.updateCropCycle()
 
     window.onresize = () => {
       this.windowWidth = window.innerWidth
@@ -198,6 +202,19 @@ export default {
             cycle.fieldArea = field.area
           }
         })
+      })
+    },
+
+    setCurrentCycle(cycle) {
+      this.currentCycle = cycle
+    },
+
+    deleteCycle() {
+      fb.cropCycle.doc(this.currentCycle.cropCycleId).delete()
+      this.cropCycle.forEach(cycle => {
+        if ((cycle.cropCycleId = this.currentCycle.cropCycleId)) {
+          this.cropCycle.splice(this.cropCycle.indexOf(cycle), 1)
+        }
       })
     },
 
