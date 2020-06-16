@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
+
 const fb = require('@/fb.js')
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    users: [],
     userId: null,
     farmId: null,
     cropCycle: [],
@@ -13,6 +16,7 @@ export const store = new Vuex.Store({
     crops: []
   },
   mutations: {
+    ...vuexfireMutations,
     updateCred(state) {
       fb.auth.onAuthStateChanged(user => {
         if (user) {
@@ -31,18 +35,17 @@ export const store = new Vuex.Store({
 
     loadFields: state => {
       state.fields = []
-      fb.field
-        .where('farmId', '==', state.farmId)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
+      fb.field.where('farmId', '==', state.farmId).onSnapshot(querySnapshot => {
+        querySnapshot.docChanges().forEach(change => {
+          if (change.type === 'added') {
             state.fields.push({
-              fieldId: doc.id,
-              name: doc.data().name,
-              area: doc.data().area
+              fieldId: change.doc.id,
+              name: change.doc.data().name,
+              area: change.doc.data().area
             })
-          })
+          }
         })
+      })
     },
 
     loadCrops: state => {
@@ -77,6 +80,43 @@ export const store = new Vuex.Store({
             })
           })
         })
+    }
+  },
+
+  actions: {
+    //data binding using vuexfire
+
+    bindUsers: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('users', fb.user)
+    }),
+    bindCropCycle: firestoreAction(({ state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'cropCycle',
+        fb.cropCycle.where('farmId', '==', state.farmId)
+      )
+    })
+  },
+
+  getters: {
+    userId: state => {
+      return state.userId
+    },
+    farmId: state => {
+      return state.farmId
+    },
+    users: state => {
+      return state.users
+    },
+    cropCycle: state => {
+      return state.cropCycle
+    },
+    fields: state => {
+      return state.fields
+    },
+    crops: state => {
+      return state.crops
     }
   }
 })

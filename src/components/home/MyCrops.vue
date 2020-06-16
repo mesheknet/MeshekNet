@@ -94,6 +94,7 @@
 
 <script>
 const fb = require('@/fb.js')
+import { mapGetters } from 'vuex'
 import addCrop from './AddCrop'
 
 export default {
@@ -106,6 +107,7 @@ export default {
       currentCycle: {}
     }
   },
+
   created() {
     //update the store objects to get current user id and farm id
     this.$store.commit('updateCred')
@@ -113,12 +115,10 @@ export default {
     this.$store.commit('loadCropCycle')
     this.$store.commit('loadFields')
     this.$store.commit('loadCrops')
-
-    this.updateCropCycle()
-    console.log(this.crops)
   },
   updated() {
     this.updateCropCycle()
+    console.log(this.fields)
   },
 
   mounted() {
@@ -128,48 +128,9 @@ export default {
   },
   computed: {
     //get local data from firestore using the store
-    farmId() {
-      return this.$store.state.farmId
-    },
-    userId() {
-      return this.$store.state.userId
-    },
-    cropCycle() {
-      return this.$store.state.cropCycle
-    },
-    fields() {
-      return this.$store.state.fields
-    },
-    crops() {
-      return this.$store.state.crops
-    }
+    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle'])
   },
   methods: {
-    //get local data from firebase
-    //in this case - on real time changes
-
-    //כאן להוסיף עריכה או מחיקה
-    // getCropCycle() {
-    //   fb.cropCycle.where('farmId', '==', this.farmId).onSnapshot(snapshot =>
-    //     snapshot.docChanges().forEach(change => {
-    //       if (change.type == 'added') {
-    //         this.cropCycle.push({
-    //           cropCycleId: change.doc.id,
-    //           fieldId: change.doc.data().fieldId,
-    //           cropId: change.doc.data().cropId,
-    //           cropName: '',
-    //           cropDuration: '',
-    //           fieldName: '',
-    //           fieldArea: '',
-    //           startDate: change.doc.data().startDate
-    //         })
-    //         this.getField()
-    //         this.updateCropCycle()
-    //       }
-    //     })
-    //   )
-    // },
-
     //add additional data using cropId
     updateCropCycle() {
       this.crops.forEach(crop => {

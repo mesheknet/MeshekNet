@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       cropId: null,
+      fieldId: null,
       crops: [],
       selectCrop: null,
       fieldName: null,
@@ -142,7 +143,6 @@ export default {
           })
           .then(() => {
             this.loading = false
-            this.$store.commit('loadCropCycle')
             this.dialog = false
           })
       }

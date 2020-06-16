@@ -24,6 +24,11 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('updateCred')
+    this.$store.dispatch('bindUsers')
+    this.$store.dispatch('bindCropCycle')
+    console.log(this.$store.state.cropCycle)
+
     fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
