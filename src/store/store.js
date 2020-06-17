@@ -11,12 +11,14 @@ export const store = new Vuex.Store({
     users: [],
     userId: null,
     farmId: null,
+    allCycles: [],
     cropCycle: [],
     fields: [],
     crops: []
   },
   mutations: {
     ...vuexfireMutations,
+
     updateCred(state) {
       fb.auth.onAuthStateChanged(user => {
         if (user) {
@@ -90,12 +92,27 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('users', fb.user)
     }),
+    bindAllCycles: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('allCycles', fb.cropCycle)
+    }),
     bindCropCycle: firestoreAction(({ state, bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef(
         'cropCycle',
         fb.cropCycle.where('farmId', '==', state.farmId)
       )
+    }),
+    bindFields: firestoreAction(({ state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'fields',
+        fb.field.where('farmId', '==', state.farmId)
+      )
+    }),
+    bindCrops: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('crops', fb.crop)
     })
   },
 

@@ -10,6 +10,7 @@
 
 <script>
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 moment.locale('he')
 const fb = require('@/fb.js')
 
@@ -23,12 +24,19 @@ export default {
       ownerName: null
     }
   },
-  mounted() {
+  created() {
+    //update local store data from firestore
     this.$store.commit('updateCred')
+    console.log(this.farmId)
     this.$store.dispatch('bindUsers')
+    this.$store.dispatch('bindFields')
+    console.log(this.fields)
     this.$store.dispatch('bindCropCycle')
-    console.log(this.$store.state.cropCycle)
-
+    this.$store.dispatch('bindCrops')
+    this.$store.dispatch('bindAllCycles')
+    console.log(this.cropCycle)
+  },
+  mounted() {
     fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
@@ -46,6 +54,10 @@ export default {
         })
       }
     })
+  },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle'])
   }
 }
 </script>

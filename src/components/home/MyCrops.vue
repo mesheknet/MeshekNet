@@ -108,20 +108,13 @@ export default {
     }
   },
 
-  created() {
-    //update the store objects to get current user id and farm id
-    this.$store.commit('updateCred')
-    //load data from firestore using store
-    this.$store.commit('loadCropCycle')
-    this.$store.commit('loadFields')
-    this.$store.commit('loadCrops')
-  },
-  updated() {
-    this.updateCropCycle()
-    console.log(this.fields)
-  },
+  created() {},
+  updated() {},
 
   mounted() {
+    console.log(this.cropCycle)
+    console.log(this.farmId)
+
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
@@ -156,16 +149,9 @@ export default {
     },
 
     deleteCycle() {
-      fb.cropCycle
-        .doc(this.currentCycle.cropCycleId)
-        .delete()
-        .then(
-          this.cropCycle.forEach(cycle => {
-            if ((cycle.cropCycleId = this.currentCycle.cropCycleId)) {
-              this.cropCycle.splice(this.cropCycle.indexOf(cycle), 1)
-            }
-          })
-        )
+      fb.cropCycle.doc(this.currentCycle.cropCycleId).delete()
+      //update store object after delete a cycle
+      this.$store.commit('loadCropCycle')
     },
 
     FirstLetter(string) {

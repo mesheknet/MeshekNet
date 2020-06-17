@@ -20,7 +20,7 @@
           ></v-text-field>
           <v-select
             v-model="selectCrop"
-            :items="crops"
+            :items="cropsDisp"
             label="סוג הגידול"
             @input="getCropId"
           ></v-select>
@@ -77,6 +77,7 @@
 <script>
 const fb = require('@/fb.js')
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'AddCrop',
@@ -84,7 +85,7 @@ export default {
     return {
       cropId: null,
       fieldId: null,
-      crops: [],
+      cropsDisp: [],
       selectCrop: null,
       fieldName: null,
       fieldArea: null,
@@ -106,7 +107,7 @@ export default {
     getCrops() {
       fb.crop.get().then(snapshot => {
         snapshot.forEach(doc => {
-          this.crops.push(doc.data().name)
+          this.cropsDisp.push(doc.data().name)
         })
       })
     },
@@ -124,6 +125,8 @@ export default {
 
     //push data to firebase if form is valid, close dialog
     submit() {
+      //console.log(this.crops.find(({ cropId }) => cropId == this.cropId).name,);
+
       if (this.$refs.form.validate()) {
         var doc = fb.field.doc()
         doc.set({
@@ -132,30 +135,29 @@ export default {
           farmId: this.farmId
         })
         this.fieldId = doc.id
+
         this.loading = true
+
         fb.cropCycle
-          .doc()
-          .set({
+          .add({
             cropId: this.cropId,
+            cropName: '',
             farmId: this.farmId,
             fieldId: this.fieldId,
             startDate: moment(this.startDate).format('L')
           })
           .then(() => {
             this.loading = false
+            //update store object after adding new cycle
+            //this.$store.commit('loadCropCycle')
             this.dialog = false
           })
       }
     }
   },
   computed: {
-    farmId() {
-      return this.$store.state.farmId
-    },
-    userId() {
-      return this.$store.state.userId
-    },
-
+    //get local data from firestore using the store
+    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle']),
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
     }
