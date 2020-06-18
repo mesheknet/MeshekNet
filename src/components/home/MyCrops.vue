@@ -108,32 +108,26 @@ export default {
     }
   },
 
-  created() {
-    //update local store data from firestore
-    this.$store.commit('updateCred')
-    console.log(this.farmId)
-    this.$store.dispatch('bindUsers')
-    this.$store.dispatch('bindFields')
-    console.log(this.fields)
-    this.$store.dispatch('bindCropCycle')
-    this.$store.dispatch('bindCrops')
-    this.$store.dispatch('bindAllCycles')
-    console.log(this.cropCycle)
+  created() {},
+  updated() {
+    console.log(this.currentField)
   },
-  updated() {},
 
   mounted() {
-    console.log(this.cropCycle)
-    console.log(this.farmId)
-    console.log(this.crops)
-
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle'])
+    ...mapGetters([
+      'userId',
+      'farmId',
+      'fields',
+      'crops',
+      'currentField',
+      'cropCycle'
+    ])
   },
   methods: {
     //add additional data using cropId

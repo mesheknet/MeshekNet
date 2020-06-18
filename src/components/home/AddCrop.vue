@@ -13,16 +13,26 @@
 
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
+          <v-select
+            v-model="selectedField"
+            :items="fields"
+            label="שדה קיים"
+            item-text="name"
+            return-object
+          ></v-select>
+          <v-btn @click="deleteField" text color="error">מחק שדה</v-btn>
           <v-text-field
             label="שם השדה"
             v-model="fieldName"
             :rules="nameRules"
           ></v-text-field>
           <v-select
-            v-model="selectCropName"
-            :items="cropsDisp"
+            v-model="selectedCrop"
+            :items="crops"
             label="סוג הגידול"
             @input="getCropId"
+            item-text="name"
+            return-object
           ></v-select>
           <v-text-field
             suffix="דונם"
@@ -86,8 +96,8 @@ export default {
       cropId: null,
       fieldId: null,
       cropsDisp: [],
-      selectCropName: null,
-      //selectedCrop: {},
+      selectedCrop: null,
+      selectedField: null,
       fieldName: null,
       fieldArea: null,
       startDate: new Date().toISOString().substr(0, 10),
@@ -100,82 +110,45 @@ export default {
     }
   },
 
-  created() {
-    //update local store data from firestore
-    this.$store.commit('updateCred')
-    console.log(this.farmId)
-    this.$store.dispatch('bindUsers')
-    this.$store.dispatch('bindFields')
-    this.$store.dispatch('bindCropCycle')
-    this.$store.dispatch('bindCrops')
-    this.$store.dispatch('bindAllCycles')
-
-    this.getCrops()
-  },
+  created() {},
 
   methods: {
-    getCrops() {
-      fb.crop.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.cropsDisp.push(doc.data().name)
-        })
-      })
+    deleteField() {
+      fb.field.doc(this.selectedField.id).delete()
     },
 
     getCropId() {
-      fb.crop
-        .where('name', '==', this.selectCropName)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.$store.state.selectedCrop = doc.data()
-          })
-        })
+      this.$store.commit('updateSelectedCrop', this.selectedCrop)
     },
 
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {
         this.loading = true
-        this.addField()
-        this.addCropCycle()
-      }
-    },
-
-    addField() {
-      var doc = fb.field
-      doc
-        .add({
+        var newField = {
           name: this.fieldName,
           area: this.fieldArea,
           farmId: this.farmId
-        })
-        .then(snap => {
-          fb.field
-            .doc(snap.id)
-            .get()
-            .then(doc => {
-              this.$store.state.currentField = doc.data()
-            })
-        })
-    },
+        }
 
-    addCropCycle() {
-      fb.cropCycle
-        .add({
-          cropId: this.selectedCrop.id,
-          cropName: this.selectedCrop.name,
-          duration: this.selectedCrop.duration,
-          farmId: this.farmId,
-          fieldId: this.currentField.id,
-          fieldName: this.currentField.name,
-          fieldArea: this.currentField.area,
-          startDate: moment(this.startDate).format('L')
-        })
-        .then(() => {
-          this.loading = false
-          this.dialog = false
-        })
+        var docRef = fb.field.doc()
+        docRef.set(newField)
+        var id = docRef.id
+
+        console.log(id)
+        fb.field
+          .doc(id)
+          .get()
+          .then(ref => {
+            this.$store.commit('updateCurrentField', ref.data())
+          })
+
+        console.log(this.currentField)
+
+        this.$store.commit('addCropCycle')
+        this.loading = false
+        this.dialog = false
+      }
     }
   },
   computed: {
@@ -185,9 +158,8 @@ export default {
       'farmId',
       'fields',
       'crops',
-      'cropCycle',
-      'selectedCrop',
-      'currentField'
+      'currentField',
+      'cropCycle'
     ]),
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''

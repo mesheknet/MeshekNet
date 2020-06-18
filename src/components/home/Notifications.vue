@@ -30,11 +30,9 @@ export default {
     console.log(this.farmId)
     this.$store.dispatch('bindUsers')
     this.$store.dispatch('bindFields')
-    console.log(this.fields)
     this.$store.dispatch('bindCropCycle')
     this.$store.dispatch('bindCrops')
     this.$store.dispatch('bindAllCycles')
-    console.log(this.cropCycle)
   },
   mounted() {
     fb.auth.onAuthStateChanged(user => {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
-
+import moment from 'moment'
 const fb = require('@/fb.js')
 
 Vue.use(Vuex)
@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
     fields: [],
     crops: [],
     selectedCrop: {},
-    currentField: {}
+    currentField: null
   },
   mutations: {
     ...vuexfireMutations,
@@ -37,53 +37,25 @@ export const store = new Vuex.Store({
       })
     },
 
-    loadFields: state => {
-      state.fields = []
-      fb.field.where('farmId', '==', state.farmId).onSnapshot(querySnapshot => {
-        querySnapshot.docChanges().forEach(change => {
-          if (change.type === 'added') {
-            state.fields.push({
-              fieldId: change.doc.id,
-              name: change.doc.data().name,
-              area: change.doc.data().area
-            })
-          }
-        })
+    updateSelectedCrop(state, crop) {
+      state.selectedCrop = crop
+    },
+
+    addCropCycle(state) {
+      fb.cropCycle.add({
+        cropId: state.selectedCrop.id,
+        cropName: state.selectedCrop.name,
+        duration: state.selectedCrop.duration,
+        farmId: state.farmId,
+        fieldId: state.currentField.id,
+        fieldName: state.currentField.name,
+        fieldArea: state.currentField.area,
+        startDate: moment(this.startDate).format('L')
       })
     },
 
-    loadCrops: state => {
-      state.crops = []
-      fb.crop.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          state.crops.push({
-            cropId: doc.id,
-            name: doc.data().name,
-            duration: doc.data().duration
-          })
-        })
-      })
-    },
-
-    loadCropCycle: state => {
-      state.cropCycle = []
-      fb.cropCycle
-        .where('farmId', '==', state.farmId)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            state.cropCycle.push({
-              cropCycleId: doc.id,
-              fieldId: doc.data().fieldId,
-              cropId: doc.data().cropId,
-              cropName: '',
-              cropDuration: '',
-              fieldName: '',
-              fieldArea: '',
-              startDate: doc.data().startDate
-            })
-          })
-        })
+    updateCurrentField(state, field) {
+      state.currentField = field
     }
   },
 
