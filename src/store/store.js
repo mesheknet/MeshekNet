@@ -14,7 +14,9 @@ export const store = new Vuex.Store({
     allCycles: [],
     cropCycle: [],
     fields: [],
-    crops: []
+    crops: [],
+    selectedCrop: {},
+    currentField: {}
   },
   mutations: {
     ...vuexfireMutations,
@@ -134,6 +136,12 @@ export const store = new Vuex.Store({
     },
     crops: state => {
       return state.crops
+    },
+    selectedCrop: state => {
+      return state.selectedCrop
+    },
+    currentField: state => {
+      return state.currentField
     }
   }
 })

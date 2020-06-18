@@ -108,12 +108,24 @@ export default {
     }
   },
 
-  created() {},
+  created() {
+    //update local store data from firestore
+    this.$store.commit('updateCred')
+    console.log(this.farmId)
+    this.$store.dispatch('bindUsers')
+    this.$store.dispatch('bindFields')
+    console.log(this.fields)
+    this.$store.dispatch('bindCropCycle')
+    this.$store.dispatch('bindCrops')
+    this.$store.dispatch('bindAllCycles')
+    console.log(this.cropCycle)
+  },
   updated() {},
 
   mounted() {
     console.log(this.cropCycle)
     console.log(this.farmId)
+    console.log(this.crops)
 
     window.onresize = () => {
       this.windowWidth = window.innerWidth
@@ -146,12 +158,11 @@ export default {
 
     setCurrentCycle(cycle) {
       this.currentCycle = cycle
+      console.log(this.currentCycle)
     },
 
     deleteCycle() {
-      fb.cropCycle.doc(this.currentCycle.cropCycleId).delete()
-      //update store object after delete a cycle
-      this.$store.commit('loadCropCycle')
+      fb.cropCycle.doc(this.currentCycle.id).delete()
     },
 
     FirstLetter(string) {

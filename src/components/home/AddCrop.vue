@@ -19,7 +19,7 @@
             :rules="nameRules"
           ></v-text-field>
           <v-select
-            v-model="selectCrop"
+            v-model="selectCropName"
             :items="cropsDisp"
             label="סוג הגידול"
             @input="getCropId"
@@ -86,7 +86,8 @@ export default {
       cropId: null,
       fieldId: null,
       cropsDisp: [],
-      selectCrop: null,
+      selectCropName: null,
+      //selectedCrop: {},
       fieldName: null,
       fieldArea: null,
       startDate: new Date().toISOString().substr(0, 10),
@@ -98,8 +99,17 @@ export default {
       loading: false
     }
   },
-  //get local data from firebase
+
   created() {
+    //update local store data from firestore
+    this.$store.commit('updateCred')
+    console.log(this.farmId)
+    this.$store.dispatch('bindUsers')
+    this.$store.dispatch('bindFields')
+    this.$store.dispatch('bindCropCycle')
+    this.$store.dispatch('bindCrops')
+    this.$store.dispatch('bindAllCycles')
+
     this.getCrops()
   },
 
@@ -114,50 +124,71 @@ export default {
 
     getCropId() {
       fb.crop
-        .where('name', '==', this.selectCrop)
+        .where('name', '==', this.selectCropName)
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            this.cropId = doc.id
+            this.$store.state.selectedCrop = doc.data()
           })
         })
     },
 
     //push data to firebase if form is valid, close dialog
     submit() {
-      //console.log(this.crops.find(({ cropId }) => cropId == this.cropId).name,);
-
       if (this.$refs.form.validate()) {
-        var doc = fb.field.doc()
-        doc.set({
+        this.loading = true
+        this.addField()
+        this.addCropCycle()
+      }
+    },
+
+    addField() {
+      var doc = fb.field
+      doc
+        .add({
           name: this.fieldName,
           area: this.fieldArea,
           farmId: this.farmId
         })
-        this.fieldId = doc.id
+        .then(snap => {
+          fb.field
+            .doc(snap.id)
+            .get()
+            .then(doc => {
+              this.$store.state.currentField = doc.data()
+            })
+        })
+    },
 
-        this.loading = true
-
-        fb.cropCycle
-          .add({
-            cropId: this.cropId,
-            cropName: '',
-            farmId: this.farmId,
-            fieldId: this.fieldId,
-            startDate: moment(this.startDate).format('L')
-          })
-          .then(() => {
-            this.loading = false
-            //update store object after adding new cycle
-            //this.$store.commit('loadCropCycle')
-            this.dialog = false
-          })
-      }
+    addCropCycle() {
+      fb.cropCycle
+        .add({
+          cropId: this.selectedCrop.id,
+          cropName: this.selectedCrop.name,
+          duration: this.selectedCrop.duration,
+          farmId: this.farmId,
+          fieldId: this.currentField.id,
+          fieldName: this.currentField.name,
+          fieldArea: this.currentField.area,
+          startDate: moment(this.startDate).format('L')
+        })
+        .then(() => {
+          this.loading = false
+          this.dialog = false
+        })
     }
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle']),
+    ...mapGetters([
+      'userId',
+      'farmId',
+      'fields',
+      'crops',
+      'cropCycle',
+      'selectedCrop',
+      'currentField'
+    ]),
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
     }
