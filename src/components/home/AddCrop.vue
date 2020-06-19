@@ -124,43 +124,31 @@ export default {
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {
+        this.setStartDate()
         this.loading = true
         var newField = {
+          id: fb.field.doc().id,
           name: this.fieldName,
           area: this.fieldArea,
           farmId: this.farmId
         }
 
-        var docRef = fb.field.doc()
-        docRef.set(newField)
-        var id = docRef.id
+        this.$store.commit('addNewField', newField)
+        this.$store.commit('addCropCycle', newField)
+        //console.log(this.fields.find(x => x.id == this.tempFieldId))
 
-        console.log(id)
-        fb.field
-          .doc(id)
-          .get()
-          .then(ref => {
-            this.$store.commit('updateCurrentField', ref.data())
-          })
-
-        console.log(this.currentField)
-
-        this.$store.commit('addCropCycle')
         this.loading = false
         this.dialog = false
       }
+    },
+    setStartDate() {
+      this.$store.commit('setStartDate', this.startDate)
     }
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters([
-      'userId',
-      'farmId',
-      'fields',
-      'crops',
-      'currentField',
-      'cropCycle'
-    ]),
+    ...mapGetters(['userId', 'farmId', 'crops', 'fields', 'cropCycle']),
+
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
     }

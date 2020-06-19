@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
     fields: [],
     crops: [],
     selectedCrop: {},
-    currentField: null
+    startDate: null
   },
   mutations: {
     ...vuexfireMutations,
@@ -41,24 +41,26 @@ export const store = new Vuex.Store({
       state.selectedCrop = crop
     },
 
-    addCropCycle(state) {
-      fb.cropCycle.add({
+    addCropCycle(state, field) {
+      fb.cropCycle.doc().set({
         cropId: state.selectedCrop.id,
         cropName: state.selectedCrop.name,
         duration: state.selectedCrop.duration,
         farmId: state.farmId,
-        fieldId: state.currentField.id,
-        fieldName: state.currentField.name,
-        fieldArea: state.currentField.area,
-        startDate: moment(this.startDate).format('L')
+        fieldId: field.id,
+        fieldName: field.name,
+        fieldArea: field.area,
+        startDate: moment(state.startDate).format('L')
       })
     },
 
-    updateCurrentField(state, field) {
-      state.currentField = field
+    addNewField(state, field) {
+      fb.field.doc(field.id).set(field)
+    },
+    setStartDate(state, startDate) {
+      state.startDate = startDate
     }
   },
-
   actions: {
     //data binding using vuexfire
 
@@ -111,9 +113,6 @@ export const store = new Vuex.Store({
     },
     selectedCrop: state => {
       return state.selectedCrop
-    },
-    currentField: state => {
-      return state.currentField
     }
   }
 })

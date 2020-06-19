@@ -109,9 +109,7 @@ export default {
   },
 
   created() {},
-  updated() {
-    console.log(this.currentField)
-  },
+  updated() {},
 
   mounted() {
     window.onresize = () => {
@@ -130,26 +128,6 @@ export default {
     ])
   },
   methods: {
-    //add additional data using cropId
-    updateCropCycle() {
-      this.crops.forEach(crop => {
-        this.cropCycle.forEach(cycle => {
-          if (crop.cropId == cycle.cropId) {
-            cycle.cropName = crop.name
-            cycle.cropDuration = crop.duration
-          }
-        })
-      })
-      this.fields.forEach(field => {
-        this.cropCycle.forEach(cycle => {
-          if (field.fieldId == cycle.fieldId) {
-            cycle.fieldName = field.name
-            cycle.fieldArea = field.area
-          }
-        })
-      })
-    },
-
     setCurrentCycle(cycle) {
       this.currentCycle = cycle
       console.log(this.currentCycle)
