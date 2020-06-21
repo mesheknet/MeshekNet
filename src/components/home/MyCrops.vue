@@ -17,19 +17,20 @@
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details">
         <div class="container_content_details_title">
-          <span>סוג גידול:</span><br />זית א
+          <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }},
+          {{ this.currentCycle.fieldName }}
         </div>
         <div class="container_content_details_kind">
           <span>זן:</span><br />סורי
         </div>
         <div class="container_content_details_dateStart">
-          <span>תאריך התחלה:</span><br />30/03/2019
+          <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
         </div>
         <div class="container_content_details_dateFinish">
-          <span>תאריך סיום:</span><br />01/10/2019
+          <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>גודל שטח:</span><br />47 דונם
+          <span>גודל שטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
         </div>
         <div class="container_content_details_btnEdit">
           <a class="btn-floating cyan pulse"
@@ -95,6 +96,7 @@
 <script>
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 import addCrop from './AddCrop'
 
 export default {
@@ -103,8 +105,7 @@ export default {
   data() {
     return {
       windowWidth: window.innerWidth,
-      toggle: true,
-      currentCycle: {}
+      toggle: true
     }
   },
 
@@ -124,12 +125,13 @@ export default {
       'fields',
       'crops',
       'currentField',
+      'currentCycle',
       'cropCycle'
     ])
   },
   methods: {
     setCurrentCycle(cycle) {
-      this.currentCycle = cycle
+      this.$store.commit('setCurrentCycle', cycle)
       console.log(this.currentCycle)
     },
 
@@ -137,6 +139,12 @@ export default {
       fb.cropCycle.doc(this.currentCycle.id).delete()
     },
 
+    calcEndDate() {
+      var finishDate = moment(moment(this.currentCycle.startDate, 'DD MM YYYY'))
+        .add(this.currentCycle.duration, 'w')
+        .format('L')
+      return finishDate
+    },
     FirstLetter(string) {
       return string.charAt(0)
     },

@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
     fields: [],
     crops: [],
     selectedCrop: {},
+    currentCycle: {},
     startDate: null
   },
   mutations: {
@@ -59,6 +60,9 @@ export const store = new Vuex.Store({
     },
     setStartDate(state, startDate) {
       state.startDate = startDate
+    },
+    setCurrentCycle(state, cycle) {
+      state.currentCycle = cycle
     }
   },
   actions: {
@@ -113,6 +117,9 @@ export const store = new Vuex.Store({
     },
     selectedCrop: state => {
       return state.selectedCrop
+    },
+    currentCycle: state => {
+      return state.currentCycle
     }
   }
 })
