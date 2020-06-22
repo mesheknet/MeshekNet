@@ -25,37 +25,35 @@ export default {
     }
   },
   created() {
-    //update local store data from firestore
-    this.$store.commit('updateCred')
-    console.log(this.farmId)
-    this.$store.dispatch('bindUsers')
-    this.$store.dispatch('bindFields')
-    this.$store.dispatch('bindCropCycle')
-    this.$store.dispatch('bindCrops')
-    this.$store.dispatch('bindAllCycles')
-  },
-  mounted() {
     fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
-        let farmRef = fb.farm.where('userId', '==', user.uid)
-        farmRef.get().then(snapshot => {
-          snapshot.forEach(doc => {
-            this.farmName = doc.data().name
-          })
-        })
-        let ownerRef = fb.farmOwner.where('userId', '==', user.uid)
-        ownerRef.get().then(snapshot => {
-          snapshot.forEach(doc => {
-            this.ownerName = doc.data().name
-          })
-        })
       }
     })
   },
+  mounted() {
+    this.setDetails()
+  },
+  methods: {
+    setDetails() {
+      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
+      this.ownerName = this.farmOwners.find(
+        obj => obj.userId == this.userId
+      ).name
+    }
+  },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'fields', 'crops', 'cropCycle'])
+    ...mapGetters([
+      'userId',
+      'farmId',
+      'users',
+      'farmOwners',
+      'farms',
+      'fields',
+      'crops',
+      'cropCycle'
+    ])
   }
 }
 </script>

@@ -11,10 +11,12 @@ export const store = new Vuex.Store({
     users: [],
     userId: null,
     farmId: null,
-    allCycles: [],
-    cropCycle: [],
+    farms: [],
+    farmOwners: [],
     fields: [],
     crops: [],
+    allCycles: [],
+    cropCycle: [],
     selectedCrop: {},
     currentCycle: {},
     startDate: null
@@ -22,20 +24,16 @@ export const store = new Vuex.Store({
   mutations: {
     ...vuexfireMutations,
 
-    updateCred(state) {
-      fb.auth.onAuthStateChanged(user => {
+    async updateUid(state) {
+      await fb.auth.onAuthStateChanged(user => {
         if (user) {
           state.userId = user.uid
-          fb.farm
-            .where('userId', '==', user.uid)
-            .get()
-            .then(snapshot => {
-              snapshot.forEach(doc => {
-                state.farmId = doc.id
-              })
-            })
         }
       })
+    },
+
+    updateFid(state) {
+      state.farmId = state.farms.find(obj => obj.userId == state.userId).id
     },
 
     updateSelectedCrop(state, crop) {
@@ -72,6 +70,14 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('users', fb.user)
     }),
+    bindFarmOwners: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('farmOwners', fb.farmOwner)
+    }),
+    bindFarms: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('farms', fb.farm)
+    }),
     bindAllCycles: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('allCycles', fb.cropCycle)
@@ -105,6 +111,12 @@ export const store = new Vuex.Store({
     },
     users: state => {
       return state.users
+    },
+    farms: state => {
+      return state.farms
+    },
+    farmOwners: state => {
+      return state.farmOwners
     },
     cropCycle: state => {
       return state.cropCycle

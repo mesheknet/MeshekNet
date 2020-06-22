@@ -124,7 +124,6 @@ export default {
       'farmId',
       'fields',
       'crops',
-      'currentField',
       'currentCycle',
       'cropCycle'
     ])
@@ -145,6 +144,7 @@ export default {
         .format('L')
       return finishDate
     },
+
     FirstLetter(string) {
       return string.charAt(0)
     },

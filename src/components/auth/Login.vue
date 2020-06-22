@@ -77,8 +77,11 @@ export default {
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
+            //set vuex store to hold db data and keep it locally synced
+            this.bindDB()
+          })
+          .then(() => {
             this.$router.push({ name: 'Notifications' })
-            this.$store.commit('updateCred')
           })
           .catch(err => {
             this.feedback = err.message
@@ -86,6 +89,18 @@ export default {
 
         this.feedback = null
       }
+    },
+    //set vuex store to hold db data and keep it locally synced
+    async bindDB() {
+      await this.$store.dispatch('bindFarms')
+      await this.$store.dispatch('bindUsers')
+      await this.$store.dispatch('bindFarmOwners')
+      await this.$store.commit('updateUid')
+      await this.$store.commit('updateFid')
+      await this.$store.dispatch('bindCrops')
+      await this.$store.dispatch('bindFields')
+      await this.$store.dispatch('bindAllCycles')
+      await this.$store.dispatch('bindCropCycle')
     }
   }
 }
