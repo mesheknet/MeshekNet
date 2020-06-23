@@ -13,7 +13,7 @@
     </div>
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
-    <div class="container_content">
+    <div class="container_content" v-if="currentCycle">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details">
         <div class="container_content_details_title">

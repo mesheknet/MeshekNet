@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!loading">
+  <div class="container">
     <h1>משק.נט</h1>
     <h4>ברוכים הבאים, {{ this.ownerName }}</h4>
     <h4>{{ this.farmName }}</h4>
@@ -33,14 +33,8 @@ export default {
       }
     })
   },
-  mounted() {
-    while (!this.farmName) {
-      this.loading = true
-      if (this.farmName) {
-        this.loading = false
-      }
-    }
-  },
+  mounted() {},
+  updated() {},
   methods: {
     setDetails() {
       this.farmName = this.farms.find(obj => obj.userId == this.userId).name
