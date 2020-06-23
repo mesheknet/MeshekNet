@@ -95,7 +95,7 @@ export default {
       await this.$store.dispatch('bindFarms')
       await this.$store.dispatch('bindUsers')
       await this.$store.dispatch('bindFarmOwners')
-      await this.$store.commit('updateUid')
+      await this.$store.dispatch('updateUid')
       await this.$store.commit('updateFid')
       await this.$store.dispatch('bindCrops')
       await this.$store.dispatch('bindFields')

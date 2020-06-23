@@ -24,12 +24,8 @@ export const store = new Vuex.Store({
   mutations: {
     ...vuexfireMutations,
 
-    async updateUid(state) {
-      await fb.auth.onAuthStateChanged(user => {
-        if (user) {
-          state.userId = user.uid
-        }
-      })
+    updateUid: (state, uid) => {
+      state.userId = uid
     },
 
     updateFid(state) {
@@ -99,7 +95,19 @@ export const store = new Vuex.Store({
     bindCrops: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('crops', fb.crop)
-    })
+    }),
+
+    //actions that change state data
+
+    updateUid: async context => {
+      let uid = null
+      await fb.auth.onAuthStateChanged(user => {
+        if (user) {
+          uid = user.uid
+        }
+      })
+      context.commit('updateUid', uid)
+    }
   },
 
   getters: {

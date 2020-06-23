@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!loading">
     <h1>משק.נט</h1>
     <h4>ברוכים הבאים, {{ this.ownerName }}</h4>
     <h4>{{ this.farmName }}</h4>
@@ -21,18 +21,25 @@ export default {
       lastSignIn: null,
       currentUser: null,
       farmName: null,
-      ownerName: null
+      ownerName: null,
+      loading: true
     }
   },
   created() {
     fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
+        this.setDetails()
       }
     })
   },
   mounted() {
-    this.setDetails()
+    while (!this.farmName) {
+      this.loading = true
+      if (this.farmName) {
+        this.loading = false
+      }
+    }
   },
   methods: {
     setDetails() {
