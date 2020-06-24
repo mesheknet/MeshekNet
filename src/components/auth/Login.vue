@@ -52,6 +52,9 @@
 
 <script>
 const fb = require('@/fb.js')
+import moment from 'moment'
+import { mapGetters } from 'vuex'
+moment.locale('he')
 
 export default {
   name: 'Login',
@@ -71,22 +74,24 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       if (this.$refs.form.validate()) {
         this.loading = true
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
-          .then(() => {
-            //set vuex store to hold db data and keep it locally synced
-            this.bindDB()
-          })
-          .then(() => {
-            this.$router.push({ name: 'Notifications' })
-          })
+          .then(() => {})
           .catch(err => {
             this.feedback = err.message
           })
+        //set vuex store to hold db data and keep it locally synced
+        await this.bindDB()
 
+        //get weather details from ims, update record in firestore
+        this.getWeatherData(
+          this.farms.find(obj => obj.id == this.farmId).weatherStation
+        )
+        this.$store.dispatch('bindWeather')
+        this.$router.push({ name: 'Notifications' })
         this.feedback = null
       }
     },
@@ -96,18 +101,39 @@ export default {
       await this.$store.dispatch('bindUsers')
       await this.$store.dispatch('bindFarmOwners')
       await this.$store.dispatch('updateUid')
-      await this.$store.commit('updateFid')
+      await this.$store.dispatch('updateFid')
       await this.$store.dispatch('bindCrops')
       await this.$store.dispatch('bindFields')
       await this.$store.dispatch('bindAllCycles')
       await this.$store.dispatch('bindCropCycle')
+    },
+
+    async getWeatherData(station) {
+      let response
+      response = await this.$http.get(
+        'https://cors-anywhere.herokuapp.com/https://api.ims.gov.il/v1/envista/stations/' +
+          station +
+          '/data/latest',
+        {
+          headers: {
+            Authorization: 'ApiToken f058958a-d8bd-47cc-95d7-7ecf98610e47'
+          }
+        }
+      )
+      let weather = {
+        farmId: this.farmId,
+        date: moment(response.body.data[0].datetime).format('L'),
+        data: response.body.data[0].channels
+      }
+      fb.weather.doc().set(weather)
     }
+  },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters(['farmId', 'farms'])
   }
 }
 </script>
 
 <style>
-.login .field label {
-  float: right;
-}
 </style>

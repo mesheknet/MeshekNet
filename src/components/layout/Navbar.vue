@@ -60,9 +60,9 @@ export default {
       links: [
         { name: 'התראות', route: 'Notifications' },
         { name: 'הגידולים שלי', route: 'MyCrops' },
-        { name: 'הלול שלי', route: '/' },
-        { name: 'מזג אויר', route: '/' },
-        { name: 'צור קשר', route: '/' }
+        { name: 'הלול שלי', route: '' },
+        { name: 'מזג אויר', route: 'Weather' },
+        { name: 'צור קשר', route: '' }
       ]
     }
   },
@@ -83,7 +83,6 @@ export default {
 <style>
 .container_fluid {
   width: 100%;
-  
 }
 .navbar .column_img {
   position: relative;
@@ -127,7 +126,7 @@ export default {
   .navbar .column_icon {
     margin-right: 100px;
     position: relative;
-    
+
     font-size: 40px;
     display: block;
   }

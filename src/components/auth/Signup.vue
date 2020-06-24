@@ -28,6 +28,14 @@
                 required
               ></v-text-field>
 
+              <v-select
+                v-model="selectedStation"
+                :items="stations"
+                label="בחר איזור לנתוני מזג אויר"
+                item-text="name"
+                return-object
+              ></v-select>
+
               <v-text-field
                 v-model="phone"
                 :type="'phone'"
@@ -102,7 +110,26 @@ export default {
       address: null,
       phone: null,
       feedback: null,
-      loading: false
+      loading: false,
+      stations: [
+        {
+          id: 28,
+          name: 'ניר העמק עפולה'
+        },
+        {
+          id: 11,
+          name: 'עמיעד'
+        },
+        {
+          id: 48,
+          name: 'בית הערבה'
+        },
+        {
+          id: 77,
+          name: 'פארן'
+        }
+      ],
+      selectedStation: null
     }
   },
   methods: {
@@ -138,11 +165,12 @@ export default {
                 refFarm.set({
                   name: this.farmName,
                   address: this.address,
-                  userId: this.userId
+                  userId: this.userId,
+                  weatherStation: this.selectedStation.id
                 })
               })
               .then(() => {
-                this.$router.push({ name: 'Notifications' })
+                this.$router.push({ name: 'Login' })
               })
               .catch(err => {
                 console.log(err)

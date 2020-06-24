@@ -3,6 +3,10 @@
 </template>
 
 <script>
+//const fb = require('@/fb.js')
+import { mapGetters } from 'vuex'
+//import moment from 'moment'
+
 export default {
   name: 'Weather',
   stationName: null,
@@ -10,24 +14,14 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters(['weather', 'farmId'])
+  },
   mounted() {
-    this.$http
-      .get(
-        'https://cors-anywhere.herokuapp.com/https://api.ims.gov.il/v1/envista/stations/23',
-        {
-          headers: {
-            Authorization: 'ApiToken f058958a-d8bd-47cc-95d7-7ecf98610e47'
-          }
-        }
-      )
-      .then(
-        response => {
-          console.log(response)
-        },
-        err => {
-          console.log(err)
-        }
-      )
+    let tempWeather = this.weather.find(obj => obj.farmId == this.farmId).data
+
+    console.log(tempWeather.find(obj => obj.name == 'WD'))
   }
 }
 </script>

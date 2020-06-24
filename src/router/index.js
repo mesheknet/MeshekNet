@@ -6,6 +6,7 @@ import Notifications from '@/components/home/Notifications'
 import Landing from '@/components/home/Landing'
 import Weather from '@/components/home/Weather'
 import MyCrops from '@/components/home/MyCrops'
+
 const fb = require('@/fb.js')
 
 Vue.use(Router)
@@ -51,6 +52,7 @@ const routes = [
       reqAuth: false
     }
   },
+
   {
     path: '/MyCrops',
     name: 'MyCrops',

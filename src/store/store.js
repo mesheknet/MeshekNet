@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
     crops: [],
     allCycles: [],
     cropCycle: [],
+    weather: [],
     selectedCrop: {},
     currentCycle: {},
     startDate: null
@@ -28,8 +29,8 @@ export const store = new Vuex.Store({
       state.userId = uid
     },
 
-    updateFid(state) {
-      state.farmId = state.farms.find(obj => obj.userId == state.userId).id
+    updateFid: (state, fid) => {
+      state.farmId = fid
     },
 
     updateSelectedCrop(state, crop) {
@@ -96,17 +97,25 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('crops', fb.crop)
     }),
-
+    bindWeather: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('weather', fb.weather)
+    }),
     //actions that change state data
 
-    updateUid: async context => {
+    async updateUid({ commit }) {
       let uid = null
       await fb.auth.onAuthStateChanged(user => {
         if (user) {
           uid = user.uid
         }
       })
-      context.commit('updateUid', uid)
+      commit('updateUid', uid)
+    },
+
+    updateFid({ commit, state }) {
+      let fid = state.farms.find(obj => obj.userId == state.userId).id
+      commit('updateFid', fid)
     }
   },
 
@@ -140,6 +149,9 @@ export const store = new Vuex.Store({
     },
     currentCycle: state => {
       return state.currentCycle
+    },
+    weather: state => {
+      return state.weather
     }
   }
 })

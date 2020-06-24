@@ -11,7 +11,6 @@
 <script>
 import moment from 'moment'
 import { mapGetters } from 'vuex'
-moment.locale('he')
 const fb = require('@/fb.js')
 
 export default {
