@@ -6,6 +6,7 @@ import Notifications from '@/components/home/Notifications'
 import Landing from '@/components/home/Landing'
 import Weather from '@/components/home/Weather'
 import MyCrops from '@/components/home/MyCrops'
+import MyCoop from '@/components/home/MyCoop'
 
 const fb = require('@/fb.js')
 
@@ -57,6 +58,15 @@ const routes = [
     path: '/MyCrops',
     name: 'MyCrops',
     component: MyCrops,
+    meta: {
+      reqAuth: true
+    }
+  },
+
+  {
+    path: '/myCoop',
+    name: 'MyCoop',
+    component: MyCoop,
     meta: {
       reqAuth: true
     }

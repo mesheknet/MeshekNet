@@ -60,7 +60,7 @@ export default {
       links: [
         { name: 'התראות', route: 'Notifications' },
         { name: 'הגידולים שלי', route: 'MyCrops' },
-        { name: 'הלול שלי', route: '' },
+        { name: 'הלול שלי', route: 'MyCoop' },
         { name: 'מזג אויר', route: 'Weather' },
         { name: 'צור קשר', route: '' }
       ]
