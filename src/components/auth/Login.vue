@@ -120,12 +120,26 @@ export default {
           }
         }
       )
+      let now = moment(Date.now()).format('X')
       let weather = {
         farmId: this.farmId,
-        date: moment(response.body.data[0].datetime).format('L'),
+        date: now,
         data: response.body.data[0].channels
       }
+      this.clearOldWeather(now)
       fb.weather.doc().set(weather)
+    },
+    //keep only updated weather data in firestore
+    clearOldWeather(now) {
+      fb.weather
+        .where('farmId', '==', this.farmId)
+        .where('date', '<', now)
+        .get()
+        .then(snap => {
+          snap.forEach(doc => {
+            doc.ref.delete()
+          })
+        })
     }
   },
   computed: {
