@@ -91,6 +91,8 @@
 import { mapGetters } from 'vuex'
 //import moment from 'moment'
 
+let google
+
 export default {
   name: 'Weather',
   stationName: null,
@@ -98,11 +100,43 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    getWeather(position) {
+      let lat = position.coords.latitude
+      let lon = position.coords.longitude
+      this.$http
+        .get(
+          `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
+        )
+        .then(
+          response => {
+            this.weather = response.body
+            console.log(response.body)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+  },
   computed: {
     //get local data from firestore using the store
     ...mapGetters(['weather', 'farmId'])
   },
   mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          this.getWeather(position)
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+    const autocomplete = new google.maps.places.Autocomplete(this.place)
+    console.log(autocomplete)
+
     let tempWeather = this.weather.find(obj => obj.farmId == this.farmId).data
 
     console.log(tempWeather.find(obj => obj.name == 'WD'))
