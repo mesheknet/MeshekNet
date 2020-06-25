@@ -3,10 +3,18 @@ import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import moment from 'moment'
 const fb = require('@/fb.js')
+//plugin that saves state on page refresh
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  plugins: [
+    //plugin that saves state on page refresh
+    createPersistedState({
+      storage: window.sessionStorage
+    })
+  ],
   state: {
     users: [],
     userId: null,

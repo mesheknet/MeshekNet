@@ -91,8 +91,8 @@ export default {
           this.farms.find(obj => obj.id == this.farmId).weatherStation
         )
         this.$store.dispatch('bindWeather')
-        this.$router.push({ name: 'Notifications' })
         this.feedback = null
+        this.$router.push({ name: 'Notifications' })
       }
     },
     //set vuex store to hold db data and keep it locally synced
@@ -135,5 +135,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

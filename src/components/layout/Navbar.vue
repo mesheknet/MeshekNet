@@ -69,6 +69,8 @@ export default {
   methods: {
     logout() {
       fb.auth.signOut().then(() => {
+        //clear store local saved data
+        sessionStorage.clear()
         this.$router.push({ name: 'Landing' })
       })
     },

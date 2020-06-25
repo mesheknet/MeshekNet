@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <v-container fluid>
+    <v-card v-for="n in 3" :key="n" class="ma-3 pa-6" outlined tile>
+      Column
+    </v-card>
+  </v-container>
 </template>
 
 <script>
