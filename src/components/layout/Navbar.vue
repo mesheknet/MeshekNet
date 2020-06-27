@@ -104,8 +104,9 @@ export default {
 }
 
 li .router-link-exact-active{
-  background-color:gray;
-  text-decoration-line: overline;
+  background-color:rgb(30, 85, 41);
+  text-decoration-line:underline;
+ 
   
    
 }

@@ -39,14 +39,14 @@
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
-        <button class="button">השקיה</button>
-        <button class="button">דישון</button>
-        <button class="button">הדברה</button>
-        <button class="button">היסטוריה גידול</button>
+        <button class="button">השקיה 		&#x1F4A7; </button>
+        <button class="button">דישון &#x1F69C;</button>
+        <button class="button">הדברה 		&#x2622;</button>
+        <button class="button">היסטוריה גידול 	&#x1F4D6;</button>
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
-        <button class="button" @click="deleteCycle">מחק</button>
+        <button class="button" @click="deleteCycle"> מחק 	&#x1F5D1;</button>
       </div>
     </div>
     <!--  container_list- main grid in container_fluid,  Controls the crop list on the right -->
@@ -342,6 +342,8 @@ border-color: rgb(204, 203, 203);
   margin-bottom: 40px;
   width: 100%;
   display: block;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
 }
 
 .container_content_btn .button:not(:last-child) {
@@ -349,7 +351,7 @@ border-color: rgb(204, 203, 203);
 }
 
 .container_content_btn .button:hover {
-  background-color: #3e8e41;
+  background-color: #848f84;
 }
 
 .container_content_btndel {
@@ -369,15 +371,12 @@ border-color: rgb(204, 203, 203);
   margin-bottom: 40px;
   width: 100%;
   display: block;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  
 }
 
-.container_content_btn .button:not(:last-child) {
-  border-bottom: none; /* Prevent double borders */
-}
 
-.container_content_btn .button:hover {
-  background-color: rgb(248, 16, 8);
-}
 
 
 
