@@ -62,7 +62,7 @@ export default {
         { name: 'הגידולים שלי', route: 'MyCrops' },
         { name: 'הלול שלי', route: 'MyCoop' },
         { name: 'מזג אויר', route: 'Weather' },
-        { name: 'צור קשר', route: '' }
+        { name: 'צור קשר', route: 'W' }
       ]
     }
   },
@@ -101,6 +101,13 @@ export default {
 }
 .navbar .column_left {
   float: left;
+}
+
+li .router-link-exact-active{
+  background-color:gray;
+  text-decoration-line: overline;
+  
+   
 }
 
 @media screen and (max-width: 759px) {

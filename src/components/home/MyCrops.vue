@@ -2,14 +2,13 @@
   <!--  container_fluid- for all main grid    -->
   <div class="container_fluid">
     <!-- container_title- main grid in container_fluid, Controls for title  -->
-    <div class="container_title">
-      <span class="siztitle">הגידולים שלי</span>
+    
       <!--  icon for open the list in condition media-->
       <div class="iconlist">
         <a class="btn-floating pulse" @click="toggle = !toggle"
           ><i class="material-icons">menu</i></a
         >
-      </div>
+      
     </div>
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
@@ -56,7 +55,7 @@
       v-if="this.toggle == true || this.windowWidth > 760"
     >
       <div class="container_list_title">
-        <h5>בחר גידול</h5>
+      בחר גידול
       </div>
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
@@ -66,8 +65,10 @@
         @click="
           toggle = !toggle
           setCurrentCycle(cycle)
+          togglec(index)
         "
-        :style="{ background: changbackground(index) }"
+        :class="{'active': index == activeIndex}"
+        
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
@@ -105,7 +106,8 @@ export default {
   data() {
     return {
       windowWidth: window.innerWidth,
-      toggle: true
+      toggle: true,
+      activeIndex: null
     }
   },
 
@@ -151,12 +153,24 @@ export default {
 
     changbackground(index) {
       return index % 2 == false ? '#e2e2e2' : '#fafafa'
-    }
+    },
+    togglec(index){
+        this.activeIndex = index
   }
+}
 }
 </script>
 
 <style scoped>
+.active {
+  
+  background:rgba(228, 221, 221, 0.75);
+border-color: rgb(204, 203, 203);
+ border-bottom-style: solid;
+  border-top-style: solid;
+  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+
+}
 /*  ------------icon for open the list in condition media-----------   */
 .iconlist {
   display: none;
@@ -171,18 +185,11 @@ export default {
   height: 90vh;
 }
 /*  ------------main grid for title-----------   */
-.container_title {
-  grid-column: 1/6;
-  height: 100%;
-  text-align: center;
-}
-.container_title .siztitle {
-  font-size: 50px;
-}
+
 
 /*  ------------main grid for list-----------   */
 .container_list {
-  grid-row: 2/4;
+  grid-row: 1/4;
   width: 100%;
   min-width: 200px;
   height: 100%;
@@ -198,43 +205,55 @@ export default {
   margin: 10px 0 10px 0;
   text-align: center;
 }
-.container_list .container_list_title h5 {
-  margin: 0;
+.container_list .container_list_title {
+  margin:5px;
+  height: 20px;
+  margin-top: 10px;
+  color: rgb(138, 135, 135);
 }
 
 .container_list_item {
-  height: 75px;
+  height: 70px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 5px auto;
-  border-style: solid;
-  border-radius: 30px;
-  box-shadow: 10px 5px 5px 0px rgba(0, 0, 0, 0.75);
-  margin-bottom: 15px;
+  
+  
   padding: 5px;
   cursor: pointer;
+  transition: background 2s;
+  transition: border-color 2s
 }
+.container_list_item:hover{
+  
+  border-bottom-style: solid;
+  border-top-style: solid;
+  border-color: rgb(204, 203, 203);
+  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+}
+
 .container_list_item_img {
   grid-column: 1/1;
   grid-row: 1/3;
 }
 .container_list_item_title {
   grid-column: 2/4;
+  font-weight: 450;
+  
 }
 
 .container_list_item_Description {
   grid-column: 2/4;
+  font-weight: 350;
 }
 
 .dot {
   height: 58px;
   width: 58px;
-  background-color: #bbb;
-  border-radius: 50%;
   display: inline-block;
-  margin: 3%;
-  font-size: 40px;
-  margin-right: 10px;
+  color: rgb(150, 147, 147);
+  font-size: 35px;
+  margin-right: 5px;
 }
 .dot h4 {
   margin-right: 33%;
@@ -251,7 +270,7 @@ export default {
 /*  ------------main grid for content-----------   */
 .container_content {
   grid-column: 2/6;
-  grid-row: 2/5;
+  grid-row: 1/5;
   border: 1px solid;
   box-shadow: 5px 10px 8px #888888;
   height: 100%;
@@ -360,6 +379,11 @@ export default {
   background-color: rgb(248, 16, 8);
 }
 
+
+
+
+  
+
 /*  ------------media-----------   */
 
 @media screen and (max-width: 759px) {
@@ -371,7 +395,7 @@ export default {
     display: inline;
     position: absolute;
     right: 0px;
-    top: 150px;
+    top: 70px;
     z-index: 2;
   }
 
@@ -409,7 +433,7 @@ export default {
 
   .container_list {
     grid-column: 1/4;
-    grid-row: 2/3;
+    grid-row: 1/3;
     z-index: 1;
   }
   .container_add {
