@@ -6,7 +6,7 @@
       <!--  icon for open the list in condition media-->
       <div class="iconlist">
         <a class="btn-floating pulse" @click="toggle = !toggle"
-          ><i class="material-icons">menu</i></a
+          ><i class="material-icons">chevron_left</i></a
         >
       
     </div>
@@ -393,8 +393,8 @@ border-color: rgb(204, 203, 203);
   .iconlist {
     display: inline;
     position: absolute;
-    right: 0px;
-    top: 70px;
+    right: -10px;
+    top: 250px;
     z-index: 2;
   }
 
