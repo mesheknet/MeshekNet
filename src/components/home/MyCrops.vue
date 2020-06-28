@@ -344,6 +344,7 @@ border-color: rgb(204, 203, 203);
   display: block;
   border-radius: 5px;
   box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  text-transform: uppercase;
 }
 
 .container_content_btn .button:not(:last-child) {
@@ -352,6 +353,10 @@ border-color: rgb(204, 203, 203);
 
 .container_content_btn .button:hover {
   background-color: #848f84;
+}
+.container_content_btn .button:active {
+  box-shadow: none;
+  
 }
 
 .container_content_btndel {
