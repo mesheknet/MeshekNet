@@ -1,7 +1,7 @@
 <template>
   <v-dialog width="500" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn class="ma-5" color="light green darken-4" dark v-on="on">
+      <v-btn class="mr-7" color="light green darken-4" dark v-on="on">
         הוספת גידול חדש
       </v-btn>
     </template>

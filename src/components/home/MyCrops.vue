@@ -192,7 +192,7 @@ border-color: rgb(204, 203, 203);
   grid-row: 1/4;
   width: 100%;
   min-width: 200px;
-  height: 100%;
+  height: 390px;
   border: 1px solid;
   overflow: auto;
   background-color: snow;
@@ -261,6 +261,7 @@ border-color: rgb(204, 203, 203);
 }
 /*  ------------main grid for add-----------   */
 .container_add {
+  padding-top: 2px;
   width: 100%;
   height: 100%;
   border: 1px solid;
@@ -437,14 +438,17 @@ border-color: rgb(204, 203, 203);
 
   .container_list {
     grid-column: 1/4;
-    grid-row: 1/3;
+    grid-row: 1/4;
     z-index: 1;
+    height: 100%;
   }
   .container_add {
     grid-column: 1/4;
-    grid-row: 3/5;
+    grid-row: 4/5;
     z-index: 1;
     width: 200px;
+    height: 50%;
+    padding-top: 10px;
   }
 }
 </style>
