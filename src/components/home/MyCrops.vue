@@ -213,7 +213,7 @@ border-color: rgb(204, 203, 203);
 }
 
 .container_list_item {
-  height: 70px;
+  height: 60px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 5px auto;
@@ -221,8 +221,8 @@ border-color: rgb(204, 203, 203);
   
   padding: 5px;
   cursor: pointer;
-  transition: background 2s;
-  transition: border-color 2s
+  transition: box-shadow 2s;
+  transition: border-color 2s;
 }
 .container_list_item:hover{
   
@@ -381,7 +381,10 @@ border-color: rgb(204, 203, 203);
   box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
   
 }
-
+.container_content_btndel .button:active {
+  box-shadow: none;
+  
+}
 
 
 
