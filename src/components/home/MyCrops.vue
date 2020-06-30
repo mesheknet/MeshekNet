@@ -180,6 +180,7 @@ border-color: rgb(204, 203, 203);
   display: grid;
   background-color: #74a748;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows:repeat(2, 1fr) ;
   grid-gap: 1em;
   padding: 15px;
   height: 90vh;
@@ -192,7 +193,7 @@ border-color: rgb(204, 203, 203);
   grid-row: 1/4;
   width: 100%;
   min-width: 200px;
-  height: 390px;
+  height: 100%;
   border: 1px solid;
   overflow: auto;
   background-color: snow;
@@ -390,6 +391,7 @@ border-color: rgb(204, 203, 203);
 
 
 
+
   
 
 /*  ------------media-----------   */
@@ -450,8 +452,8 @@ border-color: rgb(204, 203, 203);
     grid-row: 4/5;
     z-index: 1;
     width: 200px;
-    height: 50%;
-    padding-top: 10px;
+    height: 100%;
+    padding-top: 3px;
   }
 }
 </style>
