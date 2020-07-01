@@ -1,15 +1,28 @@
 <template>
-  <v-container class="mx-4">
-    <v-layout row justify-space-around>
-      <v-flex md3>
-        <v-card class="pa-2" outlined tile>
-          <v-card-title primary-title>
-            צור קשר
-          </v-card-title>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+<div class="container_fluid">
+ <v-card class="mx-auto"
+    max-width="500"
+    min-height="485">
+   <v-card-text>
+     <v-form class="px3">
+       <v-textarea  filled
+          auto-grow
+          label="נושא"
+          rows="1"
+          row-height="30"
+          shaped v-model="subject"></v-textarea>
+        <v-textarea
+          filled
+          auto-grow
+          label="Four rows"
+          rows="7"
+          row-height="30"
+          shaped
+        ></v-textarea>
+     </v-form>
+   </v-card-text>
+ </v-card>
+  </div>
 </template>
 
 <script>
@@ -29,3 +42,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.container_fluid {
+  
+  background-color: #74a748;
+  
+  padding: 15px;
+  height: 90vh;
+}
+</style>
