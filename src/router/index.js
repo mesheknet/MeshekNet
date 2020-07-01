@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import Signup from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
 import Notifications from '@/components/home/Notifications'
-import Landing from '@/components/home/Landing'
+import Landing from '@/components/layout/Landing'
 import Weather from '@/components/home/Weather'
 import MyCrops from '@/components/home/MyCrops'
 import MyCoop from '@/components/home/MyCoop'
+import Contact from '@/components/home/Contact'
 
 const fb = require('@/fb.js')
 
@@ -67,6 +68,14 @@ const routes = [
     path: '/myCoop',
     name: 'MyCoop',
     component: MyCoop,
+    meta: {
+      reqAuth: true
+    }
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact,
     meta: {
       reqAuth: true
     }

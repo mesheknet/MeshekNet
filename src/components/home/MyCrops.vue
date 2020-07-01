@@ -2,19 +2,18 @@
   <!--  container_fluid- for all main grid    -->
   <div class="container_fluid">
     <!-- container_title- main grid in container_fluid, Controls for title  -->
-    
-      <!--  icon for open the list in condition media-->
-      <div class="iconlist">
-        <a class="btn-floating pulse" @click="toggle = !toggle"
-          ><i class="material-icons">chevron_left</i></a
-        >
-      
+
+    <!--  icon for open the list in condition media-->
+    <div class="iconlist">
+      <a class="btn-floating pulse" @click="toggle = !toggle"
+        ><i class="material-icons">chevron_left</i></a
+      >
     </div>
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
-    <div class="container_content" v-if="currentCycle">
+    <div class="container_content">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
-      <div class="container_content_details">
+      <div class="container_content_details" v-if="currentCycle">
         <div class="container_content_details_title">
           <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }},
           {{ this.currentCycle.fieldName }}
@@ -39,14 +38,45 @@
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
-        <button class="button">השקיה 		&#x1F4A7; </button>
+        <button class="button">השקיה &#x1F4A7;</button>
         <button class="button">דישון &#x1F69C;</button>
-        <button class="button">הדברה 		&#x2622;</button>
-        <button class="button">היסטוריה גידול 	&#x1F4D6;</button>
+        <button class="button">הדברה &#x2622;</button>
+        <button class="button">היסטוריה גידול &#x1F4D6;</button>
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
-        <button class="button" @click="deleteCycle"> מחק 	&#x1F5D1;</button>
+        <v-btn dark color="#f70810" @click="deleteDialog = true">
+          מחק<v-icon right>&#x1F5D1;</v-icon></v-btn
+        >
+        <v-dialog v-model="deleteDialog" max-width="500px">
+          <v-card>
+            <v-card-title style="font-size:20px"
+              >האם אתה בטוח שברצונך למחוק מחזור גידול זה?</v-card-title
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                dark
+                color="#4caf50"
+                style="font-size:15px"
+                text
+                @click="
+                  deleteCycle()
+                  deleteDialog = false
+                "
+                >כן</v-btn
+              >
+              <v-btn
+                dark
+                color="#f70810"
+                style="font-size:15px"
+                text
+                @click="deleteDialog = false"
+                >לא</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
     <!--  container_list- main grid in container_fluid,  Controls the crop list on the right -->
@@ -55,7 +85,7 @@
       v-if="this.toggle == true || this.windowWidth > 760"
     >
       <div class="container_list_title">
-      בחר גידול
+        בחר גידול
       </div>
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
@@ -67,8 +97,7 @@
           setCurrentCycle(cycle)
           togglec(index)
         "
-        :class="{'active': index == activeIndex}"
-        
+        :class="{ active: index == activeIndex }"
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
@@ -98,7 +127,8 @@
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import addCrop from './AddCrop'
+import addCrop from '@/components/popups/AddCrop'
+//import irrigation from '@/components/popups/Irrigation'
 
 export default {
   name: 'MyCrops',
@@ -107,7 +137,8 @@ export default {
     return {
       windowWidth: window.innerWidth,
       toggle: true,
-      activeIndex: null
+      activeIndex: null,
+      deleteDialog: false
     }
   },
 
@@ -137,7 +168,10 @@ export default {
     },
 
     deleteCycle() {
-      fb.cropCycle.doc(this.currentCycle.id).delete()
+      if (this.currentCycle) {
+        fb.cropCycle.doc(this.currentCycle.id).delete()
+        this.setCurrentCycle(null)
+      }
     },
 
     calcEndDate() {
@@ -154,22 +188,20 @@ export default {
     changbackground(index) {
       return index % 2 == false ? '#e2e2e2' : '#fafafa'
     },
-    togglec(index){
-        this.activeIndex = index
+    togglec(index) {
+      this.activeIndex = index
+    }
   }
-}
 }
 </script>
 
 <style scoped>
 .active {
-  
-  background:rgba(228, 221, 221, 0.75);
-border-color: rgb(204, 203, 203);
- border-bottom-style: solid;
+  background: rgba(228, 221, 221, 0.75);
+  border-color: rgb(204, 203, 203);
+  border-bottom-style: solid;
   border-top-style: solid;
   box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
-
 }
 /*  ------------icon for open the list in condition media-----------   */
 .iconlist {
@@ -180,13 +212,12 @@ border-color: rgb(204, 203, 203);
   display: grid;
   background-color: #74a748;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows:repeat(2, 1fr) ;
+  grid-template-rows: repeat(2, 1fr);
   grid-gap: 1em;
   padding: 15px;
   height: 90vh;
 }
 /*  ------------main grid for title-----------   */
-
 
 /*  ------------main grid for list-----------   */
 .container_list {
@@ -207,7 +238,7 @@ border-color: rgb(204, 203, 203);
   text-align: center;
 }
 .container_list .container_list_title {
-  margin:5px;
+  margin: 5px;
   height: 20px;
   margin-top: 10px;
   color: rgb(138, 135, 135);
@@ -218,15 +249,13 @@ border-color: rgb(204, 203, 203);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 5px auto;
-  
-  
+
   padding: 5px;
   cursor: pointer;
   transition: box-shadow 2s;
   transition: border-color 2s;
 }
-.container_list_item:hover{
-  
+.container_list_item:hover {
   border-bottom-style: solid;
   border-top-style: solid;
   border-color: rgb(204, 203, 203);
@@ -240,7 +269,6 @@ border-color: rgb(204, 203, 203);
 .container_list_item_title {
   grid-column: 2/4;
   font-weight: 450;
-  
 }
 
 .container_list_item_Description {
@@ -358,7 +386,6 @@ border-color: rgb(204, 203, 203);
 }
 .container_content_btn .button:active {
   box-shadow: none;
-  
 }
 
 .container_content_btndel {
@@ -380,19 +407,10 @@ border-color: rgb(204, 203, 203);
   display: block;
   border-radius: 5px;
   box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
-  
 }
 .container_content_btndel .button:active {
   box-shadow: none;
-  
 }
-
-
-
-
-
-
-  
 
 /*  ------------media-----------   */
 
