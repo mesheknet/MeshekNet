@@ -1,44 +1,104 @@
 <template>
 <div class="container_fluid">
- <v-card class="mx-auto"
-    max-width="500"
-    min-height="485">
-   <v-card-text>
-     <v-form class="px3">
-       <v-textarea  filled
-          auto-grow
-          label="נושא"
-          rows="1"
-          row-height="30"
-          shaped v-model="subject"></v-textarea>
-        <v-textarea
-          filled
-          auto-grow
-          label="Four rows"
-          rows="7"
-          row-height="30"
-          shaped
+  <div class="container_content">
+  <v-container grey lighten-3>
+ <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+
+   <v-select
+      v-model="select"
+      :items="items"
+      :rules="[v => !!v || 'נדרש לבחור סיבת פניה']"
+      label="בחר סיבת פניה"
+      required
+    ></v-select>
+
+    <v-text-field
+      v-model="Topic"
+      :counter="20"
+      :rules="nameRules"
+      label="נושא"
+      required
+    ></v-text-field>
+
+     <v-textarea
+      v-model="message"
+      :rules="messageRules"
+      label="כתוב הודעה"
+      required
         ></v-textarea>
-     </v-form>
-   </v-card-text>
- </v-card>
+
+   
+
+
+    <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      @click="validate"
+    >
+      שלח
+    </v-btn>
+
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+    >
+      נקה הכל
+    </v-btn>
+
+   
+  </v-form>
+  </v-container>
+  </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+
 
 export default {
-  name: 'Weather',
+  name: 'Contact',
   stationName: null,
 
   data() {
-    return {}
+    return {
+      valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'נדרש לכתוב נושא פניה',
+        v => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות',
+      ],
+      message: '',
+       messageRules: [
+        v => !!v || 'נדרש לכתוב את תוכן הודעה',
+         v => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות',
+        
+      ],
+      select: null,
+      items: [
+        'לול',
+        'גידולי שדה',
+        'דיווח על בעיות תוכנה',
+        'מזג אוויר',
+      ],
+      }
   },
-  methods: {},
+  methods: {
+    validate () {
+        this.$refs.form.validate()
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
+      
+    },
   computed: {
-    //get local data from firestore using the store
-    ...mapGetters(['weather', 'farmId'])
+    
   }
 }
 </script>
@@ -50,5 +110,9 @@ export default {
   
   padding: 15px;
   height: 90vh;
+}
+.container_content{
+background-color: #f7f8f7;
+padding: 15px;
 }
 </style>

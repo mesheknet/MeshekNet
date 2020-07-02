@@ -15,11 +15,11 @@
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentCycle">
         <div class="container_content_details_title">
-          <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }},
+          <span>סוג מחזור:</span><br />{{ this.currentCycle.cropName }},
           {{ this.currentCycle.fieldName }}
         </div>
         <div class="container_content_details_kind">
-          <span>זן:</span><br />סורי
+          <span>כמות תרנגולות:</span><br />500
         </div>
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
@@ -28,7 +28,7 @@
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>גודל שטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
+          <span>כמות תרנגולות התחלתית:</span><br />{{ this.currentCycle.fieldArea }} דונם
         </div>
         <div class="container_content_details_btnEdit">
           <a class="btn-floating cyan pulse"
@@ -123,7 +123,7 @@
       class="container_add"
       v-if="this.toggle == true || this.windowWidth > 760"
     >
-      <addCrop />
+      
     </div>
   </div>
 </template>
@@ -132,12 +132,12 @@
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import addCrop from '@/components/popups/AddCrop'
+
 //import irrigation from '@/components/popups/Irrigation'
 
 export default {
-  name: 'MyCrops',
-  components: { addCrop },
+  name: 'MyCroop',
+ 
   data() {
     return {
       windowWidth: window.innerWidth,
