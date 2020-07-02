@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import moment from 'moment'
+import VueInstance from '@/main'
 const fb = require('@/fb.js')
 //plugin that saves state on page refresh
 import createPersistedState from 'vuex-persistedstate'
@@ -25,7 +26,8 @@ export const store = new Vuex.Store({
     crops: [],
     allCycles: [],
     cropCycle: [],
-    weather: [],
+    weather: null,
+    openWeather: null,
     selectedCrop: {},
     currentCycle: {},
     startDate: null
@@ -66,6 +68,9 @@ export const store = new Vuex.Store({
     },
     setCurrentCycle(state, cycle) {
       state.currentCycle = cycle
+    },
+    getWeather(state, response) {
+      state.openWeather = response
     }
   },
   actions: {
@@ -124,6 +129,22 @@ export const store = new Vuex.Store({
     updateFid({ commit, state }) {
       let fid = state.farms.find(obj => obj.userId == state.userId).id
       commit('updateFid', fid)
+    },
+    getWeather(commit, position) {
+      let lat = position.coords.latitude
+      let lon = position.coords.longitude
+      VueInstance.$http
+        .get(
+          `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
+        )
+        .then(
+          response => {
+            this.commit('getWeather', response.body)
+          },
+          error => {
+            console.log(error)
+          }
+        )
     }
   },
 
@@ -160,6 +181,9 @@ export const store = new Vuex.Store({
     },
     weather: state => {
       return state.weather
+    },
+    openWeather: state => {
+      return state.openWeather
     }
   }
 })

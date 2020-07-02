@@ -60,6 +60,7 @@
                 color="#4caf50"
                 style="font-size:15px"
                 text
+                :disabled="isDisabled"
                 @click="
                   deleteCycle()
                   deleteDialog = false
@@ -159,7 +160,13 @@ export default {
       'crops',
       'currentCycle',
       'cropCycle'
-    ])
+    ]),
+    isDisabled() {
+      if (this.currentCycle) {
+        return true
+      }
+      return false
+    }
   },
   methods: {
     setCurrentCycle(cycle) {
