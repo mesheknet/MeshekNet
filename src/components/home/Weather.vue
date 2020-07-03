@@ -19,7 +19,7 @@
               <v-list-item-title>טמפרטורה ממוצעת:</v-list-item-title>
               <v-list-item-subtitle
                 >{{
-                  this.openWeather.list[0].main.temp
+                  this.openWeather.list[0].main.temp.toFixed(0)
                 }}°c</v-list-item-subtitle
               >
             </v-list-item-content>
@@ -39,7 +39,7 @@
               <v-list-item-title>מהירות הרוח:</v-list-item-title>
               <v-list-item-subtitle
                 >{{
-                  (this.openWeather.list[0].wind.speed * 3.6).toFixed(1)
+                  (this.openWeather.list[0].wind.speed * 3.6).toFixed(0)
                 }}
                 קמ"ש</v-list-item-subtitle
               >
