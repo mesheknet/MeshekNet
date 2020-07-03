@@ -28,7 +28,10 @@
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>כמות תרנגולות התחלתית:</span><br />{{ this.currentCycle.fieldArea }} דונם
+          <span>כמות תרנגולות התחלתית:</span><br />{{
+            this.currentCycle.fieldArea
+          }}
+          דונם
         </div>
         <div class="container_content_details_btnEdit">
           <a class="btn-floating cyan pulse"
@@ -46,7 +49,7 @@
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
         <v-btn
-          dark
+          class="white--text"
           color="#f70810"
           :disabled="!isDisabled"
           @click="deleteDialog = true"
@@ -122,9 +125,7 @@
     <div
       class="container_add"
       v-if="this.toggle == true || this.windowWidth > 760"
-    >
-      
-    </div>
+    ></div>
   </div>
 </template>
 
@@ -137,7 +138,7 @@ import moment from 'moment'
 
 export default {
   name: 'MyCroop',
- 
+
   data() {
     return {
       windowWidth: window.innerWidth,
@@ -167,9 +168,7 @@ export default {
     ]),
     //set delete button enabled or disabled
     isDisabled() {
-      if (this.currentCycle) {
-        return true
-      }
+      if (this.currentCycle) return true
       return false
     }
   },

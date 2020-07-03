@@ -45,7 +45,12 @@
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
-        <v-btn dark color="#f70810" @click="deleteDialog = true">
+        <v-btn
+          class="white--text"
+          color="#f70810"
+          :disabled="!isDisabled"
+          @click="deleteDialog = true"
+        >
           מחק<v-icon right>&#x1F5D1;</v-icon></v-btn
         >
         <v-dialog v-model="deleteDialog" max-width="500px">
@@ -60,7 +65,6 @@
                 color="#4caf50"
                 style="font-size:15px"
                 text
-                :disabled="isDisabled"
                 @click="
                   deleteCycle()
                   deleteDialog = false
@@ -162,9 +166,7 @@ export default {
       'cropCycle'
     ]),
     isDisabled() {
-      if (this.currentCycle) {
-        return true
-      }
+      if (this.currentCycle) return true
       return false
     }
   },
