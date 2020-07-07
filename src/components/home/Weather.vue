@@ -3,96 +3,167 @@
     <v-layout row justify-space-around>
       <v-flex md12>
         <v-card class="mx-auto" max-width="700" tile>
-          <v-card-title primary-title>
-            <h4 class="text--secondary">מזג האויר כרגע באיזור המשק:</h4>
+          <v-card-title>
+            מזג האויר כרגע באיזור המשק
           </v-card-title>
           <v-card-text>
-            <h5>{{ this.openWeather.list[0].weather[0].description }}</h5>
-            <v-row align="center">
-              <v-col class="display-3" cols="6">
-                {{ this.openWeather.list[0].main.temp.toFixed(0) }}°c
+            <v-row>
+              <v-col>
+                <h5>{{ openWeather.list[0].weather[0].description }}</h5>
               </v-col>
-              <v-col cols="6">
+            </v-row>
+
+            <v-row align="center">
+              <v-col class="display-3">
+                {{ openWeather.list[0].main.temp.toFixed(0) }}°c
+              </v-col>
+              <v-col>
                 <v-img
                   :src="
                     'http://openweathermap.org/img/wn/' +
-                      this.openWeather.list[0].weather[0].icon +
+                      openWeather.list[0].weather[0].icon +
                       '@2x.png'
                   "
                   width="92"
                 ></v-img>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                <v-list-item two-line>
+                  <v-list-item-icon>
+                    <v-icon color="indigo accent-2">fas fa-tint</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>לחות:</v-list-item-title>
+                    <v-list-item-subtitle
+                      >{{
+                        openWeather.list[0].main.humidity
+                      }}%</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+              <v-col>
+                <v-list-item two-line>
+                  <v-list-item-icon>
+                    <v-icon color="deep-purple ">fas fa-wind</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>מהירות הרוח:</v-list-item-title>
+                    <v-list-item-subtitle
+                      >{{
+                        (openWeather.list[0].wind.speed * 3.6).toFixed(0)
+                      }}
+                      קמ"ש</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+              <v-col>
+                <v-list-item two-line>
+                  <v-list-item-icon>
+                    <v-icon color="teal accent-5">fas fa-compass</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>כיוון הרוח:</v-list-item-title>
+                    <v-list-item-subtitle
+                      >{{ degToCompass(openWeather.list[0].wind.deg) }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+            </v-row>
           </v-card-text>
-
-          <v-list-item two-line>
-            <v-list-item-content>
-              <v-list-item-title>טמפרטורה ממוצעת:</v-list-item-title>
-              <v-list-item-subtitle
-                >{{
-                  this.openWeather.list[0].main.temp.toFixed(0)
-                }}°c</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item two-line>
-            <v-list-item-content>
-              <v-list-item-title>לחות:</v-list-item-title>
-              <v-list-item-subtitle
-                >{{
-                  this.openWeather.list[0].main.humidity
-                }}%</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item two-line>
-            <v-list-item-content>
-              <v-list-item-title>מהירות הרוח:</v-list-item-title>
-              <v-list-item-subtitle
-                >{{
-                  (this.openWeather.list[0].wind.speed * 3.6).toFixed(0)
-                }}
-                קמ"ש</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item two-line>
-            <v-list-item-content>
-              <v-list-item-title>כיוון הרוח:</v-list-item-title>
-              <v-list-item-subtitle
-                >{{ degToCompass(this.openWeather.list[0].wind.deg) }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
         </v-card>
-        <v-row :align="align" no-gutters style="height: 150px;">
+        <v-row class="mt-4">
           <v-col v-for="n in 3" :key="n">
-            <v-card class="mx-auto" max-width="400">
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title
-                    >מזג האויר כרגע באיזור המשק:</v-list-item-title
-                  >
-                  <v-list-item-subtitle
-                    >Mon, 12:30 PM, Mostly sunny</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdiWeatherWindy</v-icon>
-                </v-list-item-icon>
-                <v-list-item-subtitle>23 km/h</v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-cloud-download</v-icon>
-                </v-list-item-icon>
-                <v-list-item-subtitle>48%</v-list-item-subtitle>
-              </v-list-item>
-            </v-card>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>
+                    תחזית ליום
+                    {{
+                      moment()
+                        .add(n, 'd')
+                        .format('dddd')
+                    }}
+                  </v-card-title>
+                  <v-card-text>
+                    <h5>
+                      {{ openWeather.list[n * 8].weather[0].description }}
+                    </h5>
+                    <v-row align="center">
+                      <v-col class="display-3">
+                        {{ openWeather.list[n * 8].main.temp.toFixed(0) }}°c
+                      </v-col>
+                      <v-col>
+                        <v-img
+                          :src="
+                            'http://openweathermap.org/img/wn/' +
+                              openWeather.list[n * 8].weather[0].icon +
+                              '@2x.png'
+                          "
+                          width="92"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-list-item two-line>
+                          <v-list-item-icon>
+                            <v-icon color="indigo accent-2">fas fa-tint</v-icon>
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title>לחות:</v-list-item-title>
+                            <v-list-item-subtitle
+                              >{{
+                                openWeather.list[n * 8].main.humidity
+                              }}%</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-col>
+                      <v-col>
+                        <v-list-item two-line>
+                          <v-list-item-icon>
+                            <v-icon color="deep-purple ">fas fa-wind</v-icon>
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title>מהירות הרוח:</v-list-item-title>
+                            <v-list-item-subtitle
+                              >{{
+                                (
+                                  openWeather.list[n * 8].wind.speed * 3.6
+                                ).toFixed(0)
+                              }}
+                              קמ"ש</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-col>
+                      <v-col>
+                        <v-list-item two-line>
+                          <v-list-item-icon>
+                            <v-icon color="teal accent-5"
+                              >fas fa-compass</v-icon
+                            >
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title>כיוון הרוח:</v-list-item-title>
+                            <v-list-item-subtitle
+                              >{{
+                                degToCompass(openWeather.list[n * 8].wind.deg)
+                              }}
+                            </v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-flex>
@@ -102,7 +173,7 @@
 
 <script>
 //const fb = require('@/fb.js')
-//import moment from 'moment'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -153,6 +224,11 @@ export default {
   },
   mounted() {
     console.log(this.openWeather)
+    console.log(
+      moment()
+        .add(1)
+        .format('dddd')
+    )
   }
 }
 </script>

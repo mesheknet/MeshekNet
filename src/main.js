@@ -7,9 +7,10 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize.min'
 import { store } from './store/store'
+import moment from 'moment'
 
 Vue.use(VueResource)
-
+Vue.prototype.moment = moment
 export default new Vue({
   router,
   vuetify,
