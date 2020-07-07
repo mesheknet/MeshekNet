@@ -38,6 +38,7 @@
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
+        <irrigation />
         <button class="button">השקיה &#x1F4A7;</button>
         <button class="button">דישון &#x1F69C;</button>
         <button class="button">הדברה &#x2622;</button>
@@ -133,11 +134,11 @@ const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import addCrop from '@/components/popups/AddCrop'
-//import irrigation from '@/components/popups/Irrigation'
+import irrigation from '@/components/popups/Irrigation'
 
 export default {
   name: 'MyCrops',
-  components: { addCrop },
+  components: { addCrop, irrigation },
   data() {
     return {
       windowWidth: window.innerWidth,
