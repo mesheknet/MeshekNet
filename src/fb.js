@@ -19,6 +19,7 @@ const auth = firebase.auth()
 const currentUser = auth.currentUser
 
 // firebase collections
+const station = db.collection('stations')
 const user = db.collection('user')
 const weather = db.collection('weather')
 const chickCycle = db.collection('chickCycle')
@@ -65,5 +66,6 @@ export {
   service,
   sysAdmin,
   treatType,
-  treatment
+  treatment,
+  station
 }

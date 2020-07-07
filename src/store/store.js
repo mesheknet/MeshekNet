@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
     })
   ],
   state: {
+    stations: [],
     users: [],
     userId: null,
     farmId: null,
@@ -75,7 +76,10 @@ export const store = new Vuex.Store({
   },
   actions: {
     //data binding using vuexfire
-
+    bindStations: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('stations', fb.station)
+    }),
     bindUsers: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('users', fb.user)
@@ -130,12 +134,15 @@ export const store = new Vuex.Store({
       let fid = state.farms.find(obj => obj.userId == state.userId).id
       commit('updateFid', fid)
     },
+
+    //`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
+
     getWeather(commit, position) {
       let lat = position.coords.latitude
       let lon = position.coords.longitude
       VueInstance.$http
         .get(
-          `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
         )
         .then(
           response => {
@@ -149,6 +156,9 @@ export const store = new Vuex.Store({
   },
 
   getters: {
+    stations: state => {
+      return state.stations
+    },
     userId: state => {
       return state.userId
     },

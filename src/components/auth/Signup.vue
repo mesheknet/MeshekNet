@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment'
 const fb = require('@/fb.js')
 
@@ -111,24 +112,6 @@ export default {
       phone: null,
       feedback: null,
       loading: false,
-      stations: [
-        {
-          id: 28,
-          name: 'ניר העמק עפולה'
-        },
-        {
-          id: 11,
-          name: 'עמיעד'
-        },
-        {
-          id: 48,
-          name: 'בית הערבה'
-        },
-        {
-          id: 77,
-          name: 'פארן'
-        }
-      ],
       selectedStation: null
     }
   },
@@ -180,6 +163,10 @@ export default {
         })
       }
     }
+  },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters(['stations'])
   }
 }
 </script>

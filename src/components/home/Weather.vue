@@ -9,19 +9,19 @@
           <v-card-text>
             <v-row>
               <v-col>
-                <h5>{{ openWeather.list[0].weather[0].description }}</h5>
+                <h5>{{ openWeather.current.weather[0].description }}</h5>
               </v-col>
             </v-row>
 
             <v-row align="center">
               <v-col class="display-3">
-                {{ openWeather.list[0].main.temp.toFixed(0) }}°c
+                {{ openWeather.current.temp.toFixed(0) }}°c
               </v-col>
               <v-col>
                 <v-img
                   :src="
                     'http://openweathermap.org/img/wn/' +
-                      openWeather.list[0].weather[0].icon +
+                      openWeather.current.weather[0].icon +
                       '@2x.png'
                   "
                   width="92"
@@ -37,9 +37,7 @@
                   <v-list-item-content>
                     <v-list-item-title>לחות:</v-list-item-title>
                     <v-list-item-subtitle
-                      >{{
-                        openWeather.list[0].main.humidity
-                      }}%</v-list-item-subtitle
+                      >{{ openWeather.current.humidity }}%</v-list-item-subtitle
                     >
                   </v-list-item-content>
                 </v-list-item>
@@ -53,7 +51,7 @@
                     <v-list-item-title>מהירות הרוח:</v-list-item-title>
                     <v-list-item-subtitle
                       >{{
-                        (openWeather.list[0].wind.speed * 3.6).toFixed(0)
+                        (openWeather.current.wind_speed * 3.6).toFixed(0)
                       }}
                       קמ"ש</v-list-item-subtitle
                     >
@@ -68,7 +66,7 @@
                   <v-list-item-content>
                     <v-list-item-title>כיוון הרוח:</v-list-item-title>
                     <v-list-item-subtitle
-                      >{{ degToCompass(openWeather.list[0].wind.deg) }}
+                      >{{ degToCompass(openWeather.current.wind_deg) }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -91,17 +89,17 @@
                   </v-card-title>
                   <v-card-text>
                     <h5>
-                      {{ openWeather.list[n * 8].weather[0].description }}
+                      {{ openWeather.daily[n].weather[0].description }}
                     </h5>
                     <v-row align="center">
                       <v-col class="display-3">
-                        {{ openWeather.list[n * 8].main.temp.toFixed(0) }}°c
+                        {{ openWeather.daily[n].temp.day.toFixed(0) }}°c
                       </v-col>
                       <v-col>
                         <v-img
                           :src="
                             'http://openweathermap.org/img/wn/' +
-                              openWeather.list[n * 8].weather[0].icon +
+                              openWeather.daily[n].weather[0].icon +
                               '@2x.png'
                           "
                           width="92"
@@ -118,7 +116,7 @@
                             <v-list-item-title>לחות:</v-list-item-title>
                             <v-list-item-subtitle
                               >{{
-                                openWeather.list[n * 8].main.humidity
+                                openWeather.daily[n].humidity
                               }}%</v-list-item-subtitle
                             >
                           </v-list-item-content>
@@ -133,9 +131,9 @@
                             <v-list-item-title>מהירות הרוח:</v-list-item-title>
                             <v-list-item-subtitle
                               >{{
-                                (
-                                  openWeather.list[n * 8].wind.speed * 3.6
-                                ).toFixed(0)
+                                (openWeather.daily[n].wind_speed * 3.6).toFixed(
+                                  0
+                                )
                               }}
                               קמ"ש</v-list-item-subtitle
                             >
@@ -152,9 +150,7 @@
                           <v-list-item-content>
                             <v-list-item-title>כיוון הרוח:</v-list-item-title>
                             <v-list-item-subtitle
-                              >{{
-                                degToCompass(openWeather.list[n * 8].wind.deg)
-                              }}
+                              >{{ degToCompass(openWeather.daily[n].wind_deg) }}
                             </v-list-item-subtitle>
                           </v-list-item-content>
                         </v-list-item>

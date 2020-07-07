@@ -35,9 +35,11 @@ export default {
   name: 'Landing',
   data() {
     return {}
+  },
+  async mounted() {
+    await this.$store.dispatch('bindStations')
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>
