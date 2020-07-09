@@ -39,7 +39,6 @@
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
         <irrigation />
-        <button class="button">השקיה &#x1F4A7;</button>
         <button class="button">דישון &#x1F69C;</button>
         <button class="button">הדברה &#x2622;</button>
         <button class="button">היסטוריה גידול &#x1F4D6;</button>
@@ -155,6 +154,8 @@ export default {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
+
+    // fb.crop.doc('alrnBbp5vtyC0CGsU90i').update({ irrigation: arr })
   },
   computed: {
     //get local data from firestore using the store
