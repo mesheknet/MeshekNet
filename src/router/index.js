@@ -9,8 +9,6 @@ import MyCrops from '@/components/home/MyCrops'
 import MyCoop from '@/components/home/MyCoop'
 import Contact from '@/components/home/Contact'
 
-const fb = require('@/fb.js')
-
 Vue.use(Router)
 
 const routes = [
@@ -88,16 +86,14 @@ const router = new Router({
   routes
 })
 
-//routes guard - only auth users can go to specific components
+//routes guard - only auth users can go to specific components. checked by farm id in store
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.reqAuth)) {
-    fb.auth.onAuthStateChanged(user => {
-      if (user) {
-        next()
-      } else {
-        next({ name: 'Landing' })
-      }
-    })
+    if (router.app.$store.state.LOADED) {
+      next()
+    } else {
+      next({ name: 'Landing' })
+    }
   } else {
     next()
   }

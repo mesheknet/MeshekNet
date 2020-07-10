@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
     })
   ],
   state: {
+    LOADED: false,
     stations: [],
     users: [],
     userId: null,
@@ -42,6 +43,7 @@ export const store = new Vuex.Store({
 
     updateFid: (state, fid) => {
       state.farmId = fid
+      state.LOADED = true
     },
 
     updateSelectedCrop(state, crop) {
@@ -156,6 +158,11 @@ export const store = new Vuex.Store({
   },
 
   getters: {
+    //tells if data finished loading from firestore.
+    LOADED: state => {
+      return state.LOADED
+    },
+
     stations: state => {
       return state.stations
     },

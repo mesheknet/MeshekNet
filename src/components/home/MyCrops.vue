@@ -39,7 +39,7 @@
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
         <irrigation />
-        <button class="button">דישון &#x1F69C;</button>
+        <fertilization />
         <button class="button">הדברה &#x2622;</button>
         <button class="button">היסטוריה גידול &#x1F4D6;</button>
       </div>
@@ -134,10 +134,11 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 import addCrop from '@/components/popups/AddCrop'
 import irrigation from '@/components/popups/Irrigation'
+import fertilization from '@/components/popups/Fertilization'
 
 export default {
   name: 'MyCrops',
-  components: { addCrop, irrigation },
+  components: { addCrop, irrigation, fertilization },
   data() {
     return {
       windowWidth: window.innerWidth,
