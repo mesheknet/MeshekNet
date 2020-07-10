@@ -1,7 +1,7 @@
 <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mx-auto" color="light green" dark v-on="on">
+      <v-btn block class="mx-auto white--text" color="light green" v-on="on">
         השקיה<v-icon right>&#x1F4A7;</v-icon>
       </v-btn>
     </template>

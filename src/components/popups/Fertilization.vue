@@ -1,7 +1,7 @@
 <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mt-6" color="light green" dark v-on="on">
+      <v-btn block class="mt-6 white--text" color="light green" v-on="on">
         דישון<v-icon right>&#x1F69C;</v-icon>
       </v-btn>
     </template>
