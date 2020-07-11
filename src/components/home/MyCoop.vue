@@ -41,10 +41,10 @@
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn">
-        <button class="button">הטלה</button>
-        <button class="button">תמותה</button>
-        <button class="button">מזון</button>
-        <button class="button">תרופות</button>
+        <ChickensFood />
+        <Drug />
+        <Eggs />
+        <Mortality />
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
@@ -59,7 +59,7 @@
         <v-dialog v-model="deleteDialog" max-width="500px">
           <v-card>
             <v-card-title style="font-size:20px"
-              >האם אתה בטוח שברצונך למחוק מחזור גידול זה?</v-card-title
+              >האם אתה בטוח שברצונך למחוק מחזור תרנגולות זה?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -93,7 +93,7 @@
       v-if="this.toggle == true || this.windowWidth > 760"
     >
       <div class="container_list_title">
-        בחר גידול
+        בחר מחזור תרנגולות
       </div>
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
@@ -125,7 +125,9 @@
     <div
       class="container_add"
       v-if="this.toggle == true || this.windowWidth > 760"
-    ></div>
+    >
+      <AddCycleChickens />
+    </div>
   </div>
 </template>
 
@@ -133,11 +135,17 @@
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import ChickensFood from '@/components/popups/ChickensFood'
+import Drug from '@/components/popups/Drug'
+import Eggs from '@/components/popups/Eggs'
+import Mortality from '@/components/popups/Mortality'
+import AddCycleChickens from '@/components/popups/AddCycleChickens'
 
 //import irrigation from '@/components/popups/Irrigation'
 
 export default {
   name: 'MyCroop',
+  components: { ChickensFood, Drug, Eggs, Mortality, AddCycleChickens },
 
   data() {
     return {
