@@ -8,29 +8,25 @@
 
     <v-card>
       <v-card-title class="green lighten-3" primary-title>
-        הזנת פרטי גידול
+        הזנת פרטי מחזור
       </v-card-title>
 
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
           
-          <v-text-field
-            label="שם השדה"
-            v-model="fieldName"
-            :rules="nameRules"
-          ></v-text-field>
+          
           <v-select
-            v-model="selectedCrop"
-            :items="crops"
-            label="סוג הגידול"
-            @input="getCropId"
+            v-model="selectedchickCycle"
+            :items="Chickens"
+            label="סוג תרנגולות"
+            @input="getChickensId"
             item-text="name"
             return-object
           ></v-select>
           <v-text-field
-            suffix="דונם"
-            label="גודל השדה"
-            v-model="fieldArea"
+            
+            label="כמות"
+            v-model="quantity"
             :rules="sizeRules"
           ></v-text-field>
           <v-menu
@@ -45,7 +41,7 @@
               <v-text-field
                 prepend-icon="date_range"
                 :value="formattedDate"
-                label="תאריך התחלת גידול"
+                label="תאריך התחלת מחזור"
                 readonly
                 v-on="on"
               ></v-text-field>
@@ -86,13 +82,10 @@ export default {
   name: 'AddCycleChickens',
   data() {
     return {
-      cropId: null,
-      fieldId: null,
-      cropsDisp: [],
-      selectedCrop: null,
-      selectedField: null,
-      fieldName: null,
-      fieldArea: null,
+      ChickenId: null,
+      coopId: null,
+      selectedchickCycle: null,
+      quantity: null,
       startDate: new Date().toISOString().substr(0, 10),
       nameRules: [v => !!v || 'אנא הכנס שם שדה'],
       sizeRules: [v => !!v || 'אנא הזן גודל שדה'],
@@ -108,8 +101,8 @@ export default {
   methods: {
     
 
-    getCropId() {
-      this.$store.commit('updateSelectedCrop', this.selectedCrop)
+    getChickensId() {
+      this.$store.commit('updateselectedchickCycle', this.selectedchickCycle)
     },
 
     //push data to firebase if form is valid, close dialog
@@ -117,15 +110,15 @@ export default {
       if (this.$refs.form.validate()) {
         this.setStartDate()
         this.loading = true
-        var newField = {
-          id: fb.field.doc().id,
-          name: this.fieldName,
-          area: this.fieldArea,
+        var newCycle = {
+          id: fb.coop.doc().id,
+          name: this.coopName,
+          quantity: this.quantity,
           farmId: this.farmId
         }
 
-        this.$store.commit('addNewField', newField)
-        this.$store.commit('addCropCycle', newField)
+       // this.$store.commit('addNewField', newCycle)
+        this.$store.commit('addchickCycle', newCycle)
         //console.log(this.fields.find(x => x.id == this.tempFieldId))
 
         this.loading = false
@@ -138,7 +131,7 @@ export default {
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'crops', 'fields', 'cropCycle']),
+    ...mapGetters(['userId', 'farmId', 'Chickens', 'coop', 'chickCycle']),
 
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''

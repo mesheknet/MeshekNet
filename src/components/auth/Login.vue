@@ -106,6 +106,13 @@ export default {
       await this.$store.dispatch('bindFields')
       await this.$store.dispatch('bindAllCycles')
       await this.$store.dispatch('bindCropCycle')
+
+      //for coop
+
+      await this.$store.dispatch('bindChickens')
+      await this.$store.dispatch('bindcoop')
+      await this.$store.dispatch('bindallchickCycle')
+      await this.$store.dispatch('bindchickCycle')
     },
 
     async getWeatherData(station) {

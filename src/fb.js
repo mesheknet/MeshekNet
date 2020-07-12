@@ -22,6 +22,7 @@ const currentUser = auth.currentUser
 const station = db.collection('stations')
 const user = db.collection('user')
 const weather = db.collection('weather')
+const Chickens = db.collection('Chickens')
 const chickCycle = db.collection('chickCycle')
 const coop = db.collection('coop')
 const crop = db.collection('crop')
@@ -48,6 +49,7 @@ export {
   currentUser,
   user,
   weather,
+  Chickens,
   chickCycle,
   coop,
   crop,

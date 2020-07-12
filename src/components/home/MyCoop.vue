@@ -13,23 +13,23 @@
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
     <div class="container_content">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
-      <div class="container_content_details" v-if="currentCycle">
+      <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
-          <span>סוג מחזור:</span><br />{{ this.currentCycle.cropName }},
-          {{ this.currentCycle.fieldName }}
+          <span>סוג מחזור:</span><br />{{ this.currentchickCycle.cropName }},
+          {{ this.currentchickCycle.fieldName }}
         </div>
         <div class="container_content_details_kind">
           <span>כמות תרנגולות:</span><br />500
         </div>
         <div class="container_content_details_dateStart">
-          <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
+          <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
         </div>
         <div class="container_content_details_dateFinish">
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
           <span>כמות תרנגולות התחלתית:</span><br />{{
-            this.currentCycle.fieldArea
+            this.currentchickCycle.fieldArea
           }}
           דונם
         </div>
@@ -98,11 +98,11 @@
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
       <div
         class="container_list_item"
-        v-for="(cycle, index) in cropCycle"
+        v-for="(cycle, index) in chickCycle"
         :key="index"
         @click="
           toggle = !toggle
-          setCurrentCycle(cycle)
+          setcurrentchickCycle(cycle)
           togglec(index)
         "
         :class="{ active: index == activeIndex }"
@@ -169,33 +169,33 @@ export default {
     ...mapGetters([
       'userId',
       'farmId',
-      'fields',
-      'crops',
-      'currentCycle',
-      'cropCycle'
+      'coop',
+      'Chickens',
+      'currentchickCycle',
+      'chickCycle'
     ]),
     //set delete button enabled or disabled
     isDisabled() {
-      if (this.currentCycle) return true
+      if (this.currentchickCycle) return true
       return false
     }
   },
   methods: {
-    setCurrentCycle(cycle) {
-      this.$store.commit('setCurrentCycle', cycle)
-      console.log(this.currentCycle)
+    setcurrentchickCycle(cycle) {
+      this.$store.commit('setcurrentchickCycle', cycle)
+      console.log(this.currentchickCycle)
     },
 
-    deleteCycle() {
-      if (this.currentCycle) {
-        fb.cropCycle.doc(this.currentCycle.id).delete()
-        this.setCurrentCycle(null)
+    deletechickCycle() {
+      if (this.currentchickCycle) {
+        fb.chickCycle.doc(this.currentchickCycle.id).delete()
+        this.setcurrentchickCycle(null)
       }
     },
 
     calcEndDate() {
-      var finishDate = moment(moment(this.currentCycle.startDate, 'DD MM YYYY'))
-        .add(this.currentCycle.duration, 'w')
+      var finishDate = moment(moment(this.currentchickCycle.startDate, 'DD MM YYYY'))
+        .add(this.currentchickCycle.duration, 'w')
         .format('L')
       return finishDate
     },

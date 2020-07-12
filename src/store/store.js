@@ -32,7 +32,19 @@ export const store = new Vuex.Store({
     openWeather: null,
     selectedCrop: {},
     currentCycle: {},
-    startDate: null
+    startDate: null,
+
+    //for coop
+    coop: [],
+    Chickens: [],
+    allchickCycle:  [],
+    chickCycle: [],
+    selectedchickCycle: {},
+    currentchickCycle: {}
+    
+
+
+
   },
   mutations: {
     ...vuexfireMutations,
@@ -74,7 +86,37 @@ export const store = new Vuex.Store({
     },
     getWeather(state, response) {
       state.openWeather = response
-    }
+    },
+
+    //for coop
+
+    updateselectedchickCycle(state, Chickens) {
+      state.selectedchickCycle = Chickens
+    },
+
+    addchickCycle(state, chick) {
+      fb.chickCycle.doc().set({
+        chickId: state.selectedchickCycle.id,
+        namechickCycle: state.selectedchickCycle.name,
+        farmId: state.farmId,
+        coopId: state.cropId,
+        coopName: state.coop,
+        quantity: chick.quantity,
+        startDate: moment(state.startDate).format('L')
+      })
+    },
+
+    addCoop(state, NewCoop) {
+      fb.coop.doc().set({
+        farmId: state.farmId,
+        maxCapacity:NewCoop.maxCapacity
+
+      })
+    },
+    setchickCycle(state, cycle) {
+      state.chickCycle = cycle
+    },
+
   },
   actions: {
     //data binding using vuexfire
@@ -154,7 +196,34 @@ export const store = new Vuex.Store({
             console.log(error)
           }
         )
-    }
+    },
+    //for coop
+    
+    bindallchickCycle: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('allchickCycle', fb.chickCycle)
+    }),
+    bindchickCycle: firestoreAction(({state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'chickCycle',
+        fb.chickCycle.where('farmId', '==', state.farmId)
+      )
+    }),
+    bindcoop: firestoreAction(({ state,bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'coop',
+        fb.coop.where('farmId', '==', state.farmId)
+      )
+    }),
+    bindChickens: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('Chickens', fb.Chickens)
+    }),
+   
+
+
   },
 
   getters: {
@@ -201,6 +270,25 @@ export const store = new Vuex.Store({
     },
     openWeather: state => {
       return state.openWeather
-    }
+    },
+
+    //for coop
+
+    coop: state => {
+      return state.coop
+    },
+    Chickens: state => {
+      return state.Chickens
+    },
+    chickCycle: state => {
+      return state.chickCycle
+    },
+    selectedchickCycle:  state => {
+      return state.selectedchickCycle
+    },
+    currentchickCycle:  state => {
+      return state.currentchickCycle
+    },
+
   }
 })
