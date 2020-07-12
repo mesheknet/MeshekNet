@@ -8,6 +8,7 @@ import Weather from '@/components/home/Weather'
 import MyCrops from '@/components/home/MyCrops'
 import MyCoop from '@/components/home/MyCoop'
 import Contact from '@/components/home/Contact'
+import Admin from '@/components/admin/Admin'
 
 Vue.use(Router)
 
@@ -74,6 +75,14 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact,
+    meta: {
+      reqAuth: true
+    }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
     meta: {
       reqAuth: true
     }

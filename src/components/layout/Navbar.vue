@@ -44,6 +44,11 @@
       >
         <ul>
           <li><a class="white-text" @click="logout">התנתק</a></li>
+          <li v-if="isAdmin()">
+            <router-link class="white-text" :to="{ name: 'Admin' }"
+              >מנהל מערכת</router-link
+            >
+          </li>
         </ul>
       </div>
     </nav>
@@ -52,6 +57,7 @@
 
 <script>
 const fb = require('@/fb.js')
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Navbar',
@@ -77,7 +83,14 @@ export default {
     toggleNav() {
       const nav = this.$refs.nav.classList
       nav.contains('active') ? nav.remove('active') : nav.add('active')
+    },
+    isAdmin() {
+      return this.users.find(obj => obj.userId == this.userId).admin
     }
+  },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters(['userId', 'users'])
   }
 }
 </script>

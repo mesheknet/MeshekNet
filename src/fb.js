@@ -38,6 +38,7 @@ const fieldCycle = db.collection('fieldCycle')
 const notification = db.collection('notification')
 const pest = db.collection('pest')
 const pesticide = db.collection('pesticide')
+const pImplement = db.collection('pImplement')
 const service = db.collection('service')
 const sysAdmin = db.collection('sysAdmin')
 const treatType = db.collection('treatType')
@@ -65,6 +66,7 @@ export {
   notification,
   pest,
   pesticide,
+  pImplement,
   service,
   sysAdmin,
   treatType,
