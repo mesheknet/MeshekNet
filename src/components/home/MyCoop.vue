@@ -11,7 +11,7 @@
     </div>
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
-    <div class="container_content">
+    <div class="container_content" >
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
@@ -124,9 +124,15 @@
     <!-- container_add-main grid in container_fluid,  Controls open window add crops -->
     <div
       class="container_add"
-      v-if="this.toggle == true || this.windowWidth > 760"
+      v-if="(this.toggle == true || this.windowWidth > 760) && coopId"
     >
       <AddCycleChickens />
+    </div>
+    <div
+      class="container_add"
+      v-if="(this.toggle == true || this.windowWidth > 760) && coopId==null"
+    >
+      <addcoop />
     </div>
   </div>
 </template>
@@ -140,12 +146,12 @@ import Drug from '@/components/popups/Drug'
 import Eggs from '@/components/popups/Eggs'
 import Mortality from '@/components/popups/Mortality'
 import AddCycleChickens from '@/components/popups/AddCycleChickens'
-
+import Addcoop from '@/components/popups/Addcoop'
 //import irrigation from '@/components/popups/Irrigation'
 
 export default {
   name: 'MyCroop',
-  components: { ChickensFood, Drug, Eggs, Mortality, AddCycleChickens },
+  components: { ChickensFood, Drug, Eggs, Mortality, AddCycleChickens, Addcoop },
 
   data() {
     return {

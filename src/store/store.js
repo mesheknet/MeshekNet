@@ -113,13 +113,13 @@ export const store = new Vuex.Store({
       })
     },
 
-  /*  addCoop(state, NewCoop) {
+    addCoop(state, Coop) {
       fb.coop.doc().set({
         farmId: state.farmId,
-        maxCapacity:NewCoop.maxCapacity
+        maxCapacity:Coop.maxCapacity
 
       })
-    },*/
+    },
     
   },
   actions: {
