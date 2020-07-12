@@ -111,6 +111,7 @@ export default {
 
       await this.$store.dispatch('bindChickens')
       await this.$store.dispatch('bindcoop')
+      await this.$store.dispatch('updatecoopid')
       await this.$store.dispatch('bindallchickCycle')
       await this.$store.dispatch('bindchickCycle')
     },

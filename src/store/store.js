@@ -36,6 +36,7 @@ export const store = new Vuex.Store({
 
     //for coop
     coop: [],
+    coopId: null,
     Chickens: [],
     allchickCycle:  [],
     chickCycle: [],
@@ -90,6 +91,13 @@ export const store = new Vuex.Store({
 
     //for coop
 
+    setchickCycle(state, cycle) {
+      state.chickCycle = cycle
+    },
+    updatecoopid: (state, Cid) => {
+      state.coopId = Cid
+    },
+
     updateselectedchickCycle(state, Chickens) {
       state.selectedchickCycle = Chickens
     },
@@ -99,24 +107,20 @@ export const store = new Vuex.Store({
         chickId: state.selectedchickCycle.id,
         namechickCycle: state.selectedchickCycle.name,
         farmId: state.farmId,
-        coopId: state.cropId,
-        coopName: state.coop,
+        coopId: state.coopId,
         quantity: chick.quantity,
         startDate: moment(state.startDate).format('L')
       })
     },
 
-    addCoop(state, NewCoop) {
+  /*  addCoop(state, NewCoop) {
       fb.coop.doc().set({
         farmId: state.farmId,
         maxCapacity:NewCoop.maxCapacity
 
       })
-    },
-    setchickCycle(state, cycle) {
-      state.chickCycle = cycle
-    },
-
+    },*/
+    
   },
   actions: {
     //data binding using vuexfire
@@ -222,7 +226,10 @@ export const store = new Vuex.Store({
       return bindFirestoreRef('Chickens', fb.Chickens)
     }),
    
-
+    updatecoopid({ commit, state }) {
+      let Cid = state.coop.find(obj => obj.farmId == state.farmId).id
+      commit('updatecoopid', Cid)
+    },
 
   },
 
@@ -288,6 +295,9 @@ export const store = new Vuex.Store({
     },
     currentchickCycle:  state => {
       return state.currentchickCycle
+    },
+    coopId: state => {
+      return state.coopId
     },
 
   }

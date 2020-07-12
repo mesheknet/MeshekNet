@@ -15,14 +15,14 @@
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
-          <span>סוג מחזור:</span><br />{{ this.currentchickCycle.cropName }},
-          {{ this.currentchickCycle.fieldName }}
+          <span>סוג מחזור:</span><br />,
+          
         </div>
         <div class="container_content_details_kind">
           <span>כמות תרנגולות:</span><br />500
         </div>
         <div class="container_content_details_dateStart">
-          <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
+          <span>תאריך התחלה:</span><br />
         </div>
         <div class="container_content_details_dateFinish">
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
@@ -110,14 +110,14 @@
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
           <span class="dot"
-            ><h4>{{ FirstLetter(cycle.cropName) }}</h4></span
+            ><h4>{{ FirstLetter(cycle.namechickCycle) }}</h4></span
           >
         </div>
         <!-- container_list_item_title- Controls the title within the item -->
-        <div class="container_list_item_title">{{ cycle.cropName }}</div>
+        <div class="container_list_item_title">{{ cycle.namechickCycle }}</div>
         <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
-          {{ cycle.fieldName + ', ' + cycle.fieldArea + ' דונם' }}
+          {{ cycle.quantity + ', ' + cycle.startDate }}
         </div>
       </div>
     </div>
@@ -170,6 +170,7 @@ export default {
       'userId',
       'farmId',
       'coop',
+      'coopId',
       'Chickens',
       'currentchickCycle',
       'chickCycle'

@@ -83,7 +83,6 @@ export default {
   data() {
     return {
       ChickenId: null,
-      coopId: null,
       selectedchickCycle: null,
       quantity: null,
       startDate: new Date().toISOString().substr(0, 10),
@@ -114,7 +113,8 @@ export default {
           id: fb.coop.doc().id,
           name: this.coopName,
           quantity: this.quantity,
-          farmId: this.farmId
+          farmId: this.farmId,
+          coopId: this.coopId
         }
 
        // this.$store.commit('addNewField', newCycle)
@@ -131,7 +131,7 @@ export default {
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'Chickens', 'coop', 'chickCycle']),
+    ...mapGetters(['userId', 'farmId', 'Chickens', 'coopId', 'chickCycle']),
 
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
