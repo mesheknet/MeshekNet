@@ -35,8 +35,9 @@
                 @click="addPesticide = true"
                 class="ma-2"
                 fab
+                x-small
                 dark
-                color="indigo"
+                color="teal darken-2"
               >
                 <v-icon dark>add</v-icon>
               </v-btn>
@@ -56,7 +57,11 @@
               ></v-text-field
             ></v-col>
             <v-col>
-              <v-btn @click="addNewPesticide()" class="ma-2" color="success"
+              <v-btn
+                text
+                @click="addNewPesticide()"
+                class="ma-2"
+                color="success"
                 >הוסף</v-btn
               >
             </v-col>
@@ -77,8 +82,9 @@
                 @click="addPest = true"
                 class="ma-2"
                 fab
+                x-small
                 dark
-                color="indigo"
+                color="teal darken-2"
               >
                 <v-icon dark>add</v-icon>
               </v-btn>
@@ -90,7 +96,7 @@
             </v-col>
 
             <v-col>
-              <v-btn @click="addNewPest()" class="ma-2" color="success"
+              <v-btn text @click="addNewPest()" class="ma-2" color="success"
                 >הוסף</v-btn
               >
             </v-col>

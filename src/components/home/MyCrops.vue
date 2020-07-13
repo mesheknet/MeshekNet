@@ -40,7 +40,7 @@
       <div class="container_content_btn">
         <irrigation />
         <fertilization />
-        <button class="button">הדברה &#x2622;</button>
+        <pestCtrl />
         <button class="button">היסטוריה גידול &#x1F4D6;</button>
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
@@ -135,10 +135,11 @@ import moment from 'moment'
 import addCrop from '@/components/popups/AddCrop'
 import irrigation from '@/components/popups/Irrigation'
 import fertilization from '@/components/popups/Fertilization'
+import pestCtrl from '@/components/popups/PestCtrl'
 
 export default {
   name: 'MyCrops',
-  components: { addCrop, irrigation, fertilization },
+  components: { addCrop, irrigation, fertilization, pestCtrl },
   data() {
     return {
       windowWidth: window.innerWidth,
