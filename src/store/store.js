@@ -90,6 +90,9 @@ export const store = new Vuex.Store({
 
     //for coop
 
+    setcurrentchickCycle(state, cycle) {
+      state.currentchickCycle = cycle
+    },
     setchickCycle(state, cycle) {
       state.chickCycle = cycle
     },

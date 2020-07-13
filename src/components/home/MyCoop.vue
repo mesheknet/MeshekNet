@@ -15,23 +15,20 @@
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
-          <span>סוג מחזור:</span><br />,
+          <span>סוג מחזור:</span><br />{{ this.currentchickCycle.namechickCycle }}
           
         </div>
         <div class="container_content_details_kind">
-          <span>כמות תרנגולות:</span><br />500
+          <span>כמות תרנגולות:</span><br />{{ this.currentchickCycle.quantity }}
         </div>
         <div class="container_content_details_dateStart">
-          <span>תאריך התחלה:</span><br />
+          <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
         </div>
         <div class="container_content_details_dateFinish">
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>כמות תרנגולות התחלתית:</span><br />{{
-            this.currentchickCycle.fieldArea
-          }}
-          דונם
+          <span>כמות תרנגולות התחלתית:</span><br />{{ this.currentchickCycle.startDate }}
         </div>
         <div class="container_content_details_btnEdit">
           <a class="btn-floating cyan pulse"
