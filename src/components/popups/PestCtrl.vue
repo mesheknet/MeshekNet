@@ -24,59 +24,9 @@
           v-if="selectedPest"
           :headers="headers"
           :items="imps"
-          hide-default-header
           hide-default-footer
           class="elevation-1"
         ></v-data-table>
-
-        <v-list two-line v-if="selectedPest">
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title> חומר הדברה נדרש: </v-list-item-title>
-              <v-list-item-subtitle>{{
-                getCurrentPesticide().name
-              }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>יצרן החומר: </v-list-item-title>
-              <v-list-item-subtitle>{{
-                getCurrentPesticide().supplier
-              }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>מינון: </v-list-item-title>
-              <v-list-item-subtitle
-                >{{
-                  pImplement.find(
-                    obj =>
-                      obj.pestId == selectedPest.id &&
-                      obj.cropId == currentCycle.cropId
-                  ).dosage
-                }}
-                גרם לדונם</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>נפח התרסיס: </v-list-item-title>
-              <v-list-item-subtitle
-                >{{
-                  pImplement.find(
-                    obj =>
-                      obj.pestId == selectedPest.id &&
-                      obj.cropId == currentCycle.cropId
-                  ).vol
-                }}
-                ליטר לדונם</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -109,8 +59,8 @@ export default {
         { text: 'יצרן', value: 'supplier' },
         { text: 'מינון (גרם לדונם)', value: 'dosage' },
         { text: 'נפח התרסיס (ליטר לדונם)', value: 'vol' },
-        { text: 'מינון לכל החלקה (גרם )', value: 'calcDosage' },
-        { text: 'נפח תרסיס לכל החלקה (ליטר )', value: 'calcVol' }
+        { text: 'מינון לכל החלקה (גרם)', value: 'calcDosage' },
+        { text: 'נפח תרסיס לכל החלקה (ליטר)', value: 'calcVol' }
       ],
       imps: []
     }
@@ -139,6 +89,7 @@ export default {
       return this.pesticides.find(obj => obj.id == tempId)
     },
 
+    //create local implements data based on selected pest. calc dosage and vol
     createLocalImplements() {
       let created = {
         name: null,
@@ -149,7 +100,14 @@ export default {
         calcVol: null
       }
       this.currentImplements.forEach(obj => {
-        created.name = obj.id
+        created.name = obj.pesticideName
+        created.supplier = obj.pesticideSupplier
+        created.dosage = obj.dosage
+        created.vol = obj.vol
+        created.calcDosage =
+          parseInt(obj.dosage) * parseInt(this.currentCycle.fieldArea)
+        created.calcVol =
+          parseInt(obj.vol) * parseInt(this.currentCycle.fieldArea)
 
         this.imps.push(created)
       })

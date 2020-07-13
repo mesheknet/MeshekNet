@@ -42,6 +42,19 @@
                 <v-icon dark>add</v-icon>
               </v-btn>
             </v-col>
+            <v-col>
+              <v-btn
+                v-if="selectedPesticide"
+                @click="deletePesticide"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="red darken-2"
+              >
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-col>
           </v-row>
           <v-row v-if="addPesticide">
             <v-col>
@@ -87,6 +100,19 @@
                 color="teal darken-2"
               >
                 <v-icon dark>add</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                v-if="selectedPest"
+                @click="deletePest"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="red darken-2"
+              >
+                <v-icon dark>delete</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -193,11 +219,20 @@ export default {
         .set({
           cropId: this.selectedCrop.id,
           pestId: this.selectedPest.id,
+          pestName: this.selectedPest.name,
           pesticideId: this.selectedPesticide.id,
+          pesticideName: this.selectedPesticide.name,
+          pesticideSupplier: this.selectedPesticide.supplier,
           dosage: this.dosage,
           vol: this.vol
         })
         .then((this.loading = false), (this.dialog = false))
+    },
+    deletePest() {
+      fb.pest.doc(this.selectedPest.id).delete()
+    },
+    deletePesticide() {
+      fb.pesticide.doc(this.selectedPesticide.id).delete()
     }
   },
   updated() {},
