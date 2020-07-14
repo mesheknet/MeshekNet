@@ -15,6 +15,7 @@
         <v-select
           v-model="selectedPest"
           :items="currentPests"
+          @input="createLocalImplements()"
           label="בחר מזיק מהרשימה"
           item-text="name"
           return-object
@@ -26,7 +27,11 @@
           :items="imps"
           hide-default-footer
           class="elevation-1"
-        ></v-data-table>
+        >
+          <template v-slot:item.calcDosage="{ item }">
+            <v-chip class="teal darken-2" dark>{{ item.calcDosage }}</v-chip>
+          </template>
+        </v-data-table>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -62,7 +67,8 @@ export default {
         { text: 'מינון לכל החלקה (גרם)', value: 'calcDosage' },
         { text: 'נפח תרסיס לכל החלקה (ליטר)', value: 'calcVol' }
       ],
-      imps: []
+      imps: [],
+      pestImplements: []
     }
   },
   methods: {
@@ -72,50 +78,41 @@ export default {
       )
     },
 
+    //get implements relevant for selected pest and current cropCycle
+    getPestImplements() {
+      this.pestImplements = this.currentImplements.filter(
+        obj => obj.pestId == this.selectedPest.id
+      )
+    },
+
     //get only pests relevant for this crop
     getCurrentPests() {
-      this.getCurrentImplements()
       this.currentImplements.forEach(obj => {
         let pest = this.pests.find(item => item.id == obj.pestId)
         this.currentPests.push(pest)
       })
     },
 
-    getCurrentPesticide() {
-      let tempId = this.pImplement.find(
-        obj => obj.cropId == this.currentCycle.cropId
-      ).pesticideId
-
-      return this.pesticides.find(obj => obj.id == tempId)
-    },
-
     //create local implements data based on selected pest. calc dosage and vol
     createLocalImplements() {
-      let created = {
-        name: null,
-        supplier: null,
-        dosage: null,
-        vol: null,
-        calcDosage: null,
-        calcVol: null
-      }
-      this.currentImplements.forEach(obj => {
-        created.name = obj.pesticideName
-        created.supplier = obj.pesticideSupplier
-        created.dosage = obj.dosage
-        created.vol = obj.vol
-        created.calcDosage =
-          parseInt(obj.dosage) * parseInt(this.currentCycle.fieldArea)
-        created.calcVol =
-          parseInt(obj.vol) * parseInt(this.currentCycle.fieldArea)
-
-        this.imps.push(created)
+      this.getPestImplements()
+      this.imps = []
+      this.pestImplements.forEach(obj => {
+        this.imps.push({
+          name: obj.pesticideName,
+          supplier: obj.pesticideSupplier,
+          dosage: obj.dosage,
+          vol: obj.vol,
+          calcDosage:
+            parseInt(obj.dosage) * parseInt(this.currentCycle.fieldArea),
+          calcVol: parseInt(obj.vol) * parseInt(this.currentCycle.fieldArea)
+        })
       })
     }
   },
   mounted() {
+    this.getCurrentImplements()
     this.getCurrentPests()
-    this.createLocalImplements()
   },
   computed: {
     //get local data from firestore using the store
