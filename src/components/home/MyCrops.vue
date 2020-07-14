@@ -18,9 +18,7 @@
           <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }},
           {{ this.currentCycle.fieldName }}
         </div>
-        <div class="container_content_details_kind">
-          <span>זן:</span><br />סורי
-        </div>
+
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
         </div>
@@ -41,7 +39,7 @@
         <irrigation />
         <fertilization />
         <pestCtrl />
-        <button class="button">היסטוריה גידול &#x1F4D6;</button>
+        <cropHistory />
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
@@ -136,10 +134,11 @@ import addCrop from '@/components/popups/AddCrop'
 import irrigation from '@/components/popups/Irrigation'
 import fertilization from '@/components/popups/Fertilization'
 import pestCtrl from '@/components/popups/PestCtrl'
+import cropHistory from '@/components/popups/CropHistory'
 
 export default {
   name: 'MyCrops',
-  components: { addCrop, irrigation, fertilization, pestCtrl },
+  components: { addCrop, irrigation, fertilization, pestCtrl, cropHistory },
   data() {
     return {
       windowWidth: window.innerWidth,

@@ -11,12 +11,13 @@
     </div>
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
-    <div class="container_content" >
+    <div class="container_content">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
-          <span>סוג מחזור:</span><br />{{ this.currentchickCycle.namechickCycle }}
-          
+          <span>סוג מחזור:</span><br />{{
+            this.currentchickCycle.namechickCycle
+          }}
         </div>
         <div class="container_content_details_kind">
           <span>כמות תרנגולות:</span><br />{{ this.currentchickCycle.quantity }}
@@ -28,7 +29,9 @@
           <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>כמות תרנגולות התחלתית:</span><br />{{ this.currentchickCycle.startDate }}
+          <span>כמות תרנגולות התחלתית:</span><br />{{
+            this.currentchickCycle.startDate
+          }}
         </div>
         <div class="container_content_details_btnEdit">
           <a class="btn-floating cyan pulse"
@@ -167,7 +170,6 @@ export default {
       'userId',
       'farmId',
       'coop',
-      'coopId',
       'Chickens',
       'currentchickCycle',
       'chickCycle'
@@ -192,7 +194,9 @@ export default {
     },
 
     calcEndDate() {
-      var finishDate = moment(moment(this.currentchickCycle.startDate, 'DD MM YYYY'))
+      var finishDate = moment(
+        moment(this.currentchickCycle.startDate, 'DD MM YYYY')
+      )
         .add(this.currentchickCycle.duration, 'w')
         .format('L')
       return finishDate
