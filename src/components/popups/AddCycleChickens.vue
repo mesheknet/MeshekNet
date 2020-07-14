@@ -14,7 +14,57 @@
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
           
-          
+            <v-row>
+            <v-col>
+              <v-select
+                v-model="selectedCoop"
+                :items="coop"
+                label="בחר לול או הוסף חדש"
+                @input="getCoopId"
+                item-text="CoopName"
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-btn
+                @click="addCoop = true"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="teal darken-2"
+              >
+                <v-icon dark>add</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                v-if="selectedCoop"
+                @click="deleteCoop"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="red darken-2"
+              >
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row v-if="addCoop">
+            <v-col>
+              <v-text-field label="שם הלול" v-model="CoopName"></v-text-field>
+            </v-col>
+             <v-col>
+              <v-text-field label="גודל מקסימלי" v-model="MaxCapacityCoop"></v-text-field>
+            </v-col>
+
+            <v-col>
+              <v-btn text @click="addNewCoop()" class="ma-2" color="success"
+                >הוסף</v-btn
+              >
+            </v-col>
+          </v-row>
           <v-select
             v-model="selectedchickCycle"
             :items="Chickens"
@@ -82,8 +132,12 @@ export default {
   name: 'AddCycleChickens',
   data() {
     return {
+      addCoop: false,
       ChickenId: null,
       selectedchickCycle: null,
+      selectedCoop: null,
+      CoopName:null,
+      MaxCapacityCoop: null,
       quantity: null,
       startDate: new Date().toISOString().substr(0, 10),
       nameRules: [v => !!v || 'אנא הכנס שם שדה'],
@@ -98,11 +152,24 @@ export default {
   created() {},
 
   methods: {
-    
-
+    addNewCoop(){
+    var coop = {
+          id: fb.coop.doc().id,
+          CoopName: this.CoopName,
+          maxCapacity: this.MaxCapacityCoop,
+          farmId: this.farmId,
+        }
+        this.$store.commit('addCoop', coop),
+        this.selectedCoop=coop
+        this.$store.commit('updateselectedcoop', this.selectedCoop)
+    },
     getChickensId() {
       this.$store.commit('updateselectedchickCycle', this.selectedchickCycle)
     },
+    getCoopId() {
+      this.$store.commit('updateselectedcoop', this.selectedCoop)
+    },
+    
 
     //push data to firebase if form is valid, close dialog
     submit() {
@@ -110,11 +177,8 @@ export default {
         this.setStartDate()
         this.loading = true
         var newCycle = {
-          id: fb.coop.doc().id,
-          name: this.coopName,
           quantity: this.quantity,
           farmId: this.farmId,
-          coopId: this.coopId
         }
 
        // this.$store.commit('addNewField', newCycle)
@@ -131,7 +195,7 @@ export default {
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'farmId', 'Chickens', 'coopId', 'chickCycle']),
+    ...mapGetters(['userId', 'farmId', 'Chickens', 'coop', 'chickCycle']),
 
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
