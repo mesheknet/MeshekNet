@@ -177,7 +177,6 @@ export default {
   methods: {
     setCurrentCycle(cycle) {
       this.$store.commit('setCurrentCycle', cycle)
-      console.log(this.currentCycle)
     },
 
     deleteCycle() {

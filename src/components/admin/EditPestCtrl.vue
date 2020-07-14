@@ -20,6 +20,54 @@
             item-text="name"
             return-object
           ></v-select>
+
+          <v-row>
+            <v-col>
+              <v-select
+                v-model="selectedPest"
+                :items="pests"
+                label="בחר מזיק או הוסף חדש"
+                item-text="name"
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-btn
+                @click="addPest = true"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="teal darken-2"
+              >
+                <v-icon dark>add</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                v-if="selectedPest"
+                @click="deletePest"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="red darken-2"
+              >
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row v-if="addPest">
+            <v-col>
+              <v-text-field label="שם המזיק" v-model="pestName"></v-text-field>
+            </v-col>
+
+            <v-col>
+              <v-btn text @click="addNewPest()" class="ma-2" color="success"
+                >הוסף</v-btn
+              >
+            </v-col>
+          </v-row>
           <v-row>
             <v-col>
               <v-select
@@ -80,53 +128,6 @@
             </v-col>
           </v-row>
 
-          <v-row>
-            <v-col>
-              <v-select
-                v-model="selectedPest"
-                :items="pests"
-                label="בחר מזיק או הוסף חדש"
-                item-text="name"
-                return-object
-              ></v-select>
-            </v-col>
-            <v-col>
-              <v-btn
-                @click="addPest = true"
-                class="ma-2"
-                fab
-                x-small
-                dark
-                color="teal darken-2"
-              >
-                <v-icon dark>add</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                v-if="selectedPest"
-                @click="deletePest"
-                class="ma-2"
-                fab
-                x-small
-                dark
-                color="red darken-2"
-              >
-                <v-icon dark>delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row v-if="addPest">
-            <v-col>
-              <v-text-field label="שם המזיק" v-model="pestName"></v-text-field>
-            </v-col>
-
-            <v-col>
-              <v-btn text @click="addNewPest()" class="ma-2" color="success"
-                >הוסף</v-btn
-              >
-            </v-col>
-          </v-row>
           <v-row>
             <v-col>
               <v-text-field
