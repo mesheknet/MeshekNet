@@ -31,6 +31,9 @@
           <template v-slot:item.calcDosage="{ item }">
             <v-chip class="teal darken-2" dark>{{ item.calcDosage }}</v-chip>
           </template>
+          <template v-slot:item.calcVol="{ item }">
+            <v-chip class="orange darken-2" dark>{{ item.calcVol }}</v-chip>
+          </template>
         </v-data-table>
       </v-card-text>
 

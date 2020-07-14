@@ -219,7 +219,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.openWeather)
     console.log(
       moment()
         .add(1)
