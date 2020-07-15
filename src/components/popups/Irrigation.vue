@@ -118,8 +118,10 @@ export default {
       let farm = this.farms.find(obj => obj.userId == this.userId)
       let station = this.stations.find(obj => obj.id == farm.weatherStation)
       //irrigation [weekNum]
+
       let res =
-        crop.irrigation[moment().isoWeek() - 1] * station.ev[moment().month()]
+        crop.irrigation[station.id][moment().isoWeek() - 2] *
+        station.ev[moment().month()]
       return res
     }
   },
