@@ -40,7 +40,7 @@
         </div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
-      <div class="container_content_btn">
+      <div class="container_content_btn" v-if="currentchickCycle">
         <ChickensFood />
         <Drug />
         <Eggs />

@@ -3,13 +3,13 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        היסטוריית גידול<v-icon right>&#x1F4D6;</v-icon>
+        יומן גידול<v-icon right>&#x1F4D6;</v-icon>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="green lighten-3" primary-title>
-        היסטוריית גידול
+        יומן גידול
       </v-card-title>
 
       <v-card-text> </v-card-text>
@@ -28,7 +28,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'CropHystory',
+  name: 'CropLog',
   components: {},
   data() {
     return {

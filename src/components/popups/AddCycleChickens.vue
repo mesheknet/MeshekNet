@@ -2,7 +2,7 @@
   <v-dialog width="500" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn class="mr-7" color="light green darken-4" dark v-on="on">
-     מחזור תרנגולת חדש
+        מחזור תרנגולת חדש
       </v-btn>
     </template>
 
@@ -13,8 +13,7 @@
 
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
-          
-            <v-row>
+          <v-row>
             <v-col>
               <v-select
                 v-model="selectedCoop"
@@ -53,15 +52,28 @@
           </v-row>
           <v-row v-if="addCoop">
             <v-col>
-              <v-text-field label="שם הלול" v-model="CoopName"></v-text-field>
+              <v-text-field
+                label="שם הלול"
+                :rules="nameRules"
+                v-model="CoopName"
+              ></v-text-field>
             </v-col>
-             <v-col>
-              <v-text-field label="גודל מקסימלי" v-model="MaxCapacityCoop"></v-text-field>
+            <v-col>
+              <v-text-field
+                label="גודל מקסימלי"
+                v-model="MaxCapacityCoop"
+              ></v-text-field>
             </v-col>
 
             <v-col>
-              <v-btn text @click="addNewCoop()
-              addCoop = false" class="ma-2" color="success"
+              <v-btn
+                text
+                @click="
+                  addNewCoop()
+                  addCoop = false
+                "
+                class="ma-2"
+                color="success"
                 >הוסף</v-btn
               >
             </v-col>
@@ -75,7 +87,6 @@
             return-object
           ></v-select>
           <v-text-field
-            
             label="כמות"
             v-model="quantity"
             :rules="sizeRules"
@@ -137,12 +148,12 @@ export default {
       ChickenId: null,
       selectedchickCycle: null,
       selectedCoop: null,
-      CoopName:null,
+      CoopName: null,
       MaxCapacityCoop: null,
       quantity: null,
       startDate: new Date().toISOString().substr(0, 10),
-      nameRules: [v => !!v || 'אנא הכנס שם שדה'],
-      sizeRules: [v => !!v || 'אנא הזן גודל שדה'],
+      nameRules: [v => !!v || 'אנא הזן שם או מספר לול'],
+      sizeRules: [v => !!v || 'אנא הזן כמות תרנגולות'],
       dialog: null,
       dateMenu: false,
       valid: false,
@@ -153,16 +164,15 @@ export default {
   created() {},
 
   methods: {
-    addNewCoop(){
-    var coop = {
-          id: fb.coop.doc().id,
-          CoopName: this.CoopName,
-          maxCapacity: this.MaxCapacityCoop,
-          farmId: this.farmId,
-        }
-        this.$store.commit('addCoop', coop),
-        this.selectedCoop=coop
-        this.$store.commit('updateselectedcoop', this.selectedCoop)
+    addNewCoop() {
+      var coop = {
+        id: fb.coop.doc().id,
+        CoopName: this.CoopName,
+        maxCapacity: this.MaxCapacityCoop,
+        farmId: this.farmId
+      }
+      this.$store.commit('addCoop', coop), (this.selectedCoop = coop)
+      this.$store.commit('updateselectedcoop', this.selectedCoop)
     },
     getChickensId() {
       this.$store.commit('updateselectedchickCycle', this.selectedchickCycle)
@@ -170,7 +180,7 @@ export default {
     getCoopId() {
       this.$store.commit('updateselectedcoop', this.selectedCoop)
     },
-    
+
     deleteCoop() {
       fb.coop.doc(this.selectedCoop.id).delete()
     },
@@ -181,10 +191,10 @@ export default {
         this.loading = true
         var newCycle = {
           quantity: this.quantity,
-          farmId: this.farmId,
+          farmId: this.farmId
         }
 
-       // this.$store.commit('addNewField', newCycle)
+        // this.$store.commit('addNewField', newCycle)
         this.$store.commit('addchickCycle', newCycle)
         //console.log(this.fields.find(x => x.id == this.tempFieldId))
 

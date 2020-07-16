@@ -30,11 +30,12 @@ export const store = new Vuex.Store({
     cropCycle: [],
     pests: [],
     pesticides: [],
+    ferts: [],
     pImplement: [],
     weather: null,
     openWeather: null,
     selectedCrop: {},
-    selectedField:{},
+    selectedField: {},
     currentCycle: {},
     startDate: null,
 
@@ -62,7 +63,7 @@ export const store = new Vuex.Store({
     updateSelectedCrop(state, crop) {
       state.selectedCrop = crop
     },
-    updateSelectedField(state,Field){
+    updateSelectedField(state, Field) {
       state.selectedField = Field
     },
 
@@ -100,7 +101,6 @@ export const store = new Vuex.Store({
     setchickCycle(state, cycle) {
       state.chickCycle = cycle
     },
-    
 
     updateselectedchickCycle(state, Chickens) {
       state.selectedchickCycle = Chickens
@@ -181,6 +181,10 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('pImplement', fb.pImplement)
     }),
+    bindFerts: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('ferts', fb.fertilizer)
+    }),
 
     bindWeather: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
@@ -244,9 +248,7 @@ export const store = new Vuex.Store({
     bindChickens: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('Chickens', fb.Chickens)
-    }),
-
-   
+    })
   },
 
   getters: {
@@ -291,6 +293,9 @@ export const store = new Vuex.Store({
     pImplement: state => {
       return state.pImplement
     },
+    ferts: state => {
+      return state.ferts
+    },
     selectedCrop: state => {
       return state.selectedCrop
     },
@@ -326,7 +331,6 @@ export const store = new Vuex.Store({
     },
     selectedCoop: state => {
       return state.selectedCoop
-    },
-    
+    }
   }
 })

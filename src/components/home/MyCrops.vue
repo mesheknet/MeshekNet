@@ -35,11 +35,11 @@
         </div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
-      <div class="container_content_btn">
+      <div class="container_content_btn" v-if="currentCycle">
         <irrigation />
         <fertilization />
         <pestCtrl />
-        <cropHistory />
+        <cropLog />
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
@@ -134,11 +134,11 @@ import addCrop from '@/components/popups/AddCrop'
 import irrigation from '@/components/popups/Irrigation'
 import fertilization from '@/components/popups/Fertilization'
 import pestCtrl from '@/components/popups/PestCtrl'
-import cropHistory from '@/components/popups/CropHistory'
+import cropLog from '@/components/popups/CropLog'
 
 export default {
   name: 'MyCrops',
-  components: { addCrop, irrigation, fertilization, pestCtrl, cropHistory },
+  components: { addCrop, irrigation, fertilization, pestCtrl, cropLog },
   data() {
     return {
       windowWidth: window.innerWidth,

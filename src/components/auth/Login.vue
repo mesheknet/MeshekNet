@@ -109,6 +109,7 @@ export default {
       await this.$store.dispatch('bindPests')
       await this.$store.dispatch('bindPesticides')
       await this.$store.dispatch('bindPimplement')
+      await this.$store.dispatch('bindFerts')
       //for coop
 
       await this.$store.dispatch('bindChickens')
