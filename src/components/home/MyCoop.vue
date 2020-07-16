@@ -69,7 +69,7 @@
                 style="font-size:15px"
                 text
                 @click="
-                  deleteCycle()
+                  deletechickCycle()
                   deleteDialog = false
                 "
                 >כן</v-btn
@@ -117,7 +117,7 @@
         <div class="container_list_item_title">{{ cycle.namechickCycle }}</div>
         <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
-          {{ cycle.quantity + ', ' + cycle.startDate }}
+          {{ cycle.quantity + ', ' + cycle.CoopName }}
         </div>
       </div>
     </div>

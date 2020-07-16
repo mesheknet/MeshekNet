@@ -60,7 +60,8 @@
             </v-col>
 
             <v-col>
-              <v-btn text @click="addNewCoop()" class="ma-2" color="success"
+              <v-btn text @click="addNewCoop()
+              addCoop = false" class="ma-2" color="success"
                 >הוסף</v-btn
               >
             </v-col>
@@ -170,7 +171,9 @@ export default {
       this.$store.commit('updateselectedcoop', this.selectedCoop)
     },
     
-
+    deleteCoop() {
+      fb.coop.doc(this.selectedCoop.id).delete()
+    },
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {

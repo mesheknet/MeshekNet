@@ -34,6 +34,7 @@ export const store = new Vuex.Store({
     weather: null,
     openWeather: null,
     selectedCrop: {},
+    selectedField:{},
     currentCycle: {},
     startDate: null,
 
@@ -61,16 +62,19 @@ export const store = new Vuex.Store({
     updateSelectedCrop(state, crop) {
       state.selectedCrop = crop
     },
+    updateSelectedField(state,Field){
+      state.selectedField = Field
+    },
 
-    addCropCycle(state, field) {
+    addCropCycle(state, NewCrop) {
       fb.cropCycle.doc().set({
         cropId: state.selectedCrop.id,
         cropName: state.selectedCrop.name,
         duration: state.selectedCrop.duration,
         farmId: state.farmId,
-        fieldId: field.id,
-        fieldName: field.name,
-        fieldArea: field.area,
+        fieldId: NewCrop.id,
+        fieldName: state.selectedField.name,
+        fieldArea: state.selectedField.area,
         startDate: moment(state.startDate).format('L')
       })
     },
@@ -289,6 +293,9 @@ export const store = new Vuex.Store({
     },
     selectedCrop: state => {
       return state.selectedCrop
+    },
+    selectedField: state => {
+      return state.selectedField
     },
     currentCycle: state => {
       return state.currentCycle

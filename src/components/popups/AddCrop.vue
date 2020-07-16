@@ -13,19 +13,60 @@
 
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
-          <v-select
-            v-model="selectedField"
-            :items="fields"
-            label="שדה קיים"
-            item-text="name"
-            return-object
-          ></v-select>
-          <v-btn @click="deleteField" text color="error">מחק שדה</v-btn>
-          <v-text-field
-            label="שם השדה"
-            v-model="fieldName"
-            :rules="nameRules"
-          ></v-text-field>
+            <v-row>
+            <v-col>
+              <v-select
+                v-model="selectedField"
+                :items="fields"
+                label="בחר שדה או הוסף חדש"
+                @input="getFieldId"
+                item-text="name"
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-btn
+                @click="addField = true"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="teal darken-2"
+              >
+                <v-icon dark>add</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                v-if="selectedField"
+                @click="deleteField"
+                class="ma-2"
+                fab
+                x-small
+                dark
+                color="red darken-2"
+              >
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row v-if="addField">
+            <v-col>
+              <v-text-field label="שם השדה" v-model="fieldName"></v-text-field>
+            </v-col>
+             <v-col>
+              <v-text-field label="גודל השדה" v-model="fieldArea"></v-text-field>
+            </v-col>
+
+            <v-col>
+              <v-btn text @click="addNewField()
+              addField = false" class="ma-2" color="success"
+                >הוסף</v-btn
+              >
+            </v-col>
+          </v-row>
+          
+          
           <v-select
             v-model="selectedCrop"
             :items="crops"
@@ -34,12 +75,6 @@
             item-text="name"
             return-object
           ></v-select>
-          <v-text-field
-            suffix="דונם"
-            label="גודל השדה"
-            v-model="fieldArea"
-            :rules="sizeRules"
-          ></v-text-field>
           <v-menu
             v-model="dateMenu"
             :close-on-content-click="false"
@@ -96,6 +131,7 @@ export default {
       cropId: null,
       fieldId: null,
       cropsDisp: [],
+      addField: false,
       selectedCrop: null,
       selectedField: null,
       fieldName: null,
@@ -113,6 +149,19 @@ export default {
   created() {},
 
   methods: {
+
+    addNewField(){
+    var newField = {
+          id: fb.field.doc().id,
+          name: this.fieldName,
+          area: this.fieldArea,
+          farmId: this.farmId
+        }
+        this.$store.commit('addNewField', newField),
+        this.selectedField=newField
+        this.$store.commit('updateSelectedField', this.selectedField)
+    },
+
     deleteField() {
       fb.field.doc(this.selectedField.id).delete()
     },
@@ -120,21 +169,24 @@ export default {
     getCropId() {
       this.$store.commit('updateSelectedCrop', this.selectedCrop)
     },
+    getFieldId() {
+      this.$store.commit('updateSelectedField', this.selectedField)
+    },
 
     //push data to firebase if form is valid, close dialog
     submit() {
       if (this.$refs.form.validate()) {
         this.setStartDate()
         this.loading = true
-        var newField = {
+        var NewCrop = {
           id: fb.field.doc().id,
           name: this.fieldName,
           area: this.fieldArea,
           farmId: this.farmId
         }
 
-        this.$store.commit('addNewField', newField)
-        this.$store.commit('addCropCycle', newField)
+        //this.$store.commit('addNewField', newField)
+        this.$store.commit('addCropCycle', NewCrop)
         //console.log(this.fields.find(x => x.id == this.tempFieldId))
 
         this.loading = false
