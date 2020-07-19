@@ -38,6 +38,7 @@ export const store = new Vuex.Store({
     selectedField: {},
     currentCycle: {},
     startDate: null,
+    cropLog: [],
 
     //for coop
     coop: [],
@@ -68,7 +69,9 @@ export const store = new Vuex.Store({
     },
 
     addCropCycle(state, NewCrop) {
-      fb.cropCycle.doc().set({
+      let ref = fb.cropCycle.doc()
+      ref.set({
+        id: ref.id,
         cropId: state.selectedCrop.id,
         cropName: state.selectedCrop.name,
         duration: state.selectedCrop.duration,
@@ -110,7 +113,9 @@ export const store = new Vuex.Store({
     },
 
     addchickCycle(state, chick) {
-      fb.chickCycle.doc().set({
+      let ref = fb.chickCycle.doc()
+      ref.set({
+        id: ref.id,
         chickId: state.selectedchickCycle.id,
         namechickCycle: state.selectedchickCycle.name,
         farmId: state.farmId,
@@ -184,6 +189,10 @@ export const store = new Vuex.Store({
     bindFerts: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('ferts', fb.fertilizer)
+    }),
+    bindCropLog: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('cropLog', fb.cropLog)
     }),
 
     bindWeather: firestoreAction(({ bindFirestoreRef }) => {
@@ -305,6 +314,10 @@ export const store = new Vuex.Store({
     currentCycle: state => {
       return state.currentCycle
     },
+    cropLog: state => {
+      return state.cropLog
+    },
+
     weather: state => {
       return state.weather
     },

@@ -13,7 +13,7 @@
 
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
-            <v-row>
+          <v-row>
             <v-col>
               <v-select
                 v-model="selectedField"
@@ -54,19 +54,27 @@
             <v-col>
               <v-text-field label="שם השדה" v-model="fieldName"></v-text-field>
             </v-col>
-             <v-col>
-              <v-text-field label="גודל השדה" v-model="fieldArea"></v-text-field>
+            <v-col>
+              <v-text-field
+                label="גודל השדה"
+                v-model="fieldArea"
+              ></v-text-field>
             </v-col>
 
             <v-col>
-              <v-btn text @click="addNewField()
-              addField = false" class="ma-2" color="success"
+              <v-btn
+                text
+                @click="
+                  addNewField()
+                  addField = false
+                "
+                class="ma-2"
+                color="success"
                 >הוסף</v-btn
               >
             </v-col>
           </v-row>
-          
-          
+
           <v-select
             v-model="selectedCrop"
             :items="crops"
@@ -149,17 +157,16 @@ export default {
   created() {},
 
   methods: {
-
-    addNewField(){
-    var newField = {
-          id: fb.field.doc().id,
-          name: this.fieldName,
-          area: this.fieldArea,
-          farmId: this.farmId
-        }
-        this.$store.commit('addNewField', newField),
-        this.selectedField=newField
-        this.$store.commit('updateSelectedField', this.selectedField)
+    addNewField() {
+      var newField = {
+        id: fb.field.doc().id,
+        name: this.fieldName,
+        area: this.fieldArea,
+        farmId: this.farmId
+      }
+      this.$store.commit('addNewField', newField),
+        (this.selectedField = newField)
+      this.$store.commit('updateSelectedField', this.selectedField)
     },
 
     deleteField() {
@@ -191,6 +198,7 @@ export default {
 
         this.loading = false
         this.dialog = false
+        this.$refs.form.reset()
       }
     },
     setStartDate() {

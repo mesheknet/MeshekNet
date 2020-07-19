@@ -227,7 +227,11 @@ export default {
           dosage: this.dosage,
           vol: this.vol
         })
-        .then((this.loading = false), (this.dialog = false))
+        .then(
+          (this.loading = false),
+          (this.dialog = false),
+          this.$refs.form.reset()
+        )
     },
     deletePest() {
       fb.pest.doc(this.selectedPest.id).delete()

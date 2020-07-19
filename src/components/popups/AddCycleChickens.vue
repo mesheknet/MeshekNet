@@ -200,6 +200,7 @@ export default {
 
         this.loading = false
         this.dialog = false
+        this.$refs.form.reset()
       }
     },
     setStartDate() {

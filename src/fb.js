@@ -27,6 +27,7 @@ const chickCycle = db.collection('chickCycle')
 const coop = db.collection('coop')
 const crop = db.collection('crop')
 const cropCycle = db.collection('cropCycle')
+const cropLog = db.collection('cropLog')
 const cycleData = db.collection('cycleData')
 const disease = db.collection('disease')
 const drug = db.collection('drug')
@@ -55,6 +56,7 @@ export {
   coop,
   crop,
   cropCycle,
+  cropLog,
   cycleData,
   disease,
   drug,

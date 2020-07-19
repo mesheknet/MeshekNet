@@ -23,15 +23,15 @@
           <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
         </div>
         <div class="container_content_details_dateFinish">
-          <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
+          <span>תאריך סיום משוער:</span><br />{{ this.calcEndDate() }}
         </div>
         <div class="container_content_details_areaSize">
-          <span>גודל שטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
+          <span>גודל השטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
         </div>
         <div class="container_content_details_btnEdit">
-          <a class="btn-floating cyan pulse"
-            ><i class="material-icons">edit</i></a
-          >
+          <v-btn class="mx-2" fab dark small color="cyan">
+            <v-icon dark>edit</v-icon>
+          </v-btn>
         </div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
@@ -181,6 +181,7 @@ export default {
     deleteCycle() {
       if (this.currentCycle) {
         fb.cropCycle.doc(this.currentCycle.id).delete()
+
         this.setCurrentCycle(null)
       }
     },
