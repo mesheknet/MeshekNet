@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        תמותה<v-icon right>&#128128;</v-icon>
+        תמותה<v-icon right>fas fa-book-dead</v-icon>
       </v-btn>
     </template>
 

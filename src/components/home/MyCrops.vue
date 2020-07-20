@@ -44,12 +44,13 @@
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btndel">
         <v-btn
-          class="white--text"
-          color="#f70810"
+          fab
+          dark
+          color="red"
           :disabled="!isDisabled"
           @click="deleteDialog = true"
         >
-          מחק<v-icon right>&#x1F5D1;</v-icon></v-btn
+          <v-icon>fas fa-trash</v-icon></v-btn
         >
         <v-dialog v-model="deleteDialog" max-width="500px">
           <v-card>

@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        תרופות<v-icon right>&#x1F489;</v-icon>
+        תרופות<v-icon right>fas fa-syringe</v-icon>
       </v-btn>
     </template>
 

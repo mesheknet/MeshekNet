@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        הטלה<v-icon right>&#129370;</v-icon>
+        הטלה<v-icon right>fas fa-egg</v-icon>
       </v-btn>
     </template>
 

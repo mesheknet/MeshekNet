@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        הדברה<v-icon right>&#x2622;</v-icon>
+        הדברה<v-icon right>fas fa-skull-crossbones</v-icon>
       </v-btn>
     </template>
 

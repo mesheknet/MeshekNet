@@ -8,7 +8,7 @@
         @click="createFertList()"
         v-on="on"
       >
-        דישון<v-icon right>&#x1F69C;</v-icon>
+        דישון<v-icon right>fab fa-envira</v-icon>
       </v-btn>
     </template>
 

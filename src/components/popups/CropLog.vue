@@ -9,7 +9,7 @@
         v-on="on"
         @click="updateCurrentLogs()"
       >
-        יומן גידול<v-icon right>&#x1F4D6;</v-icon>
+        יומן גידול<v-icon right>fas fa-history</v-icon>
       </v-btn>
     </template>
 
