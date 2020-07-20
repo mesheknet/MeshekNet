@@ -2,7 +2,13 @@
 <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mt-6 white--text" color="light green" v-on="on">
+      <v-btn
+        block
+        class="mt-6 white--text"
+        color="light green"
+        v-on="on"
+        @click="updateCurrentLogs()"
+      >
         יומן גידול<v-icon right>&#x1F4D6;</v-icon>
       </v-btn>
     </template>
@@ -83,7 +89,7 @@
         <v-data-table
           :search="search"
           :headers="headers"
-          :items="logList"
+          :items="cropLog"
           :page.sync="page"
           :items-per-page="itemsPerPage"
           hide-default-footer
@@ -96,13 +102,7 @@
             </p>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon
-              small
-              @click="
-                deleteLog(item)
-                getCycleLogs()
-              "
-            >
+            <v-icon small @click="deleteLog(item)">
               delete
             </v-icon>
           </template>
@@ -173,40 +173,25 @@ export default {
           cycleId: this.currentCycle.id,
           logName: this.logName,
           actor: this.actor,
-          logDate: this.logDate,
+          logDate: moment(this.logDate).format('L'),
           logNotes: this.logNotes
         })
+        //reset form values
         .then(this.$refs.form.reset())
-        .then(this.getCycleLogs)
     },
-    getCycleLogs() {
-      this.logList = []
-      let tempList = this.cropLog.filter(
-        obj => obj.cycleId == this.currentCycle.id
-      )
-      tempList.forEach(item => {
-        this.logList.push({
-          id: item.id,
-          logName: item.logName,
-          actor: item.actor,
-          logDate: moment(item.logDate).format('L'),
-          logNotes: item.logNotes
-        })
-      })
+    //get current cycle logs using store
+    updateCurrentLogs() {
+      this.$store.dispatch('bindCropLog')
     },
+
     deleteLog(item) {
-      fb.cropLog
-        .doc(item.id)
-        .delete()
-        .then(this.getCycleLogs())
+      fb.cropLog.doc(item.id).delete()
     }
   },
-  created() {
-    this.getCycleLogs()
-  },
+  created() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['farmId', 'currentCycle', 'cropLog']),
+    ...mapGetters(['farmId', 'currentCycle', 'cropLog', 'LOADED']),
 
     formattedDate() {
       return this.logDate ? moment(this.logDate).format('L') : ''

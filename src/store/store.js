@@ -190,9 +190,12 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('ferts', fb.fertilizer)
     }),
-    bindCropLog: firestoreAction(({ bindFirestoreRef }) => {
+    bindCropLog: firestoreAction(({ state, bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
-      return bindFirestoreRef('cropLog', fb.cropLog)
+      return bindFirestoreRef(
+        'cropLog',
+        fb.cropLog.where('cycleId', '==', state.currentCycle.id)
+      )
     }),
 
     bindWeather: firestoreAction(({ bindFirestoreRef }) => {
