@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-        מזון<v-icon right>&#x1F33D;</v-icon>
+        מזון<v-icon right>fas fa-carrot</v-icon>
       </v-btn>
     </template>
 
