@@ -1,14 +1,15 @@
 <template>
 
-  <v-layout>
+  <v-card>
+    <v-card-text>
     <v-row>
     <editPestCtrl />
     </v-row>
     <v-row>
     <EditChickenType />
     </v-row>
-  </v-layout>
-
+    </v-card-text>
+    </v-card>
 
 </template>
 

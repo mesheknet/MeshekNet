@@ -49,6 +49,7 @@
             </v-col>
           </v-row>
           <v-row v-if="addChicken">
+              <v-text-field label="שם סוג התרנגולת" v-model="NameChicken"></v-text-field>
             <v-col>
               <v-text-field label="כמות ביצים ממצועת" v-model="EggsAvg"></v-text-field>
             </v-col>
@@ -62,23 +63,15 @@
               >
             </v-col>
           </v-row>
-
-
-
-
-
-      
-
       <v-card-actions>
         <v-btn
           :loading="loading"
           block
           @click="
-            addPest = false
-            addPimplement()
+            dialog = false
           "
           color="success"
-          >הוסף סוג תרנגולת</v-btn
+          >עדכן תרנגולות</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -97,6 +90,7 @@ export default {
       loading: false,
       dialog: null,
       addChicken: false,
+      NameChicken:null,
       EggsAvg: null,
       FoodAvg: null,
       selectChicken: null,
@@ -105,55 +99,25 @@ export default {
     }
   },
   methods: {
-    addNewPesticide() {
-      let ref = fb.pesticide.doc()
-      ref
-        .set({
-          name: this.pesticideName,
-          supplier: this.supplierName,
-          id: ref.id
-        })
-        .then(
-          (this.selectedPesticide = this.pesticides.find(
-            obj => obj.id == ref.id
-          ))
-        )
-        .then((this.addPesticide = false))
-    },
+   
 
-    addNewPest() {
-      let ref = fb.pest.doc()
-      ref
-        .set({ name: this.pestName, id: ref.id })
-        .then((this.selectedPest = this.pests.find(obj => obj.id == ref.id)))
-        .then((this.addPest = false))
+    addNewChicken() {
+      var newChickens = {
+        id: fb.Chickens.doc().id,
+        name: this.NameChicken,
+        AverageEggs: this.EggsAvg,
+        DayAverageFood: this.FoodAvg
+      }
+      this.$store.commit('addNewChickens', newChickens),
+        (this.selectChicken = newChickens)
+     
     },
-    addPimplement() {
-      this.loading = true
-      let ref = fb.pImplement.doc()
-      ref
-        .set({
-          cropId: this.selectedCrop.id,
-          pestId: this.selectedPest.id,
-          pestName: this.selectedPest.name,
-          pesticideId: this.selectedPesticide.id,
-          pesticideName: this.selectedPesticide.name,
-          pesticideSupplier: this.selectedPesticide.supplier,
-          dosage: this.dosage,
-          vol: this.vol
-        })
-        .then(
-          (this.loading = false),
-          (this.dialog = false),
-          this.$refs.form.reset()
-        )
+    
+   
+    deleteChicken() {
+      fb.Chickens.doc(this.selectChicken.id).delete()
     },
-    deletePest() {
-      fb.pest.doc(this.selectedPest.id).delete()
-    },
-    deletePesticide() {
-      fb.pesticide.doc(this.selectedPesticide.id).delete()
-    }
+   
   },
   updated() {},
   computed: {

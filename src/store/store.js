@@ -97,7 +97,15 @@ export const store = new Vuex.Store({
     },
 
     //for coop
-
+    addNewChickens(state,newChickens){
+      let ref = fb.Chickens.doc()
+      ref.set({
+        id: ref.id,
+        AverageEggs:newChickens.AverageEggs,
+        DayAverageFood:newChickens.DayAverageFood,
+        name:newChickens.name
+      })
+    },
     setcurrentchickCycle(state, cycle) {
       state.currentchickCycle = cycle
     },
