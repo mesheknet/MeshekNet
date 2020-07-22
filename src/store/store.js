@@ -97,13 +97,13 @@ export const store = new Vuex.Store({
     },
 
     //for coop
-    addNewChickens(state,newChickens){
+    addNewChickens(state, newChickens) {
       let ref = fb.Chickens.doc()
       ref.set({
         id: ref.id,
-        AverageEggs:newChickens.AverageEggs,
-        DayAverageFood:newChickens.DayAverageFood,
-        name:newChickens.name
+        AverageEggs: newChickens.AverageEggs,
+        DayAverageFood: newChickens.DayAverageFood,
+        name: newChickens.name
       })
     },
     setcurrentchickCycle(state, cycle) {
@@ -268,6 +268,13 @@ export const store = new Vuex.Store({
     bindChickens: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('Chickens', fb.Chickens)
+    }),
+    bindCycleData: firestoreAction(({ state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'cycleData',
+        fb.cycleData.where('cycleId', '==', state.currentchickCycle.id)
+      )
     })
   },
 
@@ -355,6 +362,9 @@ export const store = new Vuex.Store({
     },
     selectedCoop: state => {
       return state.selectedCoop
+    },
+    cycleData: state => {
+      return state.cycleData
     }
   }
 })

@@ -1,7 +1,13 @@
 <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mt-6 white--text" color="light green" v-on="on">
+      <v-btn
+        block
+        class="mt-6 white--text"
+        color="light green"
+        v-on="on"
+        @click="updateCurrentCycleData()"
+      >
         מזון<v-icon right>fas fa-carrot</v-icon>
       </v-btn>
     </template>
@@ -11,7 +17,9 @@
         מזון
       </v-card-title>
 
-      <v-card-text> </v-card-text>
+      <v-card-text>
+        <p>כמות תערובת נוכחית:</p>
+      </v-card-text>
 
       <v-divider></v-divider>
 
@@ -33,11 +41,24 @@ export default {
       dialog: null
     }
   },
-  methods: {},
+  methods: {
+    //get current cycle data using store
+    updateCurrentCycleData() {
+      this.$store.dispatch('bindCycleData')
+    }
+  },
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters([])
+    ...mapGetters([
+      'userId',
+      'farmId',
+      'coop',
+      'Chickens',
+      'currentchickCycle',
+      'chickCycle',
+      'cycleData'
+    ])
   }
 }
 </script>
