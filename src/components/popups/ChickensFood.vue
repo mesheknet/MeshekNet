@@ -18,7 +18,8 @@
       </v-card-title>
 
       <v-card-text>
-        <p>כמות תערובת נוכחית:</p>
+        <p>כמות תערובת נוכחית: {{ this.currentchickCycle.food }}</p>
+        <p>כמות זו תספיק לעוד {{}} ימים</p>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -42,9 +43,16 @@ export default {
     }
   },
   methods: {
+    calcFood() {
+      let dailyFood = this.Chickens.find(
+        item => item.id == this.currentchickCycle.chickId
+      ).DayAverageFood
+      console.log(dailyFood)
+    },
     //get current cycle data using store
     updateCurrentCycleData() {
       this.$store.dispatch('bindCycleData')
+      this.calcFood()
     }
   },
   updated() {},
@@ -57,7 +65,8 @@ export default {
       'Chickens',
       'currentchickCycle',
       'chickCycle',
-      'cycleData'
+      'cycleData',
+      'Chickens'
     ])
   }
 }

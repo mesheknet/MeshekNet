@@ -5,7 +5,7 @@
     >
       <v-row>
         <v-col class="text-right" cols="12">
-          <h1 class=" mb-4">ברוכים הבאים למשק שלך.</h1>
+          <h1 class=" mb-4">ברוך הבא למשק שלך.</h1>
           <h4 class="subheading">
             ניהול המשק ביעילות ובפשטות<br />
             הישאר מחובר למשק שלך
