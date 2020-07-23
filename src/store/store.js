@@ -129,7 +129,9 @@ export const store = new Vuex.Store({
         farmId: state.farmId,
         CoopName: state.selectedCoop.CoopName,
         coopId: state.selectedCoop.id,
-        quantity: chick.quantity,
+        quantity: parseInt(chick.quantity),
+        currentChickens: parseInt(chick.quantity),
+        currentFood: 0,
         startDate: moment(state.startDate).format('L')
       })
     },
