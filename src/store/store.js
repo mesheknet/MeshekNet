@@ -356,6 +356,9 @@ export const store = new Vuex.Store({
     chickCycle: state => {
       return state.chickCycle
     },
+    allchickCycle: state => {
+      return state.allchickCycle
+    },
     selectedchickCycle: state => {
       return state.selectedchickCycle
     },

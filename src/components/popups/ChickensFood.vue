@@ -8,6 +8,7 @@
         v-on="on"
         @click="
           updateCurrentCycleData()
+          updateCurrentCycle()
           calcFood()
         "
       >
@@ -15,14 +16,16 @@
       </v-btn>
     </template>
 
-    <v-card>
+    <v-card v-if="this.currentChickCycle">
       <v-card-title class="green lighten-3" primary-title>
         מזון
       </v-card-title>
 
       <v-card-text>
-        <p>כמות תערובת נוכחית: {{ this.currentchickCycle.food }}</p>
-        <p>כמות זו תספיק לעוד {{ this.remainingFoodDays }} ימים</p>
+        <h5>
+          כמות תערובת נוכחית: {{ this.currentChickCycle.currentFood }} קילוגרם
+        </h5>
+        <h5>כמות זו תספיק לעוד {{ this.remainingFoodDays }} ימים</h5>
 
         <v-btn text class="ma-2" color="success" @click="addFill = true"
           >הוסף מילוי אחרון
@@ -71,6 +74,7 @@
               color="success"
               @click="
                 addNewFill()
+                calcFood()
                 addFill = false
               "
               >הוסף</v-btn
@@ -101,27 +105,35 @@ export default {
       dialog: null,
       dateMenu: false,
       remainingFoodDays: null,
+      currentChickCycle: null,
       addFill: false,
       lastFill: 0,
       fillDate: new Date().toISOString().substr(0, 10),
-      formattedFillDate: moment(this.fillDate).format('L'),
     }
   },
   methods: {
     calcFood() {
       let dailyFood = this.Chickens.find(
-        (item) => item.id == this.currentchickCycle.chickId
+        (item) => item.id == this.currentChickCycle.chickId
       ).DayAverageFood
       this.remainingFoodDays = (
-        this.currentchickCycle.currentFood /
-        (this.currentchickCycle.currentChickens * dailyFood)
+        this.currentChickCycle.currentFood /
+        (this.currentChickCycle.currentChickens * dailyFood)
       ).toFixed(0)
     },
 
     //add silo fill record to daily data, if not exist -> create new daily data object
     addNewFill() {
+      //add last fill to total amount of food
+
+      fb.chickCycle.doc(this.currentChickCycle.id).update({
+        currentFood:
+          parseInt(this.currentChickCycle.currentFood) +
+          parseInt(this.lastFill),
+      })
+
       let fillDateData = this.cycleData.find(
-        (item) => item.date == this.formattedFillDate
+        (item) => item.date == moment(this.fillDate).format('L')
       )
       if (!fillDateData) {
         fb.cycleData.doc().set({
@@ -129,27 +141,28 @@ export default {
           dailyEggs: null,
           dailyDeath: null,
           foodFill: this.lastFill,
-          date: this.formattedFillDate,
+          date: moment(this.fillDate).format('L'),
         })
       } else {
         let currentCycleDataId = this.cycleData.find(
-          (item) => item.date == this.formattedFillDate
+          (item) => item.date == moment(this.fillDate).format('L')
         ).id
         fb.cycleData.doc(currentCycleDataId).update({
           foodFill: this.lastFill,
         })
       }
-      let updatedCurrentFood = this.currentchickCycle.currentFood
-      updatedCurrentFood =
-        parseInt(updatedCurrentFood) + parseInt(this.lastFill)
-      fb.chickCycle.doc(this.currentchickCycle.id).update({
-        currentFood: updatedCurrentFood,
-      })
+      this.updateCurrentCycle()
     },
 
     //get current cycle data using store
     updateCurrentCycleData() {
       this.$store.dispatch('bindCycleData')
+    },
+    //update current food in local chickCycle object
+    updateCurrentCycle() {
+      this.currentChickCycle = this.allchickCycle.find(
+        (item) => item.id == this.currentchickCycle.id
+      )
     },
   },
   updated() {},
@@ -162,6 +175,7 @@ export default {
       'Chickens',
       'currentchickCycle',
       'chickCycle',
+      'allchickCycle',
       'cycleData',
       'Chickens',
     ]),

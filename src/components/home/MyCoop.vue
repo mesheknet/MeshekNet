@@ -59,7 +59,7 @@
         >
         <v-dialog v-model="deleteDialog" max-width="500px">
           <v-card>
-            <v-card-title style="font-size:20px"
+            <v-card-title style="font-size: 20px;"
               >האם אתה בטוח שברצונך למחוק מחזור תרנגולות זה?</v-card-title
             >
             <v-card-actions>
@@ -67,7 +67,7 @@
               <v-btn
                 dark
                 color="#4caf50"
-                style="font-size:15px"
+                style="font-size: 15px;"
                 text
                 @click="
                   deletechickCycle()
@@ -78,7 +78,7 @@
               <v-btn
                 dark
                 color="#f70810"
-                style="font-size:15px"
+                style="font-size: 15px;"
                 text
                 @click="deleteDialog = false"
                 >לא</v-btn
@@ -153,7 +153,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false
+      deleteDialog: false,
     }
   },
 
@@ -173,18 +173,17 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
-      'chickCycle'
+      'chickCycle',
     ]),
     //set delete button enabled or disabled
     isDisabled() {
       if (this.currentchickCycle) return true
       return false
-    }
+    },
   },
   methods: {
     setcurrentchickCycle(cycle) {
       this.$store.commit('setcurrentchickCycle', cycle)
-      console.log(this.currentchickCycle)
     },
 
     deletechickCycle() {
@@ -212,8 +211,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    }
-  }
+    },
+  },
 }
 </script>
 
