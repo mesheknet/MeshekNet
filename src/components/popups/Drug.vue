@@ -1,5 +1,5 @@
 <template>
-<v-dialog max-width="700" v-model="dialog">
+  <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn
         block
@@ -8,23 +8,23 @@
         v-on="on"
         @click="updateCurrentLogs()"
       >
-        תרופות<v-icon right>fas fa-history</v-icon>
+        מחלות<v-icon right>fas fa-history</v-icon>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="green lighten-3" primary-title>
-      תרופות
+        מחלות
       </v-card-title>
 
       <v-card-text>
-        <v-btn text class="ma-2" color="success" @click="addAct = true"
-          >הוסף תרופה</v-btn
+        <v-btn text class="ma-2" color="success" @click="addDisease = true"
+          >הוסף מחלה</v-btn
         >
-        <v-form class="px-3" ref="form" v-if="addAct">
+        <v-form class="px-3" ref="form" v-if="addDisease">
           <v-row>
             <v-col>
-              <v-text-field label="שם התרופה" v-model="logName"></v-text-field>
+              <v-text-field label="שם מחלה" v-model="logName"></v-text-field>
             </v-col>
             <v-col>
               <v-text-field label="נותן התרופה" v-model="actor"></v-text-field>
@@ -68,7 +68,7 @@
               color="success"
               @click="
                 addNewAct()
-                addAct = false
+                addDisease = false
               "
               >הוסף</v-btn
             >
@@ -100,13 +100,12 @@
               עדיין לא ניתנו תרופות למזור תרנגולות זה
             </p>
           </template>
-          
+
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="deleteLog(item)">
               delete
             </v-icon>
           </template>
-
         </v-data-table>
         <div class="text-center pt-2">
           <v-pagination
@@ -150,7 +149,7 @@ export default {
         { text: 'הערות', value: 'logNotes' },
         { text: 'מחיקה', value: 'actions' }
       ],
-       search: '',
+      search: '',
       page: 1,
       pageCount: 0,
       itemsPerPage: 5,
@@ -162,10 +161,10 @@ export default {
       logNotes: null,
       dateMenu: false,
       logList: [],
-      addAct: false
+      addDisease: false
     }
   },
-   methods: {
+  methods: {
     addNewAct() {
       fb.cropLog
         .doc()
