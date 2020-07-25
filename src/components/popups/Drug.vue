@@ -13,7 +13,11 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form class="px-3" ref="form">
+ <v-btn text class="ma-2" color="success" @click="addDiseaseChicken = true"
+          >הוסף מחלה</v-btn
+        >
+
+        <v-form class="px-3" ref="form" v-if="addDiseaseChicken">
         
           <v-row>
             <v-col>
@@ -209,7 +213,29 @@
               >
             </v-col>
           </v-row>
-
+          <v-menu
+            v-model="dateMenu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                prepend-icon="date_range"
+                :value="formattedDate"
+                label="תאריך התחלת מחלה"
+                readonly
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              locale="he-il"
+              v-model="startDate"
+              @input="dateMenu = false"
+            ></v-date-picker>
+          </v-menu>
          
         </v-form>
       </v-card-text>
@@ -256,7 +282,9 @@ export default {
       selectedTreatment: null,
       TreatmentName: null,
       selectedDrug: null,
+      addDiseaseChicken:false,
       DrugName: null,
+      dateMenu: false,
       dosage: null,
       vol: null
     }
