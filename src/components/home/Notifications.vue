@@ -21,13 +21,13 @@ export default {
       currentUser: null,
       farmName: null,
       ownerName: null,
-      loading: true
+      loading: true,
     }
   },
   created() {
-    fb.auth.onAuthStateChanged(user => {
+    fb.auth.onAuthStateChanged((user) => {
       if (user) {
-        this.lastSignIn = moment(user.metadata.lastSignIn).calendar()
+        this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
         this.setDetails()
       }
     })
@@ -36,11 +36,11 @@ export default {
   updated() {},
   methods: {
     setDetails() {
-      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
+      this.farmName = this.farms.find((obj) => obj.userId == this.userId).name
       this.ownerName = this.farmOwners.find(
-        obj => obj.userId == this.userId
+        (obj) => obj.userId == this.userId
       ).name
-    }
+    },
   },
   computed: {
     //get local data from firestore using the store
@@ -52,9 +52,9 @@ export default {
       'farms',
       'fields',
       'crops',
-      'cropCycle'
-    ])
-  }
+      'cropCycle',
+    ]),
+  },
 }
 </script>
 

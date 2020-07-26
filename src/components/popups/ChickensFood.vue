@@ -116,10 +116,29 @@ export default {
       let dailyFood = this.Chickens.find(
         (item) => item.id == this.currentChickCycle.chickId
       ).DayAverageFood
+
+      //calc remainig days till next fill
       this.remainingFoodDays = (
         this.currentChickCycle.currentFood /
         (this.currentChickCycle.currentChickens * dailyFood)
       ).toFixed(0)
+
+      //update currentFood based on time passed since last sign in
+      let lastSignIn
+      fb.auth.onAuthStateChanged((user) => {
+        if (user) {
+          lastSignIn = user.metadata.lastSignInTime
+        }
+      })
+
+      let timeFromLastLogin = moment(lastSignIn).diff(moment(), 'days')
+      let foodToReduce =
+        dailyFood * this.currentChickCycle.currentChickens * timeFromLastLogin
+
+      fb.chickCycle.doc(this.currentChickCycle.id).update({
+        currentFood:
+          parseInt(this.currentChickCycle.currentFood) - parseInt(foodToReduce),
+      })
     },
 
     //add silo fill record to daily data, if not exist -> create new daily data object
@@ -136,22 +155,27 @@ export default {
         (item) => item.date == moment(this.fillDate).format('L')
       )
       if (!fillDateData) {
-        fb.cycleData.doc().set({
-          cycleId: this.currentchickCycle.id,
-          dailyEggs: null,
-          dailyDeath: null,
-          foodFill: this.lastFill,
-          date: moment(this.fillDate).format('L'),
-        })
+        fb.cycleData
+          .doc()
+          .set({
+            cycleId: this.currentchickCycle.id,
+            dailyEggs: null,
+            dailyDeath: null,
+            foodFill: this.lastFill,
+            date: moment(this.fillDate).format('L'),
+          })
+          .then(this.updateCurrentCycle())
       } else {
         let currentCycleDataId = this.cycleData.find(
           (item) => item.date == moment(this.fillDate).format('L')
         ).id
-        fb.cycleData.doc(currentCycleDataId).update({
-          foodFill: this.lastFill,
-        })
+        fb.cycleData
+          .doc(currentCycleDataId)
+          .update({
+            foodFill: this.lastFill,
+          })
+          .then(this.updateCurrentCycle())
       }
-      this.updateCurrentCycle()
     },
 
     //get current cycle data using store
