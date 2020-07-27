@@ -21,6 +21,7 @@ export const store = new Vuex.Store({
     stations: [],
     users: [],
     userId: null,
+    currentUser: null,
     farmId: null,
     farms: [],
     farmOwners: [],
@@ -153,6 +154,13 @@ export const store = new Vuex.Store({
     bindUsers: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('users', fb.user)
+    }),
+    bindCurrentUser: firestoreAction(({ state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'currentUser',
+        fb.user.where('userId', '==', state.userId)
+      )
     }),
     bindFarmOwners: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
@@ -297,6 +305,9 @@ export const store = new Vuex.Store({
     },
     users: state => {
       return state.users
+    },
+    currentUser: state => {
+      return state.currentUser
     },
     farms: state => {
       return state.farms

@@ -92,6 +92,7 @@ export default {
         )
         this.$store.dispatch('bindWeather')
 
+        this.updateLoginData()
         this.feedback = null
         this.$router.push({ name: 'Notifications' })
       }
@@ -100,8 +101,9 @@ export default {
     async bindDB() {
       await this.$store.dispatch('bindFarms')
       await this.$store.dispatch('bindUsers')
-      await this.$store.dispatch('bindFarmOwners')
       await this.$store.dispatch('updateUid')
+      await this.$store.dispatch('bindFarmOwners')
+      await this.$store.dispatch('bindCurrentUser')
       await this.$store.dispatch('updateFid')
       await this.$store.dispatch('bindCrops')
       await this.$store.dispatch('bindFields')
@@ -152,10 +154,19 @@ export default {
           })
         })
     },
+
+    //update user's login time data
+    updateLoginData() {
+      let userLastLogin = this.currentUser[0].currentLogin
+      fb.user.doc(this.currentUser[0].email).update({
+        lastLogin: userLastLogin,
+        currentLogin: moment().format('L'),
+      })
+    },
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['farmId', 'farms']),
+    ...mapGetters(['farmId', 'farms', 'userId', 'users', 'currentUser']),
   },
 }
 </script>

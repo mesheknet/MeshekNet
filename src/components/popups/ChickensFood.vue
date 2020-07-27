@@ -123,22 +123,21 @@ export default {
         (this.currentChickCycle.currentChickens * dailyFood)
       ).toFixed(0)
 
-      //update currentFood based on time passed since last sign in
-      let lastSignIn
-      fb.auth.onAuthStateChanged((user) => {
-        if (user) {
-          lastSignIn = user.metadata.lastSignInTime
-        }
-      })
+      //update currentFood based on time passed since last login
+      let lastLogin = this.currentUser[0].lastLogin
 
-      let timeFromLastLogin = moment(lastSignIn).diff(moment(), 'days')
+      let daysFromLastLogin = moment(lastLogin).diff(moment(), 'days')
       let foodToReduce =
-        dailyFood * this.currentChickCycle.currentChickens * timeFromLastLogin
+        dailyFood * this.currentChickCycle.currentChickens * daysFromLastLogin
 
-      fb.chickCycle.doc(this.currentChickCycle.id).update({
-        currentFood:
-          parseInt(this.currentChickCycle.currentFood) - parseInt(foodToReduce),
-      })
+      //in case of multiple logins in one day, do not reduce the food from currentFood
+      let oldCurrentFood = this.currentChickCycle.currentFood
+      if (oldCurrentFood != this.currentChickCycle.lastCurrentFood) {
+        fb.chickCycle.doc(this.currentChickCycle.id).update({
+          lastCurrentFood: oldCurrentFood,
+          currentFood: this.currentChickCycle.currentFood - foodToReduce,
+        })
+      }
     },
 
     //add silo fill record to daily data, if not exist -> create new daily data object
@@ -195,6 +194,7 @@ export default {
     ...mapGetters([
       'userId',
       'farmId',
+      'currentUser',
       'coop',
       'Chickens',
       'currentchickCycle',
