@@ -8,6 +8,9 @@
     <v-row>
     <EditChickenType />
     </v-row>
+    <v-row>
+    <AddDisease />
+    </v-row>
     </v-card-text>
     </v-card>
 
@@ -17,11 +20,12 @@
 import { mapGetters } from 'vuex'
 import editPestCtrl from './EditPestCtrl'
 import EditChickenType from './EditChickenType'
+import AddDisease from './AddDisease'
 
 
 export default {
   name: 'Admin',
-  components: { editPestCtrl , EditChickenType },
+  components: { editPestCtrl , EditChickenType , AddDisease },
   data() {
     return {
       dialog: null
