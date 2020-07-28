@@ -56,7 +56,6 @@ export const store = new Vuex.Store({
     selectedDisease: {},
     selectedTypeTreatment: {},
     selectedDrug: {}
-
   },
   mutations: {
     ...vuexfireMutations,
@@ -129,8 +128,6 @@ export const store = new Vuex.Store({
       state.selectedCoop = coop
     },
 
-
-
     updateSelectedDisease(state, Disease) {
       state.selectedDisease = Disease
     },
@@ -140,7 +137,6 @@ export const store = new Vuex.Store({
     updateSelectedDrug(state, Drug) {
       state.selectedDrug = Drug
     },
-    
 
     addchickCycle(state, chick) {
       let ref = fb.chickCycle.doc()
@@ -176,7 +172,7 @@ export const store = new Vuex.Store({
     NewDrug(state, drug) {
       fb.drug.doc(drug.id).set(drug)
     },
-    
+
     NewTreatment(state, treatment) {
       let ref = fb.treatment.doc()
       ref.set({
@@ -187,11 +183,9 @@ export const store = new Vuex.Store({
         nameDisease: state.selectedDisease.name,
         idDrug: state.selectedDrug.id,
         idTypeTreatment: state.selectedTypeTreatment.id,
-        idDisease: state.selectedDisease.id,
+        idDisease: state.selectedDisease.id
       })
-      
-    },
-
+    }
   },
   actions: {
     //data binding using vuexfire
@@ -280,9 +274,14 @@ export const store = new Vuex.Store({
       commit('updateUid', uid)
     },
 
-    updateFid({ commit, state }) {
-      let fid = state.farms.find(obj => obj.userId == state.userId).id
-      commit('updateFid', fid)
+    async updateFid({ commit, state }) {
+      let fid = null
+      await fb.auth.onAuthStateChanged(user => {
+        if (user) {
+          fid = state.users.find(item => item.userId == user.uid).farmId
+          commit('updateFid', fid)
+        }
+      })
     },
 
     //`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=cf89017588e993af02c5a5e11390cef3&units=metric&lang=he`
@@ -349,8 +348,7 @@ export const store = new Vuex.Store({
     bindDrug: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('drug', fb.drug)
-    }),
-    
+    })
   },
 
   getters: {
@@ -459,7 +457,7 @@ export const store = new Vuex.Store({
     treatType: state => {
       return state.treatType
     },
-    
+
     selectedDisease: state => {
       return state.selectedDisease
     },
@@ -468,6 +466,6 @@ export const store = new Vuex.Store({
     },
     selectedDrug: state => {
       return state.selectedDrug
-    },
+    }
   }
 })

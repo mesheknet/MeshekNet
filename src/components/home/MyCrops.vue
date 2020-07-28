@@ -28,11 +28,7 @@
         <div class="container_content_details_areaSize">
           <span>גודל השטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
         </div>
-        <div class="container_content_details_btnEdit">
-          <v-btn class="mx-2" fab dark small color="cyan">
-            <v-icon dark>edit</v-icon>
-          </v-btn>
-        </div>
+        <div class="container_content_details_btnEdit"></div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn" v-if="currentCycle">
@@ -42,19 +38,13 @@
         <cropLog />
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
-      <div class="container_content_btndel">
-        <v-btn
-          fab
-          dark
-          color="red"
-          :disabled="!isDisabled"
-          @click="deleteDialog = true"
-        >
+      <div class="container_content_btndel" v-if="currentCycle">
+        <v-btn fab dark color="red" @click="deleteDialog = true">
           <v-icon>fas fa-trash</v-icon></v-btn
         >
         <v-dialog v-model="deleteDialog" max-width="500px">
           <v-card>
-            <v-card-title style="font-size:20px"
+            <v-card-title style="font-size: 20px;"
               >האם אתה בטוח שברצונך למחוק מחזור גידול זה?</v-card-title
             >
             <v-card-actions>
@@ -62,7 +52,7 @@
               <v-btn
                 dark
                 color="#4caf50"
-                style="font-size:15px"
+                style="font-size: 15px;"
                 text
                 @click="
                   deleteCycle()
@@ -73,7 +63,7 @@
               <v-btn
                 dark
                 color="#f70810"
-                style="font-size:15px"
+                style="font-size: 15px;"
                 text
                 @click="deleteDialog = false"
                 >לא</v-btn
@@ -145,7 +135,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false
+      deleteDialog: false,
     }
   },
 
@@ -153,11 +143,10 @@ export default {
   updated() {},
 
   mounted() {
+    this.setCurrentCycle(null)
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
-
-    // fb.crop.doc('alrnBbp5vtyC0CGsU90i').update({ irrigation: arr })
   },
   computed: {
     //get local data from firestore using the store
@@ -167,12 +156,8 @@ export default {
       'fields',
       'crops',
       'currentCycle',
-      'cropCycle'
+      'cropCycle',
     ]),
-    isDisabled() {
-      if (this.currentCycle) return true
-      return false
-    }
   },
   methods: {
     setCurrentCycle(cycle) {
@@ -203,8 +188,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    }
-  }
+    },
+  },
 }
 </script>
 

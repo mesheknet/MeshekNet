@@ -99,12 +99,12 @@ export default {
     },
     //set vuex store to hold db data and keep it locally synced
     async bindDB() {
-      await this.$store.dispatch('bindFarms')
-      await this.$store.dispatch('bindUsers')
       await this.$store.dispatch('updateUid')
-      await this.$store.dispatch('bindFarmOwners')
       await this.$store.dispatch('bindCurrentUser')
+      await this.$store.dispatch('bindUsers')
       await this.$store.dispatch('updateFid')
+      await this.$store.dispatch('bindFarms')
+      await this.$store.dispatch('bindFarmOwners')
       await this.$store.dispatch('bindCrops')
       await this.$store.dispatch('bindFields')
       await this.$store.dispatch('bindAllCycles')
@@ -120,7 +120,7 @@ export default {
       await this.$store.dispatch('bindallchickCycle')
       await this.$store.dispatch('bindchickCycle')
 
-       await this.$store.dispatch('bindTreatType')
+      await this.$store.dispatch('bindTreatType')
       await this.$store.dispatch('bindDisease')
       await this.$store.dispatch('bindTreatment')
       await this.$store.dispatch('bindDrug')

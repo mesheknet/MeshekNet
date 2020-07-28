@@ -20,7 +20,9 @@
           }}
         </div>
         <div class="container_content_details_kind">
-          <span>כמות תרנגולות:</span><br />{{ this.currentchickCycle.quantity }}
+          <span>כמות תרנגולות נוכחית:</span><br />{{
+            this.currentchickCycle.currentChickens
+          }}
         </div>
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
@@ -30,14 +32,10 @@
         </div>
         <div class="container_content_details_areaSize">
           <span>כמות תרנגולות התחלתית:</span><br />{{
-            this.currentchickCycle.startDate
+            this.currentchickCycle.quantity
           }}
         </div>
-        <div class="container_content_details_btnEdit">
-          <a class="btn-floating cyan pulse"
-            ><i class="material-icons">edit</i></a
-          >
-        </div>
+        <div class="container_content_details_btnEdit"></div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn" v-if="currentchickCycle">
@@ -47,14 +45,8 @@
         <Mortality />
       </div>
       <!--  container_content_btndel-Secondary grid in container_content Controls btn green -->
-      <div class="container_content_btndel">
-        <v-btn
-          fab
-          dark
-          color="red"
-          :disabled="!isDisabled"
-          @click="deleteDialog = true"
-        >
+      <div class="container_content_btndel" v-if="currentchickCycle">
+        <v-btn fab dark color="red" @click="deleteDialog = true">
           <v-icon>fas fa-trash</v-icon></v-btn
         >
         <v-dialog v-model="deleteDialog" max-width="500px">
@@ -161,6 +153,7 @@ export default {
   updated() {},
 
   mounted() {
+    this.setcurrentchickCycle(null)
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
@@ -175,11 +168,6 @@ export default {
       'currentchickCycle',
       'chickCycle',
     ]),
-    //set delete button enabled or disabled
-    isDisabled() {
-      if (this.currentchickCycle) return true
-      return false
-    },
   },
   methods: {
     setcurrentchickCycle(cycle) {

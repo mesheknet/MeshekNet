@@ -92,16 +92,16 @@ export default {
   data() {
     return {
       valid: true,
-      nameRules: [v => !!v || 'נא להזין שם'],
+      nameRules: [(v) => !!v || 'נא להזין שם'],
       emailRules: [
-        v => !!v || 'נא להזין כתובת מייל',
-        v => /.+@.+\..+/.test(v) || 'נא להזין כתובת מייל חוקית'
+        (v) => !!v || 'נא להזין כתובת מייל',
+        (v) => /.+@.+\..+/.test(v) || 'נא להזין כתובת מייל חוקית',
       ],
       passwordRules: [
-        v => !!v || 'נא להזין סיסמה',
-        v => v.length >= 8 || 'סיסמה בת 8 תווים לפחות'
+        (v) => !!v || 'נא להזין סיסמה',
+        (v) => v.length >= 8 || 'סיסמה בת 8 תווים לפחות',
       ],
-      phoneRules: [v => !!v || 'נא להזין מספר טלפון'],
+      phoneRules: [(v) => !!v || 'נא להזין מספר טלפון'],
       show: false,
       email: null,
       userId: null,
@@ -112,7 +112,7 @@ export default {
       phone: null,
       feedback: null,
       loading: false,
-      selectedStation: null
+      selectedStation: null,
     }
   },
   methods: {
@@ -123,25 +123,28 @@ export default {
         let ref = fb.user.doc(this.email)
         let refOwner = fb.farmOwner.doc()
         let refFarm = fb.farm.doc()
-        ref.get().then(doc => {
+        ref.get().then((doc) => {
           if (doc.exists) {
             this.feedback = 'משתמש קיים במערכת'
           } else {
             fb.auth
               .createUserWithEmailAndPassword(this.email, this.password)
-              .then(cred => {
+              .then((cred) => {
                 this.userId = cred.user.uid
                 ref.set({
                   email: this.email,
                   userId: this.userId,
+                  farmId: refFarm.id,
                   regDate: moment().format('L'),
-                  phone: this.phone
+                  lastLogin: moment().format('L'),
+                  currentLogin: moment().format('L'),
+                  phone: this.phone,
                 })
               })
               .then(() => {
                 refOwner.set({
                   userId: this.userId,
-                  name: this.farmOwner
+                  name: this.farmOwner,
                 })
               })
               .then(() => {
@@ -149,25 +152,25 @@ export default {
                   name: this.farmName,
                   address: this.address,
                   userId: this.userId,
-                  weatherStation: this.selectedStation.id
+                  weatherStation: this.selectedStation.id,
                 })
               })
               .then(() => {
                 this.$router.push({ name: 'Login' })
               })
-              .catch(err => {
+              .catch((err) => {
                 console.log(err)
                 this.feedback = err.message
               })
           }
         })
       }
-    }
+    },
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['stations'])
-  }
+    ...mapGetters(['stations']),
+  },
 }
 </script>
 
