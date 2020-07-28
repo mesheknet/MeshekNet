@@ -22,8 +22,9 @@
             <v-col>
               <v-select
                 v-model="selectedDisease"
-                :items="pests"
+                :items="disease"
                 label="בחר או הוסף מחלה"
+                @input="getDisease"
                 item-text="name"
                 return-object
               ></v-select>
@@ -35,6 +36,7 @@
                 fab
                 x-small
                 dark
+                
                 color="teal darken-2"
               >
                 <v-icon dark>add</v-icon>
@@ -69,9 +71,10 @@
             <v-col>
               <v-select
                 v-model="selectedTypeTreatment"
-                :items="pesticides"
+                :items="treatType"
                 label="בחר או הוסף סוג טיפול"
                 item-text="name"
+                @input="getTypeTreatment"
                 return-object
               ></v-select>
             </v-col>
@@ -111,67 +114,22 @@
             <v-col>
               <v-btn
                 text
-                @click="TypeTreatment()"
+                @click="addNewTypeTreatment()"
                 class="ma-2"
                 color="success"
                 >הוסף</v-btn
               >
             </v-col>
           </v-row>
-          <v-row>
-            <v-col>
-              <v-select
-                v-model="selectedTreatment"
-                :items="pests"
-                label="בחר טיפול או הוסף חדש"
-                item-text="name"
-                return-object
-              ></v-select>
-            </v-col>
-            <v-col>
-              <v-btn
-                @click="addTreatment = true"
-                class="ma-2"
-                fab
-                x-small
-                dark
-                color="teal darken-2"
-              >
-                <v-icon dark>add</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                v-if="selectedTreatment"
-                @click="deleteTreatment"
-                class="ma-2"
-                fab
-                x-small
-                dark
-                color="red darken-2"
-              >
-                <v-icon dark>delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row v-if="addTreatment">
-            <v-col>
-              <v-text-field label="תאור הטיפול" v-model="TreatmentName"></v-text-field>
-            </v-col>
-
-            <v-col>
-              <v-btn text @click="addNewTreatment()" class="ma-2" color="success"
-                >הוסף</v-btn
-              >
-            </v-col>
-          </v-row>
+          
             <v-row>
             <v-col>
               <v-select
                 v-model="selectedDrug"
-                :items="pests"
+                :items="drug"
                 label="בחר או הוסף תרופה"
                 item-text="name"
+                @input="getDrug"
                 return-object
               ></v-select>
             </v-col>
@@ -212,29 +170,11 @@
               >
             </v-col>
           </v-row>
-          <v-menu
-            v-model="dateMenu"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                prepend-icon="date_range"
-                :value="formattedDate"
-                label="תאריך התחלת מחלה"
-                readonly
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              locale="he-il"
-              v-model="startDate"
-              @input="dateMenu = false"
-            ></v-date-picker>
-          </v-menu>
+          <v-row>
+          <v-col>
+              <v-text-field label="תאור הטיפול" v-model="TreatmentName"></v-text-field>
+            </v-col>
+          </v-row>
          
         </v-form>
       </v-card-text>
@@ -246,9 +186,7 @@
           :loading="loading"
           block
           @click="
-            addPesticide = false
-            addPest = false
-            addPimplement()
+            addNewTreatment()
           "
           color="success"
           >הוסף מחלה </v-btn
@@ -289,60 +227,59 @@ export default {
     }
   },
   methods: {
-    addNewPesticide() {
-      let ref = fb.pesticide.doc()
-      ref
-        .set({
-          name: this.pesticideName,
-          supplier: this.supplierName,
-          id: ref.id
-        })
-        .then(
-          (this.selectedPesticide = this.pesticides.find(
-            obj => obj.id == ref.id
-          ))
-        )
-        .then((this.addPesticide = false))
+     getDisease() {
+      this.$store.commit('updateSelectedDisease', this.selectedDisease)
     },
 
-    addNewPest() {
-      let ref = fb.pest.doc()
-      ref
-        .set({ name: this.pestName, id: ref.id })
-        .then((this.selectedPest = this.pests.find(obj => obj.id == ref.id)))
-        .then((this.addPest = false))
+     getTypeTreatment() {
+      this.$store.commit('updateSelectedTypeTreatment', this.selectedTypeTreatment)
     },
-    addPimplement() {
-      this.loading = true
-      let ref = fb.pImplement.doc()
-      ref
-        .set({
-          cropId: this.selectedCrop.id,
-          pestId: this.selectedPest.id,
-          pestName: this.selectedPest.name,
-          pesticideId: this.selectedPesticide.id,
-          pesticideName: this.selectedPesticide.name,
-          pesticideSupplier: this.selectedPesticide.supplier,
-          dosage: this.dosage,
-          vol: this.vol
-        })
-        .then(
-          (this.loading = false),
-          (this.dialog = false),
-          this.$refs.form.reset()
-        )
+
+     getDrug() {
+      this.$store.commit('updateSelectedDrug', this.selectedDrug)
     },
-    deletePest() {
-      fb.pest.doc(this.selectedPest.id).delete()
+
+   addNewDisease() {
+      var NewDisease = {
+        id: fb.disease.doc().id,
+        name: this.DiseasName,
+      }
+      this.$store.commit('NewDisease', NewDisease),
+        (this.selectedDisease = NewDisease)
+        this.$store.commit('updateSelectedDisease', this.selectedDisease)
     },
-    deletePesticide() {
-      fb.pesticide.doc(this.selectedPesticide.id).delete()
-    }
+    addNewTypeTreatment() {
+      var NewTypeTreatment = {
+        id: fb.treatType.doc().id,
+        name: this.TypeTreatmentName,
+      }
+      this.$store.commit('NewTypeTreatment', NewTypeTreatment),
+        (this.selectedTypeTreatment = NewTypeTreatment)
+        this.$store.commit('updateSelectedTypeTreatment', this.selectedTypeTreatment)
+    },
+    addNewDrug() {
+      var NewDrug = {
+        id: fb.drug.doc().id,
+        name: this.DrugName,
+      }
+      this.$store.commit('NewDrug', NewDrug),
+        (this.selectedDrug = NewDrug)
+        this.$store.commit('updateSelectedDrug', this.selectedDrug)
+        
+    },
+    addNewTreatment() {
+      var NewTreatment = {
+        id: fb.treatment.doc().id,
+        name: this.TreatmentName,
+      }
+      this.$store.commit('NewTreatment', NewTreatment)
+       
+    },
   },
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['pests', 'pesticides', 'pImplement', 'crops'])
+    ...mapGetters(['drug', 'treatType', 'disease', 'treatment'])
   }
 }
 </script>

@@ -48,7 +48,15 @@ export const store = new Vuex.Store({
     chickCycle: [],
     selectedchickCycle: {},
     selectedCoop: {},
-    currentchickCycle: {}
+    currentchickCycle: {},
+    drug: {},
+    treatment: {},
+    treatType: {},
+    disease: {},
+    selectedDisease: {},
+    selectedTypeTreatment: {},
+    selectedDrug: {}
+
   },
   mutations: {
     ...vuexfireMutations,
@@ -121,6 +129,19 @@ export const store = new Vuex.Store({
       state.selectedCoop = coop
     },
 
+
+
+    updateSelectedDisease(state, Disease) {
+      state.selectedDisease = Disease
+    },
+    updateSelectedTypeTreatment(state, TypeTreatment) {
+      state.selectedTypeTreatment = TypeTreatment
+    },
+    updateSelectedDrug(state, Drug) {
+      state.selectedDrug = Drug
+    },
+    
+
     addchickCycle(state, chick) {
       let ref = fb.chickCycle.doc()
       ref.set({
@@ -143,7 +164,34 @@ export const store = new Vuex.Store({
         CoopName: Coop.CoopName,
         maxCapacity: Coop.maxCapacity
       })
-    }
+    },
+
+    NewDisease(state, disease) {
+      fb.disease.doc(disease.id).set(disease)
+    },
+
+    NewTypeTreatment(state, treatType) {
+      fb.treatType.doc(treatType.id).set(treatType)
+    },
+    NewDrug(state, drug) {
+      fb.drug.doc(drug.id).set(drug)
+    },
+    
+    NewTreatment(state, treatment) {
+      let ref = fb.treatment.doc()
+      ref.set({
+        id: ref.id,
+        name: treatment.name,
+        nameDrug: state.selectedDrug.name,
+        nameTypeTreatment: state.selectedTypeTreatment.name,
+        nameDisease: state.selectedDisease.name,
+        idDrug: state.selectedDrug.id,
+        idTypeTreatment: state.selectedTypeTreatment.id,
+        idDisease: state.selectedDisease.id,
+      })
+      
+    },
+
   },
   actions: {
     //data binding using vuexfire
@@ -285,7 +333,24 @@ export const store = new Vuex.Store({
         'cycleData',
         fb.cycleData.where('cycleId', '==', state.currentchickCycle.id)
       )
-    })
+    }),
+    bindTreatType: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('treatType', fb.treatType)
+    }),
+    bindDisease: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('disease', fb.disease)
+    }),
+    bindTreatment: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('treatment', fb.treatment)
+    }),
+    bindDrug: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('drug', fb.drug)
+    }),
+    
   },
 
   getters: {
@@ -381,6 +446,28 @@ export const store = new Vuex.Store({
     },
     cycleData: state => {
       return state.cycleData
-    }
+    },
+    drug: state => {
+      return state.drug
+    },
+    treatment: state => {
+      return state.treatment
+    },
+    disease: state => {
+      return state.disease
+    },
+    treatType: state => {
+      return state.treatType
+    },
+    
+    selectedDisease: state => {
+      return state.selectedDisease
+    },
+    selectedTypeTreatment: state => {
+      return state.selectedTypeTreatment
+    },
+    selectedDrug: state => {
+      return state.selectedDrug
+    },
   }
 })

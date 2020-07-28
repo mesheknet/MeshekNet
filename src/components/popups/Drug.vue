@@ -127,7 +127,7 @@ export default {
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['pests', 'pesticides', 'pImplement', 'crops'])
+    ...mapGetters(['drug', 'treatType', 'disease', 'treatment'])
   }
 }
 </script>

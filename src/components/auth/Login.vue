@@ -119,6 +119,11 @@ export default {
       await this.$store.dispatch('bindcoop')
       await this.$store.dispatch('bindallchickCycle')
       await this.$store.dispatch('bindchickCycle')
+
+       await this.$store.dispatch('bindTreatType')
+      await this.$store.dispatch('bindDisease')
+      await this.$store.dispatch('bindTreatment')
+      await this.$store.dispatch('bindDrug')
     },
 
     async getWeatherData(station) {
