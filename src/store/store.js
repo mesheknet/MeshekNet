@@ -54,6 +54,7 @@ export const store = new Vuex.Store({
     treatType: {},
     disease: {},
     selectedDisease: {},
+    DiseasechickCycle:{},
     selectedTypeTreatment: {},
     selectedDrug: {}
   },
@@ -137,6 +138,9 @@ export const store = new Vuex.Store({
     updateSelectedDrug(state, Drug) {
       state.selectedDrug = Drug
     },
+    updateselectedTret(state, Tret) {
+      state.selectedTret = Tret
+    },
 
     addchickCycle(state, chick) {
       let ref = fb.chickCycle.doc()
@@ -185,7 +189,23 @@ export const store = new Vuex.Store({
         idTypeTreatment: state.selectedTypeTreatment.id,
         idDisease: state.selectedDisease.id
       })
-    }
+    },
+
+    addDiseasesCycle(state, DiseasesCycle) {
+      let ref = fb.DiseasechickCycle.doc()
+      ref.set({
+        id: ref.id,
+        Description: DiseasesCycle.Description,
+        idChickens: state.currentchickCycle.id,
+        nameDrug: state.selectedTret.nameDrug,
+        nameTypeTreatment: state.selectedTret.nameTypeTreatment ,
+        nameDisease: state.selectedTret.nameDisease ,
+        idDrug: state.selectedTret.idDrug ,
+        idTypeTreatment: state.selectedTret.idTypeTreatment,
+        idDisease: state.selectedTret.idDisease ,
+        
+      })
+    },
   },
   actions: {
     //data binding using vuexfire
@@ -348,7 +368,12 @@ export const store = new Vuex.Store({
     bindDrug: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('drug', fb.drug)
-    })
+    }),
+    bindDiseasechickCycle: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('DiseasechickCycle', fb.DiseasechickCycle)
+    }),
+    
   },
 
   getters: {
@@ -466,6 +491,9 @@ export const store = new Vuex.Store({
     },
     selectedDrug: state => {
       return state.selectedDrug
-    }
+    },
+    DiseasechickCycle: state => {
+      return state.DiseasechickCycle
+    },
   }
 })

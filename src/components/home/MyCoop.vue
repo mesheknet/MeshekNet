@@ -40,7 +40,7 @@
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
       <div class="container_content_btn" v-if="currentchickCycle">
         <ChickensFood />
-        <Drug />
+        <Diseases />
         <Eggs />
         <Mortality />
       </div>
@@ -129,7 +129,7 @@ const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import ChickensFood from '@/components/popups/ChickensFood'
-import Drug from '@/components/popups/Drug'
+import Diseases from '@/components/popups/Diseases'
 import Eggs from '@/components/popups/Eggs'
 import Mortality from '@/components/popups/Mortality'
 import AddCycleChickens from '@/components/popups/AddCycleChickens'
@@ -138,7 +138,7 @@ import AddCycleChickens from '@/components/popups/AddCycleChickens'
 
 export default {
   name: 'MyCroop',
-  components: { ChickensFood, Drug, Eggs, Mortality, AddCycleChickens },
+  components: { ChickensFood, Diseases, Eggs, Mortality, AddCycleChickens },
 
   data() {
     return {
