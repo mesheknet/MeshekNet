@@ -49,12 +49,13 @@ export const store = new Vuex.Store({
     selectedchickCycle: {},
     selectedCoop: {},
     currentchickCycle: {},
+    currentChickCycle: {},
     drug: {},
     treatment: {},
     treatType: {},
     disease: {},
     selectedDisease: {},
-    DiseasechickCycle:{},
+    DiseasechickCycle: {},
     selectedTypeTreatment: {},
     selectedDrug: {}
   },
@@ -198,14 +199,13 @@ export const store = new Vuex.Store({
         Description: DiseasesCycle.Description,
         idChickens: state.currentchickCycle.id,
         nameDrug: state.selectedTret.nameDrug,
-        nameTypeTreatment: state.selectedTret.nameTypeTreatment ,
-        nameDisease: state.selectedTret.nameDisease ,
-        idDrug: state.selectedTret.idDrug ,
+        nameTypeTreatment: state.selectedTret.nameTypeTreatment,
+        nameDisease: state.selectedTret.nameDisease,
+        idDrug: state.selectedTret.idDrug,
         idTypeTreatment: state.selectedTret.idTypeTreatment,
-        idDisease: state.selectedTret.idDisease ,
-        
+        idDisease: state.selectedTret.idDisease
       })
-    },
+    }
   },
   actions: {
     //data binding using vuexfire
@@ -353,6 +353,13 @@ export const store = new Vuex.Store({
         fb.cycleData.where('cycleId', '==', state.currentchickCycle.id)
       )
     }),
+    bindCurrentChickCycle: firestoreAction(({ state, bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef(
+        'currentChickCycle',
+        fb.chickCycle.where('id', '==', state.currentchickCycle.id)
+      )
+    }),
     bindTreatType: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('treatType', fb.treatType)
@@ -372,8 +379,7 @@ export const store = new Vuex.Store({
     bindDiseasechickCycle: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('DiseasechickCycle', fb.DiseasechickCycle)
-    }),
-    
+    })
   },
 
   getters: {
@@ -464,6 +470,9 @@ export const store = new Vuex.Store({
     currentchickCycle: state => {
       return state.currentchickCycle
     },
+    currentChickCycle: state => {
+      return state.currentchickCycle
+    },
     selectedCoop: state => {
       return state.selectedCoop
     },
@@ -494,6 +503,6 @@ export const store = new Vuex.Store({
     },
     DiseasechickCycle: state => {
       return state.DiseasechickCycle
-    },
+    }
   }
 })

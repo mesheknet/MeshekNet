@@ -86,13 +86,14 @@ export default {
         //set vuex store to hold db data and keep it locally synced
         await this.bindDB()
 
+        this.updateLoginData()
+
         //get weather details from ims, update record in firestore
         this.getWeatherData(
           this.farms.find((obj) => obj.id == this.farmId).weatherStation
         )
         this.$store.dispatch('bindWeather')
 
-        this.updateLoginData()
         this.feedback = null
         this.$router.push({ name: 'Notifications' })
       }
@@ -119,7 +120,6 @@ export default {
       await this.$store.dispatch('bindcoop')
       await this.$store.dispatch('bindallchickCycle')
       await this.$store.dispatch('bindchickCycle')
-
       await this.$store.dispatch('bindTreatType')
       await this.$store.dispatch('bindDisease')
       await this.$store.dispatch('bindTreatment')
