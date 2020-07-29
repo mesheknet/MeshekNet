@@ -180,18 +180,17 @@ export default {
         dailyFood * this.currentchickCycle.currentChickens * daysFromLastLogin
 
       //in case of multiple logins in one day, do not reduce the food from currentFood
-      let oldCurrentFood = this.currentchickCycle.currentFood
 
-      if (oldCurrentFood == this.currentchickCycle.lastCurrentFood) {
-        let newCurrentFood = this.currentchickCycle.currentFood - foodToReduce
-        if (newCurrentFood < 0) {
-          newCurrentFood = 0
-        }
-        fb.chickCycle.doc(this.currentchickCycle.id).update({
-          lastCurrentFood: oldCurrentFood,
-          currentFood: newCurrentFood,
-        })
+      let newCurrentFood = this.currentchickCycle.currentFood - foodToReduce
+      if (newCurrentFood < 0) {
+        newCurrentFood = 0
       }
+      fb.chickCycle.doc(this.currentchickCycle.id).update({
+        currentFood: newCurrentFood,
+      })
+
+      //reset days from last login to 0 to avoid multiple calculations
+      this.updateLoginData()
     },
 
     //add silo fill record to daily data, if not exist -> create new daily data object
@@ -199,14 +198,11 @@ export default {
       //add last fill to total amount of food
       let updateCurrentFood =
         parseInt(this.currentchickCycle.currentFood) + parseInt(this.lastFill)
-      let updateLastCurrentFood =
-        parseInt(this.currentchickCycle.currentFood) + parseInt(this.lastFill)
 
       fb.chickCycle
         .doc(this.currentchickCycle.id)
         .update({
           currentFood: updateCurrentFood,
-          lastCurrentFood: updateLastCurrentFood,
         })
         .then(() => {
           let fillDateData = this.cycleData.find(
@@ -242,6 +238,13 @@ export default {
         (item) => item.id == this.currentchickCycle.id
       )
       this.$store.commit('setcurrentchickCycle', cycle)
+    },
+
+    updateLoginData() {
+      fb.user.doc(this.currentUser[0].email).update({
+        lastLogin: moment().format('L'),
+        currentLogin: moment().format('L'),
+      })
     },
   },
   loaded() {},
