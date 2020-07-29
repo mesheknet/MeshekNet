@@ -376,9 +376,14 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('drug', fb.drug)
     }),
-    bindDiseasechickCycle: firestoreAction(({ bindFirestoreRef }) => {
+    
+
+    bindDiseasechickCycle: firestoreAction(({ state, bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
-      return bindFirestoreRef('DiseasechickCycle', fb.DiseasechickCycle)
+      return bindFirestoreRef(
+        'DiseasechickCycle',
+        fb.DiseasechickCycle.where('idChickens', '==', state.currentchickCycle.id)
+      )
     })
   },
 

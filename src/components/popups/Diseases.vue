@@ -2,7 +2,12 @@
  <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mt-6 white--text" color="light green" v-on="on">
+      <v-btn
+       block 
+       class="mt-6 white--text" 
+       color="light green" v-on="on" 
+       @click="updateCurrentDiseases()"
+       >
        מחלות<v-icon right>&#x2622;</v-icon>
       </v-btn>
     </template>
@@ -63,14 +68,7 @@
           </v-menu>
          
         
-          
-         
-         
-         
-        </v-form>
-      </v-card-text>
-
-      <v-divider></v-divider>
+           <v-divider></v-divider>
 
       <v-card-actions>
         <v-btn
@@ -84,7 +82,50 @@
           >הוסף מחלה </v-btn
         >
       </v-card-actions>
+        </v-form>
+      </v-card-text>
+  <v-divider></v-divider>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="חיפוש"
+        single-line
+        hide-details
+        class="mb-4"
+      ></v-text-field>
+      <v-data-table
+        :search="search"
+        :headers="headers"
+        :items="DiseasechickCycle"
+        hide-default-footer
+        :page.sync="page"
+        :items-per-page="itemsPerPage"
+        class="elevation-1"
+        @page-count="pageCount = $event"
+      >
+        <template slot="no-data">
+          <p class="text-right">אין נתוני מחלות למחזור זה</p>
+        </template>
+       
+      </v-data-table>
+      <div class="text-center pt-2">
+        <v-pagination
+          :next-icon="nextIcon"
+          :prev-icon="prevIcon"
+          v-model="page"
+          :length="pageCount"
+          color="teal darken-3"
+        ></v-pagination>
+      </div>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn block @click="dialog = false" color="success">חזרה</v-btn>
+      </v-card-actions>
+     
+
+      
     </v-card>
+    
   </v-dialog>
 </template>
 
@@ -100,15 +141,34 @@ export default {
     return {
       loading: false,
       dialog: null,
+
     selectedTret:null,
     DescriptionTret: null,
     addDiseaseChicken: false,
       dateMenu: false,
       dosage: null,
-      vol: null
+      vol: null,
+        headers: [
+        {
+          text: 'תאריך מילוי',
+          align: 'start',
+          value: 'nameDisease',
+        },
+        { text: 'כמות ק"ג', value: 'nameDrug' },
+      ],
+      search: '',
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 5,
+      nextIcon: 'navigate_next',
+      prevIcon: 'navigate_before',
     }
+    
   },
   methods: {
+     updateCurrentDiseases() {
+      this.$store.dispatch('bindDiseasechickCycle')
+    },
     getChickensId() {
       this.$store.commit('updateselectedTret', this.selectedTret)
     },
@@ -124,7 +184,7 @@ export default {
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['DiseasechickCycle' ,'currentCycle' , 'treatment','currentchickCycle'] )
+    ...mapGetters(['DiseasechickCycle' ,'currentCycle' , 'treatment','currentchickCycle', 'DiseasechickCycle'] )
   }
 }
 </script>
