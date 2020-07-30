@@ -12,11 +12,9 @@
       </v-card-title>
 
       <v-card-text>
- <v-btn text class="ma-2" color="success" @click="addDiseaseChicken = true"
-          >הוסף מחלה</v-btn
-        >
+ 
 
-        <v-form class="px-3" ref="form" v-if="addDiseaseChicken">
+        <v-form class="px-3" ref="form">
         
           <v-row>
             <v-col>
@@ -185,8 +183,10 @@
         <v-btn
           :loading="loading"
           block
+          
           @click="
             addNewTreatment()
+            dialog = false
           "
           color="success"
           >הוסף מחלה </v-btn
@@ -275,7 +275,18 @@ export default {
       this.$store.commit('NewTreatment', NewTreatment)
        
     },
+    deleteDisease(){
+      fb.disease.doc(this.selectedDisease.id).delete()
+    },
+     deleteTypeTreatment(){
+      fb.treatType.doc(this.selectedTypeTreatment.id).delete()
+    },
+     deleteDrug(){
+      fb.drug.doc(this.selectedDrug.id).delete()
+    }
   },
+
+  
   updated() {},
   computed: {
     //get local data from firestore using the store

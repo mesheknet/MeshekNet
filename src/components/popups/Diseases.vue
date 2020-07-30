@@ -106,6 +106,11 @@
         <template slot="no-data">
           <p class="text-right">אין נתוני מחלות למחזור זה</p>
         </template>
+        <template v-slot:item.actions="{ item }">
+            <v-icon small @click="deleteDiseases(item)">
+              delete
+            </v-icon>
+          </template>
        
       </v-data-table>
       <div class="text-center pt-2">
@@ -150,11 +155,12 @@ export default {
       vol: null,
         headers: [
         {
-          text: 'תאריך מילוי',
+          text: 'תאריך טיפול',
           align: 'start',
           value: 'nameDisease',
         },
-        { text: 'כמות ק"ג', value: 'nameDrug' },
+        { text: 'שם תרופה', value: 'nameDrug' },
+        { text: 'מחיקה', value: 'actions' }
       ],
       search: '',
       page: 1,
@@ -180,6 +186,9 @@ export default {
       }
       this.$store.commit('addDiseasesCycle',DiseasesCycle)
     },
+    deleteDiseases(item) {
+      fb.DiseasechickCycle.doc(item.id).delete()
+    }
   },
   updated() {},
   computed: {
