@@ -6,7 +6,10 @@
         class="mt-6 white--text"
         color="light green"
         v-on="on"
-        @click="createEggData()"
+        @click="
+          createEggData()
+          createSparklineLists()
+        "
       >
         הטלה<v-icon right>fas fa-egg</v-icon>
       </v-btn>
@@ -64,7 +67,6 @@
               color="success"
               @click="
                 addEntry()
-                createEggData()
                 addEggs = false
               "
               >הוסף</v-btn
@@ -74,6 +76,25 @@
       </v-card-text>
 
       <v-divider></v-divider>
+      <v-sheet
+        class="v-sheet--offset mx-auto"
+        color="teal lighten-2"
+        elevation="12"
+        max-width="600"
+      >
+        <v-sparkline
+          :labels="eggDataLables"
+          :value="eggDataValues"
+          color="white"
+          auto-draw
+          :smooth="10"
+          line-width="2"
+          padding="25"
+        ></v-sparkline>
+      </v-sheet>
+
+      <v-divider></v-divider>
+
       <v-text-field
         v-model="search"
         append-icon="search"
@@ -134,6 +155,8 @@ export default {
       entryDate: new Date().toISOString().substr(0, 10),
       dialog: null,
       eggDataList: [],
+      eggDataLables: [],
+      eggDataValues: [],
       headers: [
         {
           text: 'תאריך',
@@ -156,26 +179,47 @@ export default {
         (item) => item.date == moment(Date.parse(this.entryDate)).format('L')
       )
       if (!DateData) {
-        fb.cycleData.doc().set({
-          cycleId: this.currentChickCycle.id,
-          dailyEggs: this.eggAmount,
-          dailyDeath: null,
-          foodFill: null,
-          date: moment(Date.parse(this.entryDate)).format('L'),
-        })
+        fb.cycleData
+          .doc()
+          .set({
+            cycleId: this.currentChickCycle.id,
+            dailyEggs: this.eggAmount,
+            dailyDeath: null,
+            foodFill: null,
+            date: moment(Date.parse(this.entryDate)).format('L'),
+          })
+          .then(() => this.createEggData())
       } else {
         var currentCycleDataId = this.cycleData.find(
           (item) => item.date == moment(Date.parse(this.entryDate)).format('L')
         ).id
-        fb.cycleData.doc(currentCycleDataId).update({
-          dailyEggs: this.eggAmount,
-        })
+        fb.cycleData
+          .doc(currentCycleDataId)
+          .update({
+            dailyEggs: this.eggAmount,
+          })
+          .then(() => this.createEggData())
       }
     },
 
-    //create a list contains only needed data for this component
+    //create a list contains only needed data for this component, sorted by date
     createEggData() {
-      this.eggDataList = this.cycleData.filter((item) => item.dailyEggs != null)
+      let tempEggDataList = this.cycleData.filter(
+        (item) => item.dailyEggs != null
+      )
+      this.eggDataList = tempEggDataList.sort(
+        (a, b) => moment(a.date, 'DD-MM-YYYY') - moment(b.date, 'DD-MM-YYYY')
+      )
+    },
+
+    //create values and lables for the sparkline component (graph)
+    createSparklineLists() {
+      this.eggDataLables = []
+      this.eggDataValues = []
+      this.eggDataList.forEach((item) => {
+        this.eggDataLables.push(item.date)
+        this.eggDataValues.push(parseInt(item.dailyEggs))
+      })
     },
   },
   updated() {},
@@ -185,10 +229,8 @@ export default {
       'userId',
       'farmId',
       'currentUser',
-      'coop',
       'Chickens',
       'currentChickCycle',
-      'chickCycle',
       'cycleData',
       'Chickens',
     ]),

@@ -6,7 +6,10 @@
         class="white--text"
         color="light green"
         v-on="on"
-        @click="initData()"
+        @click="
+          calcFood()
+          createFoodData()
+        "
       >
         מזון<v-icon right>fas fa-carrot</v-icon>
       </v-btn>
@@ -69,7 +72,6 @@
               @click="
                 addNewFill()
                 addFill = false
-                dialog = false
               "
               >הוסף</v-btn
             >
@@ -89,7 +91,7 @@
       <v-data-table
         :search="search"
         :headers="headers"
-        :items="cycleData"
+        :items="foodDataList"
         hide-default-footer
         :page.sync="page"
         :items-per-page="itemsPerPage"
@@ -136,6 +138,7 @@ export default {
       addFill: false,
       lastFill: null,
       fillDate: new Date().toISOString().substr(0, 10),
+      foodDataList: [],
       headers: [
         {
           text: 'תאריך מילוי',
@@ -206,30 +209,29 @@ export default {
             (item) => item.date == moment(Date.parse(this.fillDate)).format('L')
           )
           if (!fillDateData) {
-            fb.cycleData.doc().set({
-              cycleId: this.currentChickCycle.id,
-              dailyEggs: null,
-              dailyDeath: null,
-              foodFill: this.lastFill,
-              date: moment(Date.parse(this.fillDate)).format('L'),
-            })
+            fb.cycleData
+              .doc()
+              .set({
+                cycleId: this.currentChickCycle.id,
+                dailyEggs: null,
+                dailyDeath: null,
+                foodFill: this.lastFill,
+                date: moment(Date.parse(this.fillDate)).format('L'),
+              })
+              .then(() => this.createFoodData())
           } else {
             var currentCycleDataId = this.cycleData.find(
               (item) =>
                 item.date == moment(Date.parse(this.fillDate)).format('L')
             ).id
-            fb.cycleData.doc(currentCycleDataId).update({
-              foodFill: this.lastFill,
-            })
+            fb.cycleData
+              .doc(currentCycleDataId)
+              .update({
+                foodFill: this.lastFill,
+              })
+              .then(() => this.createFoodData())
           }
         })
-    },
-
-    //get current cycle data using store
-    initData() {
-      this.$store.dispatch('bindCycleData')
-      this.$store.dispatch('bindCurrentChickCycle')
-      this.calcFood()
     },
 
     updateLoginData() {
@@ -242,6 +244,16 @@ export default {
       return this.chickCycle.find(
         (item) => item.id == this.currentChickCycle.id
       ).currentFood
+    },
+
+    //create a list contains only needed data for this component
+    createFoodData() {
+      let tempFoodDataList = this.cycleData.filter(
+        (item) => item.foodFill != null
+      )
+      this.foodDataList = tempFoodDataList.sort(
+        (a, b) => moment(a.date, 'DD-MM-YYYY') - moment(b.date, 'DD-MM-YYYY')
+      )
     },
   },
   loaded() {},

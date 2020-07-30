@@ -96,6 +96,7 @@
         @click="
           toggle = !toggle
           setcurrentchickCycle(cycle)
+          initCycleData()
           togglec(index)
         "
         :class="{ active: index == activeIndex }"
@@ -172,6 +173,12 @@ export default {
   methods: {
     setcurrentchickCycle(cycle) {
       this.$store.commit('setcurrentchickCycle', cycle)
+    },
+
+    //get current cycle data
+    async initCycleData() {
+      await this.$store.dispatch('bindCurrentChickCycle')
+      await this.$store.dispatch('bindCycleData')
     },
 
     deletechickCycle() {
