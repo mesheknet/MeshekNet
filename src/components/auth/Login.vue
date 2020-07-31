@@ -79,23 +79,28 @@ export default {
         this.loading = true
         fb.auth
           .signInWithEmailAndPassword(this.email, this.password)
-          .then(() => {})
+          .then(() => {
+            this.bindDB()
+              .then(() => {
+                this.updateLoginData() //get weather details from ims, update record in firestore
+                this.getWeatherData(
+                  this.farms.find((obj) => obj.id == this.farmId).weatherStation
+                )
+                this.$store.dispatch('bindWeather')
+
+                this.feedback = null
+              })
+              .then(() => {
+                this.loading = false
+              })
+              .then(() => {
+                this.$router.push({ name: 'Notifications' })
+              })
+          })
           .catch((err) => {
             this.feedback = err.message
           })
         //set vuex store to hold db data and keep it locally synced
-        await this.bindDB()
-
-        this.updateLoginData()
-
-        //get weather details from ims, update record in firestore
-        this.getWeatherData(
-          this.farms.find((obj) => obj.id == this.farmId).weatherStation
-        )
-        this.$store.dispatch('bindWeather')
-
-        this.feedback = null
-        this.$router.push({ name: 'Notifications' })
       }
     },
     //set vuex store to hold db data and keep it locally synced
@@ -171,7 +176,14 @@ export default {
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['farmId', 'farms', 'userId', 'users', 'currentUser']),
+    ...mapGetters([
+      'farmId',
+      'farms',
+      'userId',
+      'users',
+      'currentUser',
+      'LOADED',
+    ]),
   },
 }
 </script>
