@@ -188,7 +188,9 @@ export const store = new Vuex.Store({
         nameDisease: state.selectedDisease.name,
         idDrug: state.selectedDrug.id,
         idTypeTreatment: state.selectedTypeTreatment.id,
-        idDisease: state.selectedDisease.id
+        idDisease: state.selectedDisease.id,
+        NameDrugSupplier:state.selectedDrug.Supplier,
+        DrugQuantity: state.selectedDrug.Quantity
       })
     },
 
@@ -203,7 +205,9 @@ export const store = new Vuex.Store({
         nameDisease: state.selectedTret.nameDisease,
         idDrug: state.selectedTret.idDrug,
         idTypeTreatment: state.selectedTret.idTypeTreatment,
-        idDisease: state.selectedTret.idDisease
+        idDisease: state.selectedTret.idDisease,
+        NameDrugSupplier:state.selectedTret.NameDrugSupplier,
+        DrugQuantity: state.selectedTret.DrugQuantity
       })
     }
   },

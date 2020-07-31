@@ -160,8 +160,16 @@
           <v-row v-if="addDrug">
             <v-col>
               <v-text-field label="שם התרופה" v-model="DrugName"></v-text-field>
+              
             </v-col>
-
+            <v-col>
+              <v-text-field label="ספק" v-model="DrugSupplier"></v-text-field>
+              
+            </v-col>
+            <v-col>
+              <v-text-field label="מינון" v-model="DrugQuantity"></v-text-field>
+              
+            </v-col>
             <v-col>
               <v-btn text @click="addNewDrug()" class="ma-2" color="success"
                 >הוסף</v-btn
@@ -221,6 +229,8 @@ export default {
       selectedDrug: null,
       addDiseaseChicken:false,
       DrugName: null,
+      DrugSupplier: null,
+      DrugQuantity: null,
       dateMenu: false,
       dosage: null,
       vol: null
@@ -261,6 +271,9 @@ export default {
       var NewDrug = {
         id: fb.drug.doc().id,
         name: this.DrugName,
+        Quantity:this.DrugQuantity,
+        Supplier:this.DrugSupplier
+
       }
       this.$store.commit('NewDrug', NewDrug),
         (this.selectedDrug = NewDrug)

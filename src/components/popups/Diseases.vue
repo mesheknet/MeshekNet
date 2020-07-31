@@ -159,7 +159,11 @@ export default {
           align: 'start',
           value: 'nameDisease',
         },
+        { text: 'שם מחלה', value: 'nameDisease' },
         { text: 'שם תרופה', value: 'nameDrug' },
+        { text: 'מינון', value: 'DrugQuantity' },
+        { text: 'סוג טיפול', value: 'nameTypeTreatment' },
+        { text: 'שם ספק', value: 'NameDrugSupplier' },
         { text: 'מחיקה', value: 'actions' }
       ],
       search: '',
