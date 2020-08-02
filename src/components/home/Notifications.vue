@@ -2,6 +2,7 @@
   <div class="container">
     <h3>אור</h3>
     <h1>משק.נט</h1>
+    <h2>ליאור</h2>
     <h4>ברוך הבא, {{ this.ownerName }}</h4>
     <h4>{{ this.farmName }}</h4>
     <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
