@@ -45,6 +45,7 @@ const sysAdmin = db.collection('sysAdmin')
 const treatType = db.collection('treatType')
 const treatment = db.collection('treatment')
 const DiseasechickCycle = db.collection('DiseasechickCycle')
+const Messages = db.collection('Messages')
 
 export {
   db,
@@ -75,5 +76,6 @@ export {
   treatType,
   treatment,
   DiseasechickCycle,
+  Messages,
   station
 }

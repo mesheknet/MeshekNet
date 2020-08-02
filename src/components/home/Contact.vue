@@ -25,7 +25,7 @@
     ></v-text-field>
 
      <v-textarea
-      v-model="message"
+      v-model="mes"
       :rules="messageRules"
       label="כתוב הודעה"
       required
@@ -38,7 +38,7 @@
       :disabled="!valid"
       color="success"
       class="mr-4"
-      @click="validate"
+      @click="submit"
     >
       שלח
     </v-btn>
@@ -59,21 +59,23 @@
 </template>
 
 <script>
-
+const fb = require('@/fb.js')
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Contact',
+  
   stationName: null,
 
   data() {
     return {
       valid: true,
-      name: '',
+      Topic: null,
       nameRules: [
         v => !!v || 'נדרש לכתוב נושא פניה',
         v => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות',
       ],
-      message: '',
+      mes: null,
        messageRules: [
         v => !!v || 'נדרש לכתוב את תוכן הודעה',
          v => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות',
@@ -89,6 +91,20 @@ export default {
       }
   },
   methods: {
+    submit() {
+      if (this.$refs.form.validate()) {
+        var NewMessage = {
+          id: fb.Messages.doc().id,
+          title: this.select,
+          subject: this.Topic,
+          mes: this.mes
+        }
+        }
+        
+        this.$store.commit('SendMessage', NewMessage)
+        this.$refs.form.reset()
+      
+    },
     validate () {
         this.$refs.form.validate()
       },
@@ -98,7 +114,7 @@ export default {
       
     },
   computed: {
-    
+     ...mapGetters(['userId', 'Messages']),
   }
 }
 </script>

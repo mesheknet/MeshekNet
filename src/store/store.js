@@ -105,6 +105,16 @@ export const store = new Vuex.Store({
     getWeather(state, response) {
       state.openWeather = response
     },
+    SendMessage(state, NewMessage) {
+      let ref = fb.Messages.doc()
+      ref.set({
+        id: ref.id,
+        title: NewMessage.title,
+        subject: NewMessage.subject,
+        mes: NewMessage.mes,
+        userid: state.userId
+      })
+    },
 
     //for coop
     addNewChickens(state, newChickens) {
@@ -327,6 +337,12 @@ export const store = new Vuex.Store({
           }
         )
     },
+
+    bindMessages: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('Messages', fb.Messages)
+    }),
+
     //for coop
 
     bindallchickCycle: firestoreAction(({ bindFirestoreRef }) => {
@@ -461,6 +477,9 @@ export const store = new Vuex.Store({
     },
     openWeather: state => {
       return state.openWeather
+    },
+    Messages: state => {
+      return state.Messages
     },
 
     //for coop
