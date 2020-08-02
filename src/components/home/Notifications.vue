@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h3>אור</h3>
     <h1>משק.נט</h1>
     <h4>ברוך הבא, {{ this.ownerName }}</h4>
     <h4>{{ this.farmName }}</h4>
