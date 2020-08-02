@@ -215,8 +215,7 @@ export default {
     //create values and lables for the sparkline component (graph), get only 7 last values using slice
     createSparklineLists() {
       let filteredEggDataList = this.eggDataList.slice(
-        this.eggDataList.lenght - 7,
-        this.eggDataList.lenght
+        Math.max(this.eggDataList.length - 7, 1)
       )
       console.log(filteredEggDataList)
       this.eggDataLables = []

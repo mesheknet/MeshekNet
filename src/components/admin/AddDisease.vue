@@ -2,20 +2,17 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn block class="mt-6 white--text" color="light green" v-on="on">
-       מחלות<v-icon right>&#x2622;</v-icon>
+        מחלות<v-icon right>fas fa-briefcase-medical</v-icon>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="green lighten-3" primary-title>
-       מחלות
+        מחלות
       </v-card-title>
 
       <v-card-text>
- 
-
         <v-form class="px-3" ref="form">
-        
           <v-row>
             <v-col>
               <v-select
@@ -34,7 +31,6 @@
                 fab
                 x-small
                 dark
-                
                 color="teal darken-2"
               >
                 <v-icon dark>add</v-icon>
@@ -56,7 +52,10 @@
           </v-row>
           <v-row v-if="addDisease">
             <v-col>
-              <v-text-field label="שם המחלה" v-model="DiseasName"></v-text-field>
+              <v-text-field
+                label="שם המחלה"
+                v-model="DiseasName"
+              ></v-text-field>
             </v-col>
 
             <v-col>
@@ -119,8 +118,8 @@
               >
             </v-col>
           </v-row>
-          
-            <v-row>
+
+          <v-row>
             <v-col>
               <v-select
                 v-model="selectedDrug"
@@ -160,15 +159,12 @@
           <v-row v-if="addDrug">
             <v-col>
               <v-text-field label="שם התרופה" v-model="DrugName"></v-text-field>
-              
             </v-col>
             <v-col>
               <v-text-field label="ספק" v-model="DrugSupplier"></v-text-field>
-              
             </v-col>
             <v-col>
               <v-text-field label="מינון" v-model="DrugQuantity"></v-text-field>
-              
             </v-col>
             <v-col>
               <v-btn text @click="addNewDrug()" class="ma-2" color="success"
@@ -177,11 +173,13 @@
             </v-col>
           </v-row>
           <v-row>
-          <v-col>
-              <v-text-field label="תאור הטיפול" v-model="TreatmentName"></v-text-field>
+            <v-col>
+              <v-text-field
+                label="תאור הטיפול"
+                v-model="TreatmentName"
+              ></v-text-field>
             </v-col>
           </v-row>
-         
         </v-form>
       </v-card-text>
 
@@ -191,21 +189,19 @@
         <v-btn
           :loading="loading"
           block
-          
           @click="
             addNewTreatment()
             dialog = false
           "
           color="success"
-          >הוסף מחלה </v-btn
-        >
+          >הוסף מחלה
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
 
@@ -227,36 +223,39 @@ export default {
       selectedTreatment: null,
       TreatmentName: null,
       selectedDrug: null,
-      addDiseaseChicken:false,
+      addDiseaseChicken: false,
       DrugName: null,
       DrugSupplier: null,
       DrugQuantity: null,
       dateMenu: false,
       dosage: null,
-      vol: null
+      vol: null,
     }
   },
   methods: {
-     getDisease() {
+    getDisease() {
       this.$store.commit('updateSelectedDisease', this.selectedDisease)
     },
 
-     getTypeTreatment() {
-      this.$store.commit('updateSelectedTypeTreatment', this.selectedTypeTreatment)
+    getTypeTreatment() {
+      this.$store.commit(
+        'updateSelectedTypeTreatment',
+        this.selectedTypeTreatment
+      )
     },
 
-     getDrug() {
+    getDrug() {
       this.$store.commit('updateSelectedDrug', this.selectedDrug)
     },
 
-   addNewDisease() {
+    addNewDisease() {
       var NewDisease = {
         id: fb.disease.doc().id,
         name: this.DiseasName,
       }
       this.$store.commit('NewDisease', NewDisease),
         (this.selectedDisease = NewDisease)
-        this.$store.commit('updateSelectedDisease', this.selectedDisease)
+      this.$store.commit('updateSelectedDisease', this.selectedDisease)
     },
     addNewTypeTreatment() {
       var NewTypeTreatment = {
@@ -265,20 +264,20 @@ export default {
       }
       this.$store.commit('NewTypeTreatment', NewTypeTreatment),
         (this.selectedTypeTreatment = NewTypeTreatment)
-        this.$store.commit('updateSelectedTypeTreatment', this.selectedTypeTreatment)
+      this.$store.commit(
+        'updateSelectedTypeTreatment',
+        this.selectedTypeTreatment
+      )
     },
     addNewDrug() {
       var NewDrug = {
         id: fb.drug.doc().id,
         name: this.DrugName,
-        Quantity:this.DrugQuantity,
-        Supplier:this.DrugSupplier
-
+        Quantity: this.DrugQuantity,
+        Supplier: this.DrugSupplier,
       }
-      this.$store.commit('NewDrug', NewDrug),
-        (this.selectedDrug = NewDrug)
-        this.$store.commit('updateSelectedDrug', this.selectedDrug)
-        
+      this.$store.commit('NewDrug', NewDrug), (this.selectedDrug = NewDrug)
+      this.$store.commit('updateSelectedDrug', this.selectedDrug)
     },
     addNewTreatment() {
       var NewTreatment = {
@@ -286,24 +285,22 @@ export default {
         name: this.TreatmentName,
       }
       this.$store.commit('NewTreatment', NewTreatment)
-       
     },
-    deleteDisease(){
+    deleteDisease() {
       fb.disease.doc(this.selectedDisease.id).delete()
     },
-     deleteTypeTreatment(){
+    deleteTypeTreatment() {
       fb.treatType.doc(this.selectedTypeTreatment.id).delete()
     },
-     deleteDrug(){
+    deleteDrug() {
       fb.drug.doc(this.selectedDrug.id).delete()
-    }
+    },
   },
 
-  
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['drug', 'treatType', 'disease', 'treatment'])
-  }
+    ...mapGetters(['drug', 'treatType', 'disease', 'treatment']),
+  },
 }
 </script>
