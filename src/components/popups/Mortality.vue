@@ -175,7 +175,13 @@ export default {
     }
   },
   methods: {
+    //add new daily death to the database, and reduce from currentChickens amount in chickCycle
     addEntry() {
+      fb.chickCycle.doc(this.currentChickCycle.id).update({
+        currentChickens:
+          parseInt(this.currentChickCycle.currentChickens) -
+          parseInt(this.deathAmount),
+      })
       var DateData = this.cycleData.find(
         (item) => item.date == moment(Date.parse(this.entryDate)).format('L')
       )

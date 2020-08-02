@@ -1,7 +1,7 @@
  <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn block class="mt-6 white--text" color="light green" v-on="on">
+      <v-btn class="mx-auto white--text" color="light green" v-on="on">
         עריכת יישומי הדברה<v-icon right>&#x2622;</v-icon>
       </v-btn>
     </template>
@@ -186,7 +186,7 @@ export default {
       selectedCrop: null,
       selectedPest: null,
       dosage: null,
-      vol: null
+      vol: null,
     }
   },
   methods: {
@@ -196,11 +196,11 @@ export default {
         .set({
           name: this.pesticideName,
           supplier: this.supplierName,
-          id: ref.id
+          id: ref.id,
         })
         .then(
           (this.selectedPesticide = this.pesticides.find(
-            obj => obj.id == ref.id
+            (obj) => obj.id == ref.id
           ))
         )
         .then((this.addPesticide = false))
@@ -210,7 +210,7 @@ export default {
       let ref = fb.pest.doc()
       ref
         .set({ name: this.pestName, id: ref.id })
-        .then((this.selectedPest = this.pests.find(obj => obj.id == ref.id)))
+        .then((this.selectedPest = this.pests.find((obj) => obj.id == ref.id)))
         .then((this.addPest = false))
     },
     addPimplement() {
@@ -225,7 +225,7 @@ export default {
           pesticideName: this.selectedPesticide.name,
           pesticideSupplier: this.selectedPesticide.supplier,
           dosage: this.dosage,
-          vol: this.vol
+          vol: this.vol,
         })
         .then(
           (this.loading = false),
@@ -238,12 +238,12 @@ export default {
     },
     deletePesticide() {
       fb.pesticide.doc(this.selectedPesticide.id).delete()
-    }
+    },
   },
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['pests', 'pesticides', 'pImplement', 'crops'])
-  }
+    ...mapGetters(['pests', 'pesticides', 'pImplement', 'crops']),
+  },
 }
 </script>
