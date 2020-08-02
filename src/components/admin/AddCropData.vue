@@ -11,7 +11,38 @@
         הוספת נתוני גידולים
       </v-card-title>
 
-      <v-card-text> </v-card-text>
+      <v-card-text>
+        <v-form class="px-3" ref="form">
+          <v-row>
+            <v-col>
+              <v-text-field v-model="cropName" label="שם הגידול"></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="cropDuration"
+                label="משך המחזור"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="fertilization"
+                label="דישון"
+                @input="stringToarr()"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field v-model="irrigation" label="השקיה"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-btn text class="ma-2" color="success" @click="addCropData()"
+              >הוסף</v-btn
+            >
+          </v-row>
+        </v-form>
+      </v-card-text>
 
       <v-divider></v-divider>
 
@@ -33,9 +64,21 @@ export default {
     return {
       loading: false,
       dialog: null,
+      cropName: null,
+      cropDuration: null,
+      irrigation: [],
+      fertilization: [],
     }
   },
-  methods: {},
+  methods: {
+    stringToarr() {
+      let tempArr = this.fertilization.split(' ')
+      let fertArr = []
+      tempArr.forEach((item) => {
+        fertArr.push(parseFloat(item))
+      })
+    },
+  },
   updated() {},
   computed: {
     //get local data from firestore using the store
