@@ -39,10 +39,28 @@
                 return-object
               ></v-select>
             </v-col>
+              <v-col v-if="this.selectedTret">
+                תרופה מומלצת:
+                 <v-text-field
+                  
+                 v-text="this.selectedTret.nameDrug"
+               
+                readonly
+              ></v-text-field>
+            </v-col>
+              <v-col v-if="this.selectedTret">
+                מינון מומלצת:
+                 <v-text-field
+                
+                v-text="this.selectedTret.DrugQuantity"
+                
+                readonly
+              ></v-text-field>
+            </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-text-field
+              <v-text-field 
                 label="הערות"
                 v-model="DescriptionTret"
               ></v-text-field>
@@ -133,7 +151,7 @@
 <script>
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
-
+import moment from 'moment'
 export default {
   name: 'Diseases',
   components: {},
@@ -141,7 +159,7 @@ export default {
     return {
       loading: false,
       dialog: null,
-
+      startDate: new Date().toISOString().substr(0, 10),
       selectedTret: null,
       DescriptionTret: null,
       addDiseaseChicken: false,
@@ -152,7 +170,7 @@ export default {
         {
           text: 'תאריך טיפול',
           align: 'start',
-          value: 'nameDisease',
+          value: 'startDate',
         },
         { text: 'שם מחלה', value: 'nameDisease' },
         { text: 'שם תרופה', value: 'nameDrug' },
@@ -170,6 +188,9 @@ export default {
     }
   },
   methods: {
+     setStartDate() {
+      this.$store.commit('setStartDate', this.startDate)
+    },
     updateCurrentDiseases() {
       this.$store.dispatch('bindDiseasechickCycle')
     },
@@ -177,6 +198,7 @@ export default {
       this.$store.commit('updateselectedTret', this.selectedTret)
     },
     addDiseasesCycle() {
+      this.setStartDate()
       var DiseasesCycle = {
         id: fb.treatment.doc().id,
         Description: this.DescriptionTret,
@@ -197,6 +219,9 @@ export default {
       'currentchickCycle',
       'DiseasechickCycle',
     ]),
+     formattedDate() {
+      return this.startDate ? moment(this.startDate).format('L') : ''
+    }
   },
 }
 </script>

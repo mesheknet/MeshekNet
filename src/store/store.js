@@ -207,7 +207,8 @@ export const store = new Vuex.Store({
         idTypeTreatment: state.selectedTret.idTypeTreatment,
         idDisease: state.selectedTret.idDisease,
         NameDrugSupplier:state.selectedTret.NameDrugSupplier,
-        DrugQuantity: state.selectedTret.DrugQuantity
+        DrugQuantity: state.selectedTret.DrugQuantity,
+        startDate: moment(state.startDate).format('L')
       })
     }
   },
