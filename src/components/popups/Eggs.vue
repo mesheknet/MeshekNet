@@ -189,6 +189,7 @@ export default {
             date: moment(Date.parse(this.entryDate)).format('L'),
           })
           .then(() => this.createEggData())
+          .then(() => this.createSparklineLists())
       } else {
         var currentCycleDataId = this.cycleData.find(
           (item) => item.date == moment(Date.parse(this.entryDate)).format('L')
@@ -199,6 +200,7 @@ export default {
             dailyEggs: this.eggAmount,
           })
           .then(() => this.createEggData())
+          .then(() => this.createSparklineLists())
       }
     },
 

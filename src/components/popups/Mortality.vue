@@ -190,6 +190,7 @@ export default {
             date: moment(Date.parse(this.entryDate)).format('L'),
           })
           .then(() => this.createDeathData())
+          .then(() => this.createSparklineLists())
       } else {
         var currentCycleDataId = this.cycleData.find(
           (item) => item.date == moment(Date.parse(this.entryDate)).format('L')
@@ -200,6 +201,7 @@ export default {
             dailyDeath: this.deathAmount,
           })
           .then(() => this.createDeathData())
+          .then(() => this.createSparklineLists())
       }
     },
 
@@ -208,7 +210,7 @@ export default {
       let tempDeathDataList = this.cycleData.filter(
         (item) => item.dailyDeath != null
       )
-      this.DeathDataList = tempDeathDataList.sort(
+      this.deathDataList = tempDeathDataList.sort(
         (a, b) => moment(a.date, 'DD-MM-YYYY') - moment(b.date, 'DD-MM-YYYY')
       )
     },
@@ -216,7 +218,7 @@ export default {
     //create values and lables for the sparkline component (graph), get only 7 last values using slice
     createSparklineLists() {
       let filteredDeathDataList = this.deathDataList.slice(
-        Math.max(this.deathDataList.length - 7, 1)
+        Math.max(this.deathDataList.length - 6, 0)
       )
       this.deathDataLables = []
       this.deathDataValues = []
