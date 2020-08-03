@@ -13,6 +13,9 @@
       <v-row>
         <AddDisease />
       </v-row>
+      <v-row>
+        <AdminMesseg />
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
@@ -23,10 +26,11 @@ import editPestCtrl from './EditPestCtrl'
 import EditChickenType from './EditChickenType'
 import AddDisease from './AddDisease'
 import AddCropData from './AddCropData'
+import AdminMesseg from './AdminMesseg'
 
 export default {
   name: 'Admin',
-  components: { editPestCtrl, EditChickenType, AddDisease, AddCropData },
+  components: { editPestCtrl, EditChickenType, AddDisease, AddCropData, AdminMesseg},
   data() {
     return {
       dialog: null,
