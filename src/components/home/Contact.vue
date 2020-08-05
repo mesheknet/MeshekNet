@@ -60,15 +60,17 @@
 
 <script>
 const fb = require('@/fb.js')
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Contact',
-  
+   
   stationName: null,
 
   data() {
     return {
+      
       valid: true,
       Topic: null,
       nameRules: [
@@ -91,6 +93,8 @@ export default {
       }
   },
   methods: {
+    
+    
     submit() {
       if (this.$refs.form.validate()) {
         var NewMessage = {
@@ -105,6 +109,9 @@ export default {
         this.$refs.form.reset()
       
     },
+    formattedDate() {
+      return this.startDate ? moment(this.startDate).format('L') : ''
+    },
     validate () {
         this.$refs.form.validate()
       },
@@ -114,7 +121,7 @@ export default {
       
     },
   computed: {
-     ...mapGetters(['userId', 'Messages']),
+     ...mapGetters(['userId', 'Messages' ]),
   }
 }
 </script>

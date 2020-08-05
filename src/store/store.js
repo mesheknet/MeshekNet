@@ -40,6 +40,7 @@ export const store = new Vuex.Store({
     currentCycle: {},
     startDate: null,
     cropLog: [],
+    Messages:{},
 
     //for coop
     coop: [],
@@ -112,7 +113,8 @@ export const store = new Vuex.Store({
         title: NewMessage.title,
         subject: NewMessage.subject,
         mes: NewMessage.mes,
-        userid: state.userId
+        userid: state.userId,
+        startDate: moment().format('L')
       })
     },
 

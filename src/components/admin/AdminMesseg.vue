@@ -13,15 +13,46 @@
 
       <v-card-text>
         <v-form class="px-3" ref="form">
-         
+          <v-row>
+                <v-col  class="mr-8" >שם</v-col>
+                <v-col >כותרת</v-col>
+                <v-col >נושא</v-col>
+                <v-col  class="mr-12">תאריך</v-col>
+          </v-row>
             <v-expansion-panels focusable>
     <v-expansion-panel
-      v-for="(item,i) in 5"
-      :key="i"
+      v-for="(Messages,index) in Messages"
+      :key="index"
     >
-      <v-expansion-panel-header>Item</v-expansion-panel-header>
+   
+      <v-expansion-panel-header>
+        <v-col >{{setOwners()}} </v-col>
+      <v-col>כותרת:  {{Messages.title}} </v-col>
+                <v-col> {{Messages.subject}}</v-col>
+                <v-col>{{Messages.startDate}} </v-col>
+      </v-expansion-panel-header>
+      
       <v-expansion-panel-content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <v-row>
+        {{Messages.mes}}
+        </v-row>
+        <v-row>
+         <v-col cols="4"> 
+        <v-btn
+                  text
+                  color="primary"
+                  
+                >השב</v-btn>
+                </v-col>
+        
+         <v-col cols="4"> 
+        <v-btn
+                  text
+                  color="primary"
+                  
+                >מחק</v-btn>
+                </v-col>
+        </v-row>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>  
@@ -44,27 +75,20 @@ export default {
     return {
       loading: false,
       dialog: null,
-      addDisease: false,
-      addTypeTreatment: false,
-      addTreatment: false,
-      addDrug: false,
-      selectedDisease: null,
-      DiseasName: null,
-      selectedTypeTreatment: null,
-      TypeTreatmentName: null,
-      selectedTreatment: null,
-      TreatmentName: null,
-      selectedDrug: null,
-      addDiseaseChicken: false,
-      DrugName: null,
-      DrugSupplier: null,
-      DrugQuantity: null,
-      dateMenu: false,
       dosage: null,
       vol: null,
     }
   },
+  created() {
+        this.setDetails()
+     
+  },
   methods: {
+    setOwners() {
+     return this.ownerName = this.farmOwners.find(
+        (obj) => obj.userId == this.userId
+      ).name
+    },
     getDisease() {
       this.$store.commit('updateSelectedDisease', this.selectedDisease)
     },
@@ -132,7 +156,7 @@ export default {
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['drug', 'treatType', 'disease', 'treatment']),
+    ...mapGetters(['Messages',  'userId', 'farmOwners',]),
   },
 }
 </script>
