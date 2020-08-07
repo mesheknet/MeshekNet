@@ -1,10 +1,40 @@
+
+
 <template>
+ <div>
   <div class="container">
     <h1>משק.נט</h1>
     <h4>ברוך הבא, {{ this.ownerName }}</h4>
     <h4>{{ this.farmName }}</h4>
     <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
     <p></p>
+  </div>
+  
+ <v-container class="mx-auto">
+    <v-expansion-panels class="mb-6 ">
+      <v-expansion-panel
+        v-for="(item,i) in 5"
+        :key="i"
+      >
+        <v-expansion-panel-header expand-icon="fa fa-exclamation">Item</v-expansion-panel-header>
+        <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          Item
+          <template v-slot:actions>
+            <v-icon color="green">fa fa-check</v-icon>
+          </template>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+ </v-container>
   </div>
 </template>
 

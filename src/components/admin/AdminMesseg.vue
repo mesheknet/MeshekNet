@@ -23,6 +23,7 @@
     <v-expansion-panel
       v-for="(Messages,index) in Messages"
       :key="index"
+      @click="setcurrentMess(Messages)"
     >
    
       <v-expansion-panel-header>
@@ -49,7 +50,7 @@
         <v-btn
                   text
                   color="primary"
-                  
+                  @click="deleteMessages()"
                 >מחק</v-btn>
                 </v-col>
         </v-row>
@@ -84,79 +85,26 @@ export default {
      
   },
   methods: {
+     setcurrentMess(Messages) {
+      this.$store.commit('setcurrentMessages', Messages)
+    },
     setOwners() {
      return this.ownerName = this.farmOwners.find(
         (obj) => obj.userId == this.userId
       ).name
     },
-    getDisease() {
-      this.$store.commit('updateSelectedDisease', this.selectedDisease)
-    },
-
-    getTypeTreatment() {
-      this.$store.commit(
-        'updateSelectedTypeTreatment',
-        this.selectedTypeTreatment
-      )
-    },
-
-    getDrug() {
-      this.$store.commit('updateSelectedDrug', this.selectedDrug)
-    },
-
-    addNewDisease() {
-      var NewDisease = {
-        id: fb.disease.doc().id,
-        name: this.DiseasName,
-      }
-      this.$store.commit('NewDisease', NewDisease),
-        (this.selectedDisease = NewDisease)
-      this.$store.commit('updateSelectedDisease', this.selectedDisease)
-    },
-    addNewTypeTreatment() {
-      var NewTypeTreatment = {
-        id: fb.treatType.doc().id,
-        name: this.TypeTreatmentName,
-      }
-      this.$store.commit('NewTypeTreatment', NewTypeTreatment),
-        (this.selectedTypeTreatment = NewTypeTreatment)
-      this.$store.commit(
-        'updateSelectedTypeTreatment',
-        this.selectedTypeTreatment
-      )
-    },
-    addNewDrug() {
-      var NewDrug = {
-        id: fb.drug.doc().id,
-        name: this.DrugName,
-        Quantity: this.DrugQuantity,
-        Supplier: this.DrugSupplier,
-      }
-      this.$store.commit('NewDrug', NewDrug), (this.selectedDrug = NewDrug)
-      this.$store.commit('updateSelectedDrug', this.selectedDrug)
-    },
-    addNewTreatment() {
-      var NewTreatment = {
-        id: fb.treatment.doc().id,
-        name: this.TreatmentName,
-      }
-      this.$store.commit('NewTreatment', NewTreatment)
-    },
-    deleteDisease() {
-      fb.disease.doc(this.selectedDisease.id).delete()
-    },
-    deleteTypeTreatment() {
-      fb.treatType.doc(this.selectedTypeTreatment.id).delete()
-    },
-    deleteDrug() {
-      fb.drug.doc(this.selectedDrug.id).delete()
-    },
+     deleteMessages() {
+      
+        fb.Messages.doc(this.currentMessages.id).delete()
+        this.currentMessages(null)
+      },
+    
   },
 
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['Messages',  'userId', 'farmOwners',]),
+    ...mapGetters(['Messages',  'userId', 'farmOwners', 'currentMessages']),
   },
 }
 </script>

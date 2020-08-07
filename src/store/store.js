@@ -38,6 +38,7 @@ export const store = new Vuex.Store({
     selectedCrop: {},
     selectedField: {},
     currentCycle: {},
+    currentMessages:{},
     startDate: null,
     cropLog: [],
     Messages:{},
@@ -134,7 +135,9 @@ export const store = new Vuex.Store({
     setchickCycle(state, cycle) {
       state.chickCycle = cycle
     },
-
+    setcurrentMessages(state, Messages) {
+      state.currentMessages = Messages
+    },
     updateselectedchickCycle(state, Chickens) {
       state.selectedchickCycle = Chickens
     },
@@ -506,6 +509,9 @@ export const store = new Vuex.Store({
     },
     currentChickCycle: state => {
       return state.currentchickCycle
+    },
+    currentMessages: state => {
+      return state.currentMessages
     },
     selectedCoop: state => {
       return state.selectedCoop
