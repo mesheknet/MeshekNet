@@ -101,7 +101,8 @@ export default {
           id: fb.Messages.doc().id,
           title: this.select,
           subject: this.Topic,
-          mes: this.mes
+          mes: this.mes,
+          to:"admin"
         }
         }
         

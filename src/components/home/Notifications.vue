@@ -13,18 +13,20 @@
  <v-container class="mx-auto">
     <v-expansion-panels class="mb-6 ">
       <v-expansion-panel
-        v-for="(item,i) in 5"
-        :key="i"
+         v-for="(Messages,index) in Messages"
+      :key="index"
       >
-        <v-expansion-panel-header expand-icon="fa fa-exclamation">Item</v-expansion-panel-header>
-        <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+        <v-expansion-panel-header expand-icon="fa fa-exclamation"> <v-col>{{Messages.title}} </v-col>
+                <v-col> {{Messages.subject}}</v-col>
+                <v-col>{{Messages.startDate}} </v-col></v-expansion-panel-header>
+        <v-expansion-panel-content>{{Messages.mes}}</v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
 
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header>
-          Item
+          התראות שבוצעו
           <template v-slot:actions>
             <v-icon color="green">fa fa-check</v-icon>
           </template>
@@ -83,6 +85,7 @@ export default {
       'fields',
       'crops',
       'cropCycle',
+      'Messages'
     ]),
   },
 }

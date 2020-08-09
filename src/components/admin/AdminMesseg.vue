@@ -21,15 +21,16 @@
           </v-row>
             <v-expansion-panels focusable>
     <v-expansion-panel
-      v-for="(Messages,index) in Messages"
+      v-for="(Messages,index) in AMesseg"
+      
       :key="index"
       @click="setcurrentMess(Messages)"
     >
    
       <v-expansion-panel-header>
         <v-col >{{setOwners()}} </v-col>
-      <v-col>כותרת:  {{Messages.title}} </v-col>
-                <v-col> {{Messages.subject}}</v-col>
+      <v-col>{{Messages.title}} </v-col>
+                <v-col>{{Messages.subject}}</v-col>
                 <v-col>{{Messages.startDate}} </v-col>
       </v-expansion-panel-header>
       
@@ -39,11 +40,7 @@
         </v-row>
         <v-row>
          <v-col cols="4"> 
-        <v-btn
-                  text
-                  color="primary"
-                  
-                >השב</v-btn>
+        <MessageFromAdmin />
                 </v-col>
         
          <v-col cols="4"> 
@@ -68,10 +65,10 @@
 <script>
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
-
+import MessageFromAdmin from './MessageFromAdmin'
 export default {
   name: 'AdminMesseg',
-  components: {},
+  components: {MessageFromAdmin},
   data() {
     return {
       loading: false,
@@ -103,6 +100,13 @@ export default {
 
   updated() {},
   computed: {
+
+     AMesseg: function() {
+       return this.Messages.filter(function(m) {
+         return m.to=="admin"
+     })
+   },
+
     //get local data from firestore using the store
     ...mapGetters(['Messages',  'userId', 'farmOwners', 'currentMessages']),
   },
