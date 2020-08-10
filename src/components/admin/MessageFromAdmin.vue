@@ -101,6 +101,9 @@ export default {
         }
         
         this.$store.commit('SendMessage', NewMessage)
+        fb.Messages.doc(this.currentMessages.id).update({
+          Done: true
+        })
         this.$refs.form.reset()
       
     },

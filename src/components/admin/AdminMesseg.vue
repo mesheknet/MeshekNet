@@ -19,15 +19,16 @@
                 <v-col >נושא</v-col>
                 <v-col  class="mr-12">תאריך</v-col>
           </v-row>
-            <v-expansion-panels focusable>
-    <v-expansion-panel
+            <v-expansion-panels focusable class="mb-6 ">
+    <v-expansion-panel 
       v-for="(Messages,index) in AMesseg"
       
       :key="index"
       @click="setcurrentMess(Messages)"
+      
     >
    
-      <v-expansion-panel-header>
+      <v-expansion-panel-header expand-icon="fa fa-exclamation">
         <v-col >{{setOwners()}} </v-col>
       <v-col>{{Messages.title}} </v-col>
                 <v-col>{{Messages.subject}}</v-col>
@@ -36,6 +37,40 @@
       
       <v-expansion-panel-content>
         <v-row>
+        {{Messages.mes}}
+        </v-row>
+        
+         <v-col cols="4"> 
+        <MessageFromAdmin />
+                </v-col>
+        
+        
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>  
+
+
+
+
+
+ <v-expansion-panels 
+ v-for="(Messages,index) in AMessegDone"
+      
+      :key="index"
+      @click="setcurrentMess(Messages)"
+      >
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+           <v-col >{{setOwners()}} </v-col>
+      <v-col>{{Messages.title}} </v-col>
+                <v-col>{{Messages.subject}}</v-col>
+                <v-col>{{Messages.startDate}} </v-col>
+          <template v-slot:actions>
+            <v-icon color="green">fa fa-check</v-icon>
+          </template>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-row>
         {{Messages.mes}}
         </v-row>
         <v-row>
@@ -51,9 +86,9 @@
                 >מחק</v-btn>
                 </v-col>
         </v-row>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>  
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels> 
              
         </v-form>
       </v-card-text>
@@ -103,9 +138,17 @@ export default {
 
      AMesseg: function() {
        return this.Messages.filter(function(m) {
-         return m.to== "admin"
+         return(( m.to== "admin") &&(m.Done==false))
      })
+     
    },
+      AMessegDone: function() {
+       return this.Messages.filter(function(m) {
+         return(( m.to== "admin") &&(m.Done==true))
+     })
+     
+   },
+
 
     //get local data from firestore using the store
     ...mapGetters(['Messages',  'userId', 'farmOwners', 'currentMessages']),

@@ -116,6 +116,7 @@ export const store = new Vuex.Store({
         mes: NewMessage.mes,
         userid: state.userId,
         to: NewMessage.to,
+        Done: false,
         startDate: moment().format('L')
       })
     },
