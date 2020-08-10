@@ -30,17 +30,23 @@ import AdminMesseg from './AdminMesseg'
 
 export default {
   name: 'Admin',
-  components: { editPestCtrl, EditChickenType, AddDisease, AddCropData, AdminMesseg},
+  components: {
+    editPestCtrl,
+    EditChickenType,
+    AddDisease,
+    AddCropData,
+    AdminMesseg
+  },
   data() {
     return {
-      dialog: null,
+      dialog: null
     }
   },
   methods: {},
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId']),
-  },
+    ...mapGetters(['userId'])
+  }
 }
 </script>

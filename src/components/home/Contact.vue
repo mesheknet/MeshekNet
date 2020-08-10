@@ -1,60 +1,46 @@
 <template>
-<div class="container_fluid">
-  <div class="container_content">
-  <v-container grey lighten-3>
- <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
+  <div class="container_fluid">
+    <div class="container_content">
+      <v-container grey lighten-3>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-select
+            v-model="select"
+            :items="items"
+            :rules="[v => !!v || 'נדרש לבחור סיבת פניה']"
+            label="בחר סיבת פניה"
+            required
+          ></v-select>
 
-   <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'נדרש לבחור סיבת פניה']"
-      label="בחר סיבת פניה"
-      required
-    ></v-select>
+          <v-text-field
+            v-model="Topic"
+            :counter="20"
+            :rules="nameRules"
+            label="נושא"
+            required
+          ></v-text-field>
 
-    <v-text-field
-      v-model="Topic"
-      :counter="20"
-      :rules="nameRules"
-      label="נושא"
-      required
-    ></v-text-field>
+          <v-textarea
+            v-model="mes"
+            :rules="messageRules"
+            label="כתוב הודעה"
+            required
+          ></v-textarea>
 
-     <v-textarea
-      v-model="mes"
-      :rules="messageRules"
-      label="כתוב הודעה"
-      required
-        ></v-textarea>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="submit"
+          >
+            שלח
+          </v-btn>
 
-   
-
-
-    <v-btn
-      :disabled="!valid"
-      color="success"
-      class="mr-4"
-      @click="submit"
-    >
-      שלח
-    </v-btn>
-
-    <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >
-      נקה הכל
-    </v-btn>
-
-   
-  </v-form>
-  </v-container>
-  </div>
+          <v-btn color="error" class="mr-4" @click="reset">
+            נקה הכל
+          </v-btn>
+        </v-form>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -65,36 +51,27 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Contact',
-   
+
   stationName: null,
 
   data() {
     return {
-      
       valid: true,
       Topic: null,
       nameRules: [
         v => !!v || 'נדרש לכתוב נושא פניה',
-        v => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות',
+        v => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות'
       ],
       mes: null,
-       messageRules: [
+      messageRules: [
         v => !!v || 'נדרש לכתוב את תוכן הודעה',
-         v => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות',
-        
+        v => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות'
       ],
       select: null,
-      items: [
-        'לול',
-        'גידולי שדה',
-        'דיווח על בעיות תוכנה',
-        'מזג אוויר',
-      ],
-      }
+      items: ['לול', 'גידולי שדה', 'דיווח על בעיות תוכנה', 'מזג אוויר']
+    }
   },
   methods: {
-    
-    
     submit() {
       if (this.$refs.form.validate()) {
         var NewMessage = {
@@ -102,41 +79,38 @@ export default {
           title: this.select,
           subject: this.Topic,
           mes: this.mes,
-          to:"admin"
+          to: 'admin'
         }
-        }
-        
-        this.$store.commit('SendMessage', NewMessage)
-        this.$refs.form.reset()
-      
+      }
+
+      this.$store.commit('SendMessage', NewMessage)
+      this.$refs.form.reset()
     },
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
     },
-    validate () {
-        this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      
+    validate() {
+      this.$refs.form.validate()
     },
+    reset() {
+      this.$refs.form.reset()
+    }
+  },
   computed: {
-     ...mapGetters(['userId', 'Messages' ]),
+    ...mapGetters(['userId', 'Messages'])
   }
 }
 </script>
 
 <style scoped>
 .container_fluid {
-  
   background-color: #74a748;
-  
+
   padding: 15px;
   height: 90vh;
 }
-.container_content{
-background-color: #f7f8f7;
-padding: 15px;
+.container_content {
+  background-color: #f7f8f7;
+  padding: 15px;
 }
 </style>
