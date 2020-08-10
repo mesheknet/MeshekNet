@@ -103,7 +103,7 @@ export default {
 
      AMesseg: function() {
        return this.Messages.filter(function(m) {
-         return m.to=="admin"
+         return m.to== "admin"
      })
    },
 

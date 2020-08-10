@@ -13,7 +13,7 @@
  <v-container class="mx-auto">
     <v-expansion-panels class="mb-6 ">
       <v-expansion-panel
-         v-for="(Messages,index) in Messages"
+         v-for="(Messages,index) in UidMessages"
       :key="index"
       >
         <v-expansion-panel-header expand-icon="fa fa-exclamation"> <v-col>{{Messages.title}} </v-col>
@@ -49,6 +49,7 @@ export default {
   name: 'Notifications',
   data() {
     return {
+      
       lastSignIn: null,
       currentUser: null,
       farmName: null,
@@ -67,6 +68,7 @@ export default {
   mounted() {},
   updated() {},
   methods: {
+    
     setDetails() {
       this.farmName = this.farms.find((obj) => obj.userId == this.userId).name
       this.ownerName = this.farmOwners.find(
@@ -75,6 +77,8 @@ export default {
     },
   },
   computed: {
+ 
+     
     //get local data from firestore using the store
     ...mapGetters([
       'userId',
@@ -87,6 +91,12 @@ export default {
       'cropCycle',
       'Messages'
     ]),
+
+    UidMessages: function() {
+       return this.Messages.filter(m => {
+         return m.to == this.userId
+     })
+   },
   },
 }
 </script>
