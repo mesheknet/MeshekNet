@@ -74,7 +74,8 @@ export default {
           title: this.currentMessages.title,
           subject: this.currentMessages.subject,
           mes: this.AdminMessage,
-          to: this.currentMessages.userid
+          to: this.currentMessages.userid,
+          PreviousPost: this.currentMessages.mes
         }
       }
 

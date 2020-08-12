@@ -2,7 +2,7 @@
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
       <v-btn class="mx-auto white--text" color="light green" v-on="on">
-        הודעות<v-icon right>fas fa-briefcase-medical</v-icon>
+        הודעות<v-icon right>far fa-envelope</v-icon>
       </v-btn>
     </template>
 

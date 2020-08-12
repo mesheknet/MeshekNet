@@ -13,31 +13,66 @@
         <v-expansion-panel
           v-for="(Messages, index) in UidMessages"
           :key="index"
+          @click="setcurrentMess(Messages)"
         >
           <v-expansion-panel-header expand-icon="fa fa-exclamation">
             <v-col>{{ Messages.title }} </v-col>
             <v-col> {{ Messages.subject }}</v-col>
             <v-col>{{ Messages.startDate }} </v-col></v-expansion-panel-header
           >
-          <v-expansion-panel-content>{{
-            Messages.mes
-          }}</v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-card color="#d6cfcf">
+                <v-card-subtitle text color="black">{{
+                  Messages.PreviousPost
+                }}</v-card-subtitle>
+              </v-card>
+            </v-row>
+
+            <v-row>
+              {{ Messages.mes }}
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-btn text color="primary" @click="UpdateDone()">בוצע</v-btn>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
 
       <v-expansion-panels>
-        <v-expansion-panel>
+        <v-expansion-panel
+          v-for="(Messages, index) in UidMessagesDone"
+          :key="index"
+          @click="setcurrentMess(Messages)"
+        >
           <v-expansion-panel-header>
-            התראות שבוצעו
+            <v-col>{{ Messages.title }} </v-col>
+            <v-col> {{ Messages.subject }}</v-col>
+            <v-col>{{ Messages.startDate }} </v-col>
             <template v-slot:actions>
               <v-icon color="green">fa fa-check</v-icon>
             </template>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            <v-row>
+              <v-card color="#d6cfcf">
+                <v-card-subtitle text color="black">{{
+                  Messages.PreviousPost
+                }}</v-card-subtitle>
+              </v-card>
+            </v-row>
+            <v-row>
+              {{ Messages.mes }}
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-btn text color="primary" @click="deleteMessages()"
+                  >מחק</v-btn
+                >
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -72,6 +107,18 @@ export default {
   mounted() {},
   updated() {},
   methods: {
+    setcurrentMess(Messages) {
+      this.$store.commit('setcurrentMessages', Messages)
+    },
+    UpdateDone() {
+      fb.Messages.doc(this.currentMessages.id).update({
+        Done: true
+      })
+    },
+    deleteMessages() {
+      fb.Messages.doc(this.currentMessages.id).delete()
+      this.currentMessages(null)
+    },
     setDetails() {
       this.farmName = this.farms.find(obj => obj.userId == this.userId).name
       this.ownerName = this.farmOwners.find(
@@ -90,12 +137,19 @@ export default {
       'fields',
       'crops',
       'cropCycle',
+      'currentMessages',
       'Messages'
     ]),
 
     UidMessages: function() {
       return this.Messages.filter(m => {
-        return m.to == this.userId
+        return m.to == this.userId && m.Done == false
+      })
+    },
+
+    UidMessagesDone: function() {
+      return this.Messages.filter(m => {
+        return m.to == this.userId && m.Done == true
       })
     }
   }

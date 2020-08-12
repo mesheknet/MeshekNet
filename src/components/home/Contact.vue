@@ -1,7 +1,7 @@
 <template>
   <div class="container_fluid">
     <div class="container_content">
-      <v-container grey lighten-3>
+      <v-container>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-select
             v-model="select"
@@ -23,6 +23,8 @@
             v-model="mes"
             :rules="messageRules"
             label="כתוב הודעה"
+            auto-grow
+            row-height="15"
             required
           ></v-textarea>
 
@@ -79,6 +81,7 @@ export default {
           title: this.select,
           subject: this.Topic,
           mes: this.mes,
+          PreviousPost: null,
           to: 'admin'
         }
       }
