@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <div class="container">
-      <h1>משק.נט</h1>
-      <h4>ברוך הבא, {{ this.ownerName }}</h4>
-      <h4>{{ this.farmName }}</h4>
-      <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
-      <p></p>
-    </div>
+  <div class="container_fluid">
+   <div>
 
     <v-container class="mx-auto">
       <v-expansion-panels class="mb-6 ">
+   
         <v-expansion-panel
           v-for="(Messages, index) in UidMessages"
           :key="index"
-          @click="setcurrentMess(Messages)"
+          @click="
+          setcurrentMess(Messages)
+          "
         >
+        
           <v-expansion-panel-header expand-icon="fa fa-exclamation">
             <v-col>{{ Messages.title }} </v-col>
             <v-col> {{ Messages.subject }}</v-col>
@@ -40,6 +38,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+
 
       <v-expansion-panels>
         <v-expansion-panel
@@ -77,6 +76,7 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-container>
+  </div>
   </div>
 </template>
 
@@ -156,7 +156,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container_fluid {
+ 
+
+  background:linear-gradient(to right, #074C00, #42A341, #B8E2A3);
+
+  padding: 15px;
+  height: 90vh;
+
+}
 .login {
   max-width: 400px;
   margin-top: 60px;

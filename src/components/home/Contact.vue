@@ -107,12 +107,14 @@ export default {
 
 <style scoped>
 .container_fluid {
-  background-color: #74a748;
+   background:linear-gradient(to right, #074C00, #42A341, #B8E2A3);
 
   padding: 15px;
   height: 90vh;
 }
 .container_content {
+  width: 800px;
+  margin: auto;
   background-color: #f7f8f7;
   padding: 15px;
 }

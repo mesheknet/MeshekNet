@@ -9,6 +9,7 @@ import MyCrops from '@/components/home/MyCrops'
 import MyCoop from '@/components/home/MyCoop'
 import Contact from '@/components/home/Contact'
 import Admin from '@/components/admin/Admin'
+import TransitionPage from '@/components/home/TransitionPage'
 
 Vue.use(Router)
 
@@ -17,6 +18,14 @@ const routes = [
     path: '/Notifications',
     name: 'Notifications',
     component: Notifications,
+    meta: {
+      reqAuth: true
+    }
+  },
+  {
+    path: '/TransitionPage',
+    name: 'TransitionPage',
+    component: TransitionPage,
     meta: {
       reqAuth: true
     }

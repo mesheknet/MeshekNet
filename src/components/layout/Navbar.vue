@@ -98,6 +98,9 @@ export default {
 <style>
 .container_fluid {
   width: 100%;
+background-color: #63d471;
+background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
+
 }
 .navbar .column_img {
   position: relative;

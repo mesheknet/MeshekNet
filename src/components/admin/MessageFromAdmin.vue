@@ -11,7 +11,7 @@
         השב הודעה
       </v-card-title>
 
-      <div class="container_fluid">
+      <div class="container_fluidd">
         <div class="container_content">
           <v-container>
             <v-form ref="form" v-model="valid" lazy-validation>

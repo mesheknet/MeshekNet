@@ -26,7 +26,7 @@
               @click="setcurrentMess(Messages)"
             >
               <v-expansion-panel-header expand-icon="fa fa-exclamation">
-                <v-col>{{ setOwners() }} </v-col>
+                <v-col>{{ setOwners(Messages.userid) }} </v-col>
                 <v-col>{{ Messages.title }} </v-col>
                 <v-col>{{ Messages.subject }}</v-col>
                 <v-col>{{ Messages.startDate }} </v-col>
@@ -51,7 +51,7 @@
           >
             <v-expansion-panel>
               <v-expansion-panel-header>
-                <v-col>{{ setOwners() }} </v-col>
+                <v-col>{{ setOwners(Messages.userid) }} </v-col>
                 <v-col>{{ Messages.title }} </v-col>
                 <v-col>{{ Messages.subject }}</v-col>
                 <v-col>{{ Messages.startDate }} </v-col>
@@ -99,17 +99,18 @@ export default {
     }
   },
   created() {
-    this.setDetails()
+    
   },
   methods: {
     setcurrentMess(Messages) {
       this.$store.commit('setcurrentMessages', Messages)
     },
-    setOwners() {
-      return (this.ownerName = this.farmOwners.find(
-        obj => obj.userId == this.userId
-      ).name)
+    setOwners(MessagesUid) {
+     
+      return (this.ownerName = this.farmOwners.find(function(m) {
+       return m.userId== MessagesUid}).name)
     },
+    
     deleteMessages() {
       fb.Messages.doc(this.currentMessages.id).delete()
       this.currentMessages(null)

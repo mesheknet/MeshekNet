@@ -94,7 +94,7 @@ export default {
                 this.loading = false
               })
               .then(() => {
-                this.$router.push({ name: 'Notifications' })
+                this.$router.push({ name: 'TransitionPage' })
               })
           })
           .catch((err) => {

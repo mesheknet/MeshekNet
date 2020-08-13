@@ -1,0 +1,81 @@
+<template>
+  <div>
+    <div class="container">
+      <h1>משק.נט</h1>
+      <h4>ברוך הבא, {{ this.ownerName }}</h4>
+      <h4>{{ this.farmName }}</h4>
+      <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
+      <p></p>
+    </div>
+  </div>
+</template>
+
+<script>
+import moment from 'moment'
+import { mapGetters } from 'vuex'
+const fb = require('@/fb.js')
+
+export default {
+  name: 'TransitionPage',
+  data() {
+    return {
+      lastSignIn: null,
+      currentUser: null,
+      farmName: null,
+      ownerName: null,
+      loading: true
+    }
+  },
+  created() {
+    fb.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
+        this.setDetails()
+      }
+    })
+  },
+  mounted() {},
+  updated() {},
+  methods: {
+ 
+    setDetails() {
+      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
+      this.ownerName = this.farmOwners.find(
+        obj => obj.userId == this.userId
+      ).name
+    }
+  },
+  computed: {
+    //get local data from firestore using the store
+    ...mapGetters([
+      'userId',
+      'farmId',
+      'users',
+      'farmOwners',
+      'farms',
+      'fields',
+      'crops',
+      'cropCycle',
+      'currentMessages',
+      'Messages'
+    ]),
+
+  
+  }
+}
+</script>
+
+<style>
+.login {
+  max-width: 400px;
+  margin-top: 60px;
+}
+
+.login .h2 {
+  font-size: 2.4em;
+}
+
+.login .field {
+  margin-bottom: 16px;
+}
+</style>
