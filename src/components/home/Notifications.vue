@@ -3,8 +3,40 @@
     <div>
       <v-container class="mx-auto">
         <v-expansion-panels class="mb-6 ">
+          <!-------  for Messages  ------->
           <v-expansion-panel
             v-for="(Messages, index) in UidMessages"
+            :key="index"
+            @click="setcurrentMess(Messages)"
+          >
+            <v-expansion-panel-header expand-icon="fa fa-exclamation">
+              <v-col>{{ Messages.title }} </v-col>
+              <v-col> {{ Messages.subject }}</v-col>
+              <v-col>{{ Messages.startDate }} </v-col></v-expansion-panel-header
+            >
+            <v-expansion-panel-content>
+              <v-row>
+                <v-card color="#d6cfcf" width="552">
+                  <v-card-subtitle text color="black">{{
+                    Messages.PreviousPost
+                  }}</v-card-subtitle>
+                </v-card>
+              </v-row>
+
+              <v-row>
+                {{ Messages.mes }}
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-btn text color="primary" @click="UpdateDone()">בוצע</v-btn>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+
+          <!-------  for notifications  ------->
+           <v-expansion-panel
+            v-for="(notification, index) in notifications"
             :key="index"
             @click="setcurrentMess(Messages)"
           >
@@ -40,7 +72,7 @@
             </v-card>
           </div>
         </v-expansion-panels>
-
+      <!-------  for Messages Done ------->
         <v-expansion-panels>
           <v-expansion-panel
             v-for="(Messages, index) in UidMessagesDone"
@@ -73,8 +105,43 @@
                   >
                 </v-col>
               </v-row>
+              <!-------  for notifications Done ------->
             </v-expansion-panel-content>
           </v-expansion-panel>
+           <v-expansion-panel
+            v-for="(notifications, index) in UidMessagesDone"
+            :key="index"
+            @click="setcurrentMess(Messages)"
+          >
+            <v-expansion-panel-header>
+              <v-col>{{ Messages.title }} </v-col>
+              <v-col> {{ Messages.subject }}</v-col>
+              <v-col>{{ Messages.startDate }} </v-col>
+              <template v-slot:actions>
+                <v-icon color="green">fa fa-check</v-icon>
+              </template>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-card color="#d6cfcf">
+                  <v-card-subtitle text color="black">{{
+                    Messages.PreviousPost
+                  }}</v-card-subtitle>
+                </v-card>
+              </v-row>
+              <v-row>
+                {{ Messages.mes }}
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-btn text color="primary" @click="deleteMessages()"
+                    >מחק</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+
           <div v-if="UidMessagesDone == false">
             <v-card color="#d6cfcf">
               <v-card-subtitle text color="black">
