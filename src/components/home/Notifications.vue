@@ -1,82 +1,90 @@
 <template>
   <div class="container_fluid">
-   <div>
-
-    <v-container class="mx-auto">
-      <v-expansion-panels class="mb-6 ">
-   
-        <v-expansion-panel
-          v-for="(Messages, index) in UidMessages"
-          :key="index"
-          @click="
-          setcurrentMess(Messages)
-          "
-        >
-        
-          <v-expansion-panel-header expand-icon="fa fa-exclamation">
-            <v-col>{{ Messages.title }} </v-col>
-            <v-col> {{ Messages.subject }}</v-col>
-            <v-col>{{ Messages.startDate }} </v-col></v-expansion-panel-header
+    <div>
+      <v-container class="mx-auto">
+        <v-expansion-panels class="mb-6 ">
+          <v-expansion-panel
+            v-for="(Messages, index) in UidMessages"
+            :key="index"
+            @click="setcurrentMess(Messages)"
           >
-          <v-expansion-panel-content>
-            <v-row>
-              <v-card color="#d6cfcf">
-                <v-card-subtitle text color="black">{{
-                  Messages.PreviousPost
-                }}</v-card-subtitle>
-              </v-card>
-            </v-row>
+            <v-expansion-panel-header expand-icon="fa fa-exclamation">
+              <v-col>{{ Messages.title }} </v-col>
+              <v-col> {{ Messages.subject }}</v-col>
+              <v-col>{{ Messages.startDate }} </v-col></v-expansion-panel-header
+            >
+            <v-expansion-panel-content>
+              <v-row>
+                <v-card color="#d6cfcf" width="552">
+                  <v-card-subtitle text color="black">{{
+                    Messages.PreviousPost
+                  }}</v-card-subtitle>
+                </v-card>
+              </v-row>
 
-            <v-row>
-              {{ Messages.mes }}
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-btn text color="primary" @click="UpdateDone()">בוצע</v-btn>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+              <v-row>
+                {{ Messages.mes }}
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-btn text color="primary" @click="UpdateDone()">בוצע</v-btn>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <div v-if="UidMessages == false">
+            <v-card color="#d6cfcf">
+              <v-card-subtitle text color="black">
+                אין התראות חדשות
+              </v-card-subtitle>
+            </v-card>
+          </div>
+        </v-expansion-panels>
 
-
-      <v-expansion-panels>
-        <v-expansion-panel
-          v-for="(Messages, index) in UidMessagesDone"
-          :key="index"
-          @click="setcurrentMess(Messages)"
-        >
-          <v-expansion-panel-header>
-            <v-col>{{ Messages.title }} </v-col>
-            <v-col> {{ Messages.subject }}</v-col>
-            <v-col>{{ Messages.startDate }} </v-col>
-            <template v-slot:actions>
-              <v-icon color="green">fa fa-check</v-icon>
-            </template>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-row>
-              <v-card color="#d6cfcf">
-                <v-card-subtitle text color="black">{{
-                  Messages.PreviousPost
-                }}</v-card-subtitle>
-              </v-card>
-            </v-row>
-            <v-row>
-              {{ Messages.mes }}
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-btn text color="primary" @click="deleteMessages()"
-                  >מחק</v-btn
-                >
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-container>
-  </div>
+        <v-expansion-panels>
+          <v-expansion-panel
+            v-for="(Messages, index) in UidMessagesDone"
+            :key="index"
+            @click="setcurrentMess(Messages)"
+          >
+            <v-expansion-panel-header>
+              <v-col>{{ Messages.title }} </v-col>
+              <v-col> {{ Messages.subject }}</v-col>
+              <v-col>{{ Messages.startDate }} </v-col>
+              <template v-slot:actions>
+                <v-icon color="green">fa fa-check</v-icon>
+              </template>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-card color="#d6cfcf">
+                  <v-card-subtitle text color="black">{{
+                    Messages.PreviousPost
+                  }}</v-card-subtitle>
+                </v-card>
+              </v-row>
+              <v-row>
+                {{ Messages.mes }}
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-btn text color="primary" @click="deleteMessages()"
+                    >מחק</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <div v-if="UidMessagesDone == false">
+            <v-card color="#d6cfcf">
+              <v-card-subtitle text color="black">
+                אין התראות שבוצעו
+              </v-card-subtitle>
+            </v-card>
+          </div>
+        </v-expansion-panels>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -93,6 +101,7 @@ export default {
       currentUser: null,
       farmName: null,
       ownerName: null,
+      nodaata: true,
       loading: true
     }
   },
@@ -158,13 +167,10 @@ export default {
 
 <style scoped>
 .container_fluid {
- 
-
-  background:linear-gradient(to right, #074C00, #42A341, #B8E2A3);
+  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
 
   padding: 15px;
   height: 90vh;
-
 }
 .login {
   max-width: 400px;

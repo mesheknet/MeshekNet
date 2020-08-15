@@ -98,19 +98,17 @@ export default {
       vol: null
     }
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     setcurrentMess(Messages) {
       this.$store.commit('setcurrentMessages', Messages)
     },
     setOwners(MessagesUid) {
-     
       return (this.ownerName = this.farmOwners.find(function(m) {
-       return m.userId== MessagesUid}).name)
+        return m.userId == MessagesUid
+      }).name)
     },
-    
+
     deleteMessages() {
       fb.Messages.doc(this.currentMessages.id).delete()
       this.currentMessages(null)
