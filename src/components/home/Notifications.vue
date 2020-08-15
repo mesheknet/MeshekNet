@@ -35,7 +35,7 @@
           </v-expansion-panel>
 
           <!-------  for notifications  ------->
-           <v-expansion-panel
+          <v-expansion-panel
             v-for="(notification, index) in notifications"
             :key="index"
             @click="setcurrentMess(Messages)"
@@ -72,7 +72,7 @@
             </v-card>
           </div>
         </v-expansion-panels>
-      <!-------  for Messages Done ------->
+        <!-------  for Messages Done ------->
         <v-expansion-panels>
           <v-expansion-panel
             v-for="(Messages, index) in UidMessagesDone"
@@ -108,8 +108,8 @@
               <!-------  for notifications Done ------->
             </v-expansion-panel-content>
           </v-expansion-panel>
-           <v-expansion-panel
-            v-for="(notifications, index) in UidMessagesDone"
+          <v-expansion-panel
+            v-for="(notifications, index) in notifications"
             :key="index"
             @click="setcurrentMess(Messages)"
           >
