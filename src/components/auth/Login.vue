@@ -120,6 +120,7 @@ export default {
       await this.$store.dispatch('bindPimplement')
       await this.$store.dispatch('bindFerts')
       await this.$store.dispatch('bindMessages')
+      await this.$store.dispatch('bindNotifications')
       //for coop
 
       await this.$store.dispatch('bindChickens')

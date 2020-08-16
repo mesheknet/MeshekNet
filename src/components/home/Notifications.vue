@@ -1,3 +1,15 @@
+<!-------  When you want to enter notifications you need to do:
+var NewNotifications = {
+          id: fb.notification.doc().id,
+          title: 
+          subject: 
+          mes: 
+          to: //To which user (userid)
+
+        }
+        this.$store.commit('NewNotifications', NewNotifications) 
+ ------->
+
 <template>
   <div class="container_fluid">
     <div>
@@ -36,35 +48,29 @@
 
           <!-------  for notifications  ------->
           <v-expansion-panel
-            v-for="(notification, index) in notifications"
+            v-for="(notifications, index) in Uidnotifications"
             :key="index"
-            @click="setcurrentMess(Messages)"
+            @click="setcurrentNoti(notifications)"
           >
             <v-expansion-panel-header expand-icon="fa fa-exclamation">
-              <v-col>{{ Messages.title }} </v-col>
-              <v-col> {{ Messages.subject }}</v-col>
-              <v-col>{{ Messages.startDate }} </v-col></v-expansion-panel-header
+              <v-col>{{ notifications.title }} </v-col>
+              <v-col> {{ notifications.subject }}</v-col>
+              <v-col>{{ notifications.startDate }} </v-col></v-expansion-panel-header
             >
             <v-expansion-panel-content>
-              <v-row>
-                <v-card color="#d6cfcf" width="552">
-                  <v-card-subtitle text color="black">{{
-                    Messages.PreviousPost
-                  }}</v-card-subtitle>
-                </v-card>
-              </v-row>
+              
 
               <v-row>
-                {{ Messages.mes }}
+                {{ notifications.mes }}
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-btn text color="primary" @click="UpdateDone()">בוצע</v-btn>
+                  <v-btn text color="primary" @click="UpdateDonenotifications()">בוצע</v-btn>
                 </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
-          <div v-if="UidMessages == false">
+          <div v-if="UidMessages == false && Uidnotifications == false ">
             <v-card color="#d6cfcf">
               <v-card-subtitle text color="black">
                 אין התראות חדשות
@@ -72,6 +78,11 @@
             </v-card>
           </div>
         </v-expansion-panels>
+
+
+
+
+
         <!-------  for Messages Done ------->
         <v-expansion-panels>
           <v-expansion-panel
@@ -109,32 +120,26 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel
-            v-for="(notifications, index) in notifications"
+            v-for="(notifications, index) in UidnotificationsDone"
             :key="index"
-            @click="setcurrentMess(Messages)"
+            @click="setcurrentNoti(notifications)"
           >
             <v-expansion-panel-header>
-              <v-col>{{ Messages.title }} </v-col>
-              <v-col> {{ Messages.subject }}</v-col>
-              <v-col>{{ Messages.startDate }} </v-col>
+              <v-col>{{ notifications.title }} </v-col>
+              <v-col> {{ notifications.subject }}</v-col>
+              <v-col>{{ notifications.startDate }} </v-col>
               <template v-slot:actions>
                 <v-icon color="green">fa fa-check</v-icon>
               </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
+             
               <v-row>
-                <v-card color="#d6cfcf">
-                  <v-card-subtitle text color="black">{{
-                    Messages.PreviousPost
-                  }}</v-card-subtitle>
-                </v-card>
-              </v-row>
-              <v-row>
-                {{ Messages.mes }}
+                {{ notifications.mes }}
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-btn text color="primary" @click="deleteMessages()"
+                  <v-btn text color="primary" @click="deletenotifications()"
                     >מחק</v-btn
                   >
                 </v-col>
@@ -142,7 +147,7 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
 
-          <div v-if="UidMessagesDone == false">
+          <div v-if="UidMessagesDone == false && UidnotificationsDone == false">
             <v-card color="#d6cfcf">
               <v-card-subtitle text color="black">
                 אין התראות שבוצעו
@@ -186,6 +191,9 @@ export default {
     setcurrentMess(Messages) {
       this.$store.commit('setcurrentMessages', Messages)
     },
+     setcurrentNoti(notifications) {
+      this.$store.commit('setcurrentnotifications', notifications)
+    },
     UpdateDone() {
       fb.Messages.doc(this.currentMessages.id).update({
         Done: true
@@ -194,6 +202,15 @@ export default {
     deleteMessages() {
       fb.Messages.doc(this.currentMessages.id).delete()
       this.currentMessages(null)
+    },
+    UpdateDonenotifications() {
+      fb.notification.doc(this.currentnotifications.id).update({
+        Done: true
+      })
+    },
+    deletenotifications() {
+      fb.notification.doc(this.currentnotifications.id).delete()
+      this.currentnotifications(null)
     },
     setDetails() {
       this.farmName = this.farms.find(obj => obj.userId == this.userId).name
@@ -214,6 +231,8 @@ export default {
       'crops',
       'cropCycle',
       'currentMessages',
+      'currentnotifications',
+      'notifications',
       'Messages'
     ]),
 
@@ -227,7 +246,18 @@ export default {
       return this.Messages.filter(m => {
         return m.to == this.userId && m.Done == true
       })
-    }
+    },
+    Uidnotifications: function() {
+      return this.notifications.filter(n => {
+        return n.to == this.userId && n.Done == false
+      })
+    },
+
+    UidnotificationsDone: function() {
+      return this.notifications.filter(n => {
+        return n.to == this.userId && n.Done == true
+      })
+    },
   }
 }
 </script>

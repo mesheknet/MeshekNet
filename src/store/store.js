@@ -42,6 +42,8 @@ export const store = new Vuex.Store({
     startDate: null,
     cropLog: [],
     Messages:{},
+    notifications:{},
+    currentnotifications:{},
 
     //for coop
     coop: [],
@@ -121,6 +123,18 @@ export const store = new Vuex.Store({
         startDate: moment().format('L')
       })
     },
+      NewNotifications(state, NewNotifications) {
+        let ref = fb.notification.doc()
+        ref.set({
+          id: ref.id,
+          title: NewNotifications.title,
+          subject: NewNotifications.subject,
+          mes: NewNotifications.mes,
+          to: NewNotifications.to,
+          Done: false,
+          startDate: moment().format('L')
+        })
+    },
 
     //for coop
     addNewChickens(state, newChickens) {
@@ -140,6 +154,9 @@ export const store = new Vuex.Store({
     },
     setcurrentMessages(state, Messages) {
       state.currentMessages = Messages
+    },
+    setcurrentnotifications(state, notifications) {
+      state.currentnotifications = notifications
     },
     updateselectedchickCycle(state, Chickens) {
       state.selectedchickCycle = Chickens
@@ -345,10 +362,13 @@ export const store = new Vuex.Store({
           }
         )
     },
-
-    bindMessages: firestoreAction(({ bindFirestoreRef }) => {
+     bindMessages: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('Messages', fb.Messages)
+    }),
+    bindNotifications: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef('notifications', fb.notification)
     }),
 
     //for coop
@@ -489,6 +509,15 @@ export const store = new Vuex.Store({
     Messages: state => {
       return state.Messages
     },
+    currentMessages: state => {
+      return state.currentMessages
+    },
+    notifications: state => {
+      return state.notifications
+    },
+    currentnotifications: state => {
+      return state.currentnotifications
+    },
 
     //for coop
 
@@ -513,9 +542,8 @@ export const store = new Vuex.Store({
     currentChickCycle: state => {
       return state.currentchickCycle
     },
-    currentMessages: state => {
-      return state.currentMessages
-    },
+    
+    
     selectedCoop: state => {
       return state.selectedCoop
     },
