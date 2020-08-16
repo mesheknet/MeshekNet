@@ -1,7 +1,12 @@
  <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn class="mx-auto white--text" color="light green" v-on="on">
+      <v-btn
+        class="mx-auto white--text"
+        color="light green"
+        v-on="on"
+        min-width="200"
+      >
         מחלות<v-icon right>fas fa-briefcase-medical</v-icon>
       </v-btn>
     </template>

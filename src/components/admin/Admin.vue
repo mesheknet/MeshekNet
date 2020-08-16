@@ -1,5 +1,6 @@
 <template>
-  <v-card>
+  <v-card class="mx-auto mt-6" max-width="700" tile>
+    <v-card-title> בחר פעולת מנהל לביצוע </v-card-title>
     <v-card-text>
       <v-row>
         <AddCropData />
@@ -35,18 +36,18 @@ export default {
     EditChickenType,
     AddDisease,
     AddCropData,
-    AdminMesseg
+    AdminMesseg,
   },
   data() {
     return {
-      dialog: null
+      dialog: null,
     }
   },
   methods: {},
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId'])
-  }
+    ...mapGetters(['userId']),
+  },
 }
 </script>

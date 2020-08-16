@@ -1,7 +1,12 @@
  <template>
   <v-dialog max-width="700" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn class="mx-auto white--text" color="light green" v-on="on">
+      <v-btn
+        class="mx-auto white--text"
+        color="light green"
+        v-on="on"
+        min-width="200"
+      >
         הוספת נתוני גידולים<v-icon right>fas fa-seedling</v-icon>
       </v-btn>
     </template>
@@ -27,11 +32,36 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="fertilization"
-                label="דישון"
-                @input="stringToarr()"
+                v-model="fertNitrogen"
+                label="דישון חנקן"
               ></v-text-field>
             </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="fertPhosphorus"
+                label="דישון זרחן"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="fertPotassium"
+                label="דישון אשלגן"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="fertUrean"
+                label="דישון אוריאה"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col>
               <v-text-field v-model="irrigation" label="השקיה"></v-text-field>
             </v-col>
@@ -47,7 +77,9 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn :loading="loading" block color="success">הוסף נתוני גידול</v-btn>
+        <v-btn :loading="loading" block color="success" @click="addCropData()"
+          >הוסף נתוני גידול</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -67,16 +99,37 @@ export default {
       cropName: null,
       cropDuration: null,
       irrigation: [],
-      fertilization: [],
+      fertNitrogen: [],
+      fertPhosphorus: [],
+      fertPotassium: [],
+      fertUrean: [],
     }
   },
   methods: {
-    stringToarr() {
-      let tempArr = this.fertilization.split(' ')
-      let fertArr = []
-      tempArr.forEach((item) => {
-        fertArr.push(parseFloat(item))
-      })
+    stringToarr(sourceArr) {
+      if (sourceArr == []) {
+        return null
+      } else {
+        sourceArr = sourceArr.split(' ')
+        let fertArr = []
+        sourceArr.forEach((item) => {
+          fertArr.push(parseFloat(item))
+        })
+        return fertArr
+      }
+    },
+
+    addCropData() {
+      this.getFertArrays()
+      console.log(this.fertPhosphorus)
+    },
+
+    //transform user input into array of float numbers
+    getFertArrays() {
+      this.fertNitrogen = this.stringToarr(this.fertNitrogen)
+      this.fertPhosphorus = this.stringToarr(this.fertPhosphorus)
+      this.fertPotassium = this.stringToarr(this.fertPotassium)
+      this.fertUrean = this.stringToarr(this.fertUrean)
     },
   },
   updated() {},
