@@ -105,7 +105,14 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn :loading="loading" block color="success" @click="addCropData()"
+        <v-btn
+          :loading="loading"
+          block
+          color="success"
+          @click="
+            addCropData()
+            this.dialog = false
+          "
           >הוסף נתוני גידול</v-btn
         >
       </v-card-actions>
