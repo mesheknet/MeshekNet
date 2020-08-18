@@ -7,7 +7,7 @@
         v-on="on"
         min-width="200"
       >
-        הוספת נתוני גידולים<v-icon right>fas fa-seedling</v-icon>
+        עריכת נתוני גידולים<v-icon right>fas fa-seedling</v-icon>
       </v-btn>
     </template>
 
@@ -17,7 +17,45 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form class="px-3" ref="form">
+        <v-row>
+          <v-col>
+            <v-select
+              v-model="selectedCrop"
+              :items="crops"
+              label="בחר גידול למחיקה או הוסף חדש"
+              item-text="name"
+              return-object
+            ></v-select>
+
+            <v-btn
+              @click="addCrop = true"
+              class="ma-2"
+              fab
+              x-small
+              dark
+              color="teal darken-2"
+            >
+              <v-icon dark>add</v-icon>
+            </v-btn>
+
+            <v-btn
+              v-if="selectedCrop"
+              @click="
+                deleteCrop()
+                dialog = false
+              "
+              class="ma-2"
+              fab
+              x-small
+              dark
+              color="red darken-2"
+            >
+              <v-icon dark>delete</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-form class="px-3" ref="form" v-if="addCrop">
           <v-row>
             <v-col>
               <v-text-field v-model="cropName" label="שם הגידול"></v-text-field>
@@ -111,7 +149,7 @@
           color="success"
           @click="
             addCropData()
-            this.dialog = false
+            dialog = false
           "
           >הוסף נתוני גידול</v-btn
         >
@@ -130,8 +168,10 @@ export default {
   data() {
     return {
       loading: false,
-      dialog: null,
+      dialog: false,
       cropName: null,
+      addCrop: false,
+      selectedCrop: null,
       cropDuration: null,
       irrigation13: [],
       irrigation28: [],
@@ -191,6 +231,10 @@ export default {
       this.irrigation28 = this.stringToarr(this.irrigation28)
       this.irrigation48 = this.stringToarr(this.irrigation48)
       this.irrigation54 = this.stringToarr(this.irrigation54)
+    },
+
+    deleteCrop() {
+      fb.crop.doc(this.selectedCrop.id).delete()
     },
   },
   updated() {},

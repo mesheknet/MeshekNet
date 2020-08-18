@@ -13,7 +13,7 @@
 
     <v-card>
       <v-card-title class="green lighten-3" primary-title>
-        עריכת תרגנגולות
+        עריכת זני תרנגולות
       </v-card-title>
 
       <v-row>
@@ -21,7 +21,7 @@
           <v-select
             v-model="selectChicken"
             :items="Chickens"
-            label="בחר סוג תרנגולת או הוסף חדש"
+            label="בחר זן תרנגולת או הוסף חדש"
             item-text="name"
             return-object
           ></v-select>
