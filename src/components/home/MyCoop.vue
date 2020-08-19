@@ -13,6 +13,15 @@
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
     <div class="container_content">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
+      <div class="BeforeClicking" v-if="currentchickCycle == null">
+        <h1>משק.נט</h1>
+        <h4>בחר מחזור תרנגולות או הוסף חדש</h4>
+        <h4>ונתחיל בעבודה</h4>
+        ><img
+          class="Imgch"
+          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2F2dzOInI.gif?alt=media&token=49dcd1f6-379e-48f4-a763-6c3091e7ec12"
+        />
+      </div>
       <div class="container_content_details" v-if="currentchickCycle">
         <div class="container_content_details_title">
           <span>סוג מחזור:</span><br />{{
@@ -146,7 +155,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false,
+      deleteDialog: false
     }
   },
 
@@ -167,8 +176,8 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
-      'chickCycle',
-    ]),
+      'chickCycle'
+    ])
   },
   methods: {
     setcurrentchickCycle(cycle) {
@@ -206,8 +215,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -226,7 +235,7 @@ export default {
 /*  ------------container for all main grid-----------   */
 .container_fluid {
   display: grid;
- background:linear-gradient(to right, #074C00, #42A341, #B8E2A3);
+  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 1em;
@@ -326,7 +335,15 @@ export default {
 
   grid-template-columns: repeat(5, 1fr);
 }
+.BeforeClicking {
+  grid-column: 1/6;
 
+  text-align: center;
+}
+.Imgch {
+  height: 30%;
+  width: 20%;
+}
 .container_content_details {
   grid-column: 1/4;
 
@@ -442,6 +459,7 @@ export default {
     top: 250px;
     z-index: 2;
   }
+  
 
   .container_title .siztitle {
     font-size: 35px;

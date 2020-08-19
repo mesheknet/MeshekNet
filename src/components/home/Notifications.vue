@@ -55,22 +55,24 @@ var NewNotifications = {
             <v-expansion-panel-header expand-icon="fa fa-exclamation">
               <v-col>{{ notifications.title }} </v-col>
               <v-col> {{ notifications.subject }}</v-col>
-              <v-col>{{ notifications.startDate }} </v-col></v-expansion-panel-header
+              <v-col
+                >{{ notifications.startDate }}
+              </v-col></v-expansion-panel-header
             >
             <v-expansion-panel-content>
-              
-
               <v-row>
                 {{ notifications.mes }}
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-btn text color="primary" @click="UpdateDonenotifications()">בוצע</v-btn>
+                  <v-btn text color="primary" @click="UpdateDonenotifications()"
+                    >בוצע</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
-          <div v-if="UidMessages == false && Uidnotifications == false ">
+          <div v-if="UidMessages == false && Uidnotifications == false">
             <v-card color="#d6cfcf">
               <v-card-subtitle text color="black">
                 אין התראות חדשות
@@ -78,10 +80,6 @@ var NewNotifications = {
             </v-card>
           </div>
         </v-expansion-panels>
-
-
-
-
 
         <!-------  for Messages Done ------->
         <v-expansion-panels>
@@ -133,7 +131,6 @@ var NewNotifications = {
               </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-             
               <v-row>
                 {{ notifications.mes }}
               </v-row>
@@ -191,7 +188,7 @@ export default {
     setcurrentMess(Messages) {
       this.$store.commit('setcurrentMessages', Messages)
     },
-     setcurrentNoti(notifications) {
+    setcurrentNoti(notifications) {
       this.$store.commit('setcurrentnotifications', notifications)
     },
     UpdateDone() {
@@ -257,7 +254,7 @@ export default {
       return this.notifications.filter(n => {
         return n.to == this.userId && n.Done == true
       })
-    },
+    }
   }
 }
 </script>

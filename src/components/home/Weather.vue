@@ -1,4 +1,5 @@
 <template>
+<div class="container_fluid">
   <v-container class="mx-auto">
     <v-layout row justify-space-around>
       <v-flex md12>
@@ -165,6 +166,7 @@
       </v-flex>
     </v-layout>
   </v-container>
+</div>
 </template>
 
 <script>
@@ -227,3 +229,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+.container_fluid {
+  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
+
+  padding: 15px;
+  
+}
+
+</style>

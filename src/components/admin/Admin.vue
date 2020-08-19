@@ -1,4 +1,5 @@
 <template>
+
   <v-card class="mx-auto mt-6" max-width="700" tile>
     <v-card-title> בחר פעולת מנהל לביצוע </v-card-title>
     <v-card-text>

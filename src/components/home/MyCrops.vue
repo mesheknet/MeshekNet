@@ -12,6 +12,15 @@
 
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
     <div class="container_content">
+      <div class="BeforeClicking" v-if="currentCycle == null">
+        <h1>משק.נט</h1>
+        <h4>בחר גידול או הוסף חדש</h4>
+        <h4>ונתחיל בעבודה</h4>
+        <img
+          class="Imgch"
+          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2Fgrowing-tree-svg-2.gif?alt=media&token=ecbe1ef8-c9f6-44ad-83bc-403fde29478e"
+        />
+      </div>
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentCycle">
         <div class="container_content_details_title">
@@ -135,7 +144,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false,
+      deleteDialog: false
     }
   },
 
@@ -156,8 +165,8 @@ export default {
       'fields',
       'crops',
       'currentCycle',
-      'cropCycle',
-    ]),
+      'cropCycle'
+    ])
   },
   methods: {
     setCurrentCycle(cycle) {
@@ -188,8 +197,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -208,7 +217,7 @@ export default {
 /*  ------------container for all main grid-----------   */
 .container_fluid {
   display: grid;
-   background:linear-gradient(to right, #074C00, #42A341, #B8E2A3);
+  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 1em;
@@ -294,6 +303,15 @@ export default {
   border: 1px solid;
   background-color: snow;
   box-shadow: 5px 10px 8px #888888;
+}
+.BeforeClicking {
+  grid-column: 1/6;
+
+  text-align: center;
+}
+.Imgch {
+  height: 30%;
+  width: 20%;
 }
 /*  ------------main grid for content-----------   */
 .container_content {
@@ -433,6 +451,7 @@ export default {
     grid-column: 1/6;
     grid-template-columns: repeat(5, 1fr);
   }
+  
   .container_content_btn {
     grid-column: 5/6;
     margin-top: 0px;

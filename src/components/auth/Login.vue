@@ -64,13 +64,13 @@ export default {
       password: null,
       feedback: null,
       emailRules: [
-        (v) => !!v || 'נא להזין כתובת מייל',
-        (v) => /.+@.+\..+/.test(v) || 'נא להזין כתובת מייל חוקית',
+        v => !!v || 'נא להזין כתובת מייל',
+        v => /.+@.+\..+/.test(v) || 'נא להזין כתובת מייל חוקית'
       ],
-      passwordRules: [(v) => !!v || 'נא להזין סיסמה'],
+      passwordRules: [v => !!v || 'נא להזין סיסמה'],
       show: false,
       valid: true,
-      loading: false,
+      loading: false
     }
   },
   methods: {
@@ -84,7 +84,7 @@ export default {
               .then(() => {
                 this.updateLoginData() //get weather details from ims, update record in firestore
                 this.getWeatherData(
-                  this.farms.find((obj) => obj.id == this.farmId).weatherStation
+                  this.farms.find(obj => obj.id == this.farmId).weatherStation
                 )
                 this.$store.dispatch('bindWeather')
 
@@ -97,7 +97,7 @@ export default {
                 this.$router.push({ name: 'TransitionPage' })
               })
           })
-          .catch((err) => {
+          .catch(err => {
             this.feedback = err.message
           })
         //set vuex store to hold db data and keep it locally synced
@@ -141,15 +141,15 @@ export default {
           '/data/latest',
         {
           headers: {
-            Authorization: 'ApiToken f058958a-d8bd-47cc-95d7-7ecf98610e47',
-          },
+            Authorization: 'ApiToken f058958a-d8bd-47cc-95d7-7ecf98610e47'
+          }
         }
       )
       let now = moment(Date.now()).format('X')
       let weather = {
         farmId: this.farmId,
         date: now,
-        data: response.body.data[0].channels,
+        data: response.body.data[0].channels
       }
       this.clearOldWeather(now)
       fb.weather.doc().set(weather)
@@ -160,8 +160,8 @@ export default {
         .where('farmId', '==', this.farmId)
         .where('date', '<', now)
         .get()
-        .then((snap) => {
-          snap.forEach((doc) => {
+        .then(snap => {
+          snap.forEach(doc => {
             doc.ref.delete()
           })
         })
@@ -172,9 +172,9 @@ export default {
       let userLastLogin = this.currentUser[0].currentLogin
       fb.user.doc(this.currentUser[0].email).update({
         lastLogin: userLastLogin,
-        currentLogin: moment().format('L'),
+        currentLogin: moment().format('L')
       })
-    },
+    }
   },
   computed: {
     //get local data from firestore using the store
@@ -184,9 +184,9 @@ export default {
       'userId',
       'users',
       'currentUser',
-      'LOADED',
-    ]),
-  },
+      'LOADED'
+    ])
+  }
 }
 </script>
 
