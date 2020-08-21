@@ -107,7 +107,7 @@ export default {
 
 <style scoped>
 .container_fluid {
-  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
+  background-color:#b0daf4;
 
   padding: 15px;
   height: 90vh;

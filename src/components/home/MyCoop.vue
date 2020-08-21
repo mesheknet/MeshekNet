@@ -235,7 +235,7 @@ export default {
 /*  ------------container for all main grid-----------   */
 .container_fluid {
   display: grid;
-  background: linear-gradient(to right, #074c00, #42a341, #b8e2a3);
+  background-color:#b0daf4;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 1em;
