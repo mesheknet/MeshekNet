@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <nav class=" light-green darken-4 container_fluid ">
+    <nav class="light-green darken-4 container_fluid">
       <div class="column_img">
         <router-link :to="{ name: 'Notifications' }" class="brand-logo right"
           ><img
@@ -18,8 +18,8 @@
         <ul
           v-if="
             this.$route.path !== '/signup' &&
-              this.$route.path !== '/login' &&
-              this.$route.path !== '/'
+            this.$route.path !== '/login' &&
+            this.$route.path !== '/'
           "
           ref="nav"
         >
@@ -37,8 +37,8 @@
       <div
         v-if="
           this.$route.path !== '/signup' &&
-            this.$route.path !== '/login' &&
-            this.$route.path !== '/'
+          this.$route.path !== '/login' &&
+          this.$route.path !== '/'
         "
         class="column_left"
       >
@@ -68,8 +68,8 @@ export default {
         { name: 'הגידולים שלי', route: 'MyCrops' },
         { name: 'הלול שלי', route: 'MyCoop' },
         { name: 'מזג אויר', route: 'Weather' },
-        { name: 'צור קשר', route: 'Contact' }
-      ]
+        { name: 'צור קשר', route: 'Contact' },
+      ],
     }
   },
   methods: {
@@ -85,22 +85,19 @@ export default {
       nav.contains('active') ? nav.remove('active') : nav.add('active')
     },
     isAdmin() {
-      return this.users.find(obj => obj.userId == this.userId).admin
-    }
+      return this.users.find((obj) => obj.userId == this.userId).admin
+    },
   },
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId', 'users'])
-  }
+    ...mapGetters(['userId', 'users']),
+  },
 }
 </script>
 
 <style>
 .container_fluid {
   width: 100%;
-background-color: #63d471;
-
-
 }
 .navbar .column_img {
   position: relative;

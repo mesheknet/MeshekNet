@@ -6,7 +6,7 @@
           <v-select
             v-model="select"
             :items="items"
-            :rules="[v => !!v || 'נדרש לבחור סיבת פניה']"
+            :rules="[(v) => !!v || 'נדרש לבחור סיבת פניה']"
             label="בחר סיבת פניה"
             required
           ></v-select>
@@ -61,16 +61,16 @@ export default {
       valid: true,
       Topic: null,
       nameRules: [
-        v => !!v || 'נדרש לכתוב נושא פניה',
-        v => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות'
+        (v) => !!v || 'נדרש לכתוב נושא פניה',
+        (v) => (v && v.length <= 20) || 'נושא הפניה צריך להיות קטן מ20 אותיות',
       ],
       mes: null,
       messageRules: [
-        v => !!v || 'נדרש לכתוב את תוכן הודעה',
-        v => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות'
+        (v) => !!v || 'נדרש לכתוב את תוכן הודעה',
+        (v) => (v && v.length > 10) || 'תוכן ההודעה צריך להיות גדול מ10 אותיות',
       ],
       select: null,
-      items: ['לול', 'גידולי שדה', 'דיווח על בעיות תוכנה', 'מזג אוויר']
+      items: ['לול', 'גידולי שדה', 'דיווח על בעיות תוכנה', 'מזג אוויר'],
     }
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
           subject: this.Topic,
           mes: this.mes,
           PreviousPost: null,
-          to: 'admin'
+          to: 'admin',
         }
       }
 
@@ -97,18 +97,16 @@ export default {
     },
     reset() {
       this.$refs.form.reset()
-    }
+    },
   },
   computed: {
-    ...mapGetters(['userId', 'Messages'])
-  }
+    ...mapGetters(['userId', 'Messages']),
+  },
 }
 </script>
 
 <style scoped>
 .container_fluid {
-  background-color:#b0daf4;
-
   padding: 15px;
   height: 90vh;
 }
@@ -117,5 +115,9 @@ export default {
   margin: auto;
   background-color: #f7f8f7;
   padding: 15px;
+
+  box-shadow: 5px 5px 8px #888888;
+  height: 100%;
+  background-color: snow;
 }
 </style>

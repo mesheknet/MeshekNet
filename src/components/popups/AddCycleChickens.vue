@@ -1,7 +1,13 @@
 <template>
   <v-dialog width="500" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn class="mr-7" color="light green darken-4" dark v-on="on">
+      <v-btn
+        class="font-weight-bold"
+        color="light green darken-2"
+        dark
+        block
+        v-on="on"
+      >
         מחזור תרנגולת חדש
       </v-btn>
     </template>
@@ -152,12 +158,12 @@ export default {
       MaxCapacityCoop: null,
       quantity: null,
       startDate: new Date().toISOString().substr(0, 10),
-      nameRules: [v => !!v || 'אנא הזן שם או מספר לול'],
-      sizeRules: [v => !!v || 'אנא הזן כמות תרנגולות'],
+      nameRules: [(v) => !!v || 'אנא הזן שם או מספר לול'],
+      sizeRules: [(v) => !!v || 'אנא הזן כמות תרנגולות'],
       dialog: null,
       dateMenu: false,
       valid: false,
-      loading: false
+      loading: false,
     }
   },
 
@@ -169,7 +175,7 @@ export default {
         id: fb.coop.doc().id,
         CoopName: this.CoopName,
         maxCapacity: this.MaxCapacityCoop,
-        farmId: this.farmId
+        farmId: this.farmId,
       }
       this.$store.commit('addCoop', coop), (this.selectedCoop = coop)
       this.$store.commit('updateselectedcoop', this.selectedCoop)
@@ -191,7 +197,7 @@ export default {
         this.loading = true
         var newCycle = {
           quantity: this.quantity,
-          farmId: this.farmId
+          farmId: this.farmId,
         }
 
         // this.$store.commit('addNewField', newCycle)
@@ -205,7 +211,7 @@ export default {
     },
     setStartDate() {
       this.$store.commit('setStartDate', this.startDate)
-    }
+    },
   },
   computed: {
     //get local data from firestore using the store
@@ -213,7 +219,7 @@ export default {
 
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''
-    }
-  }
+    },
+  },
 }
 </script>

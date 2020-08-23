@@ -14,7 +14,7 @@ var NewNotifications = {
   <div class="container_fluid">
     <div>
       <v-container class="mx-auto">
-        <v-expansion-panels class="mb-6 ">
+        <v-expansion-panels class="mb-6">
           <!-------  for Messages  ------->
           <v-expansion-panel
             v-for="(Messages, index) in UidMessages"
@@ -171,11 +171,11 @@ export default {
       farmName: null,
       ownerName: null,
       nodaata: true,
-      loading: true
+      loading: true,
     }
   },
   created() {
-    fb.auth.onAuthStateChanged(user => {
+    fb.auth.onAuthStateChanged((user) => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
         this.setDetails()
@@ -193,7 +193,7 @@ export default {
     },
     UpdateDone() {
       fb.Messages.doc(this.currentMessages.id).update({
-        Done: true
+        Done: true,
       })
     },
     deleteMessages() {
@@ -202,7 +202,7 @@ export default {
     },
     UpdateDonenotifications() {
       fb.notification.doc(this.currentnotifications.id).update({
-        Done: true
+        Done: true,
       })
     },
     deletenotifications() {
@@ -210,11 +210,11 @@ export default {
       this.currentnotifications(null)
     },
     setDetails() {
-      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
+      this.farmName = this.farms.find((obj) => obj.userId == this.userId).name
       this.ownerName = this.farmOwners.find(
-        obj => obj.userId == this.userId
+        (obj) => obj.userId == this.userId
       ).name
-    }
+    },
   },
   computed: {
     //get local data from firestore using the store
@@ -230,39 +230,37 @@ export default {
       'currentMessages',
       'currentnotifications',
       'notifications',
-      'Messages'
+      'Messages',
     ]),
 
-    UidMessages: function() {
-      return this.Messages.filter(m => {
+    UidMessages: function () {
+      return this.Messages.filter((m) => {
         return m.to == this.userId && m.Done == false
       })
     },
 
-    UidMessagesDone: function() {
-      return this.Messages.filter(m => {
+    UidMessagesDone: function () {
+      return this.Messages.filter((m) => {
         return m.to == this.userId && m.Done == true
       })
     },
-    Uidnotifications: function() {
-      return this.notifications.filter(n => {
+    Uidnotifications: function () {
+      return this.notifications.filter((n) => {
         return n.to == this.userId && n.Done == false
       })
     },
 
-    UidnotificationsDone: function() {
-      return this.notifications.filter(n => {
+    UidnotificationsDone: function () {
+      return this.notifications.filter((n) => {
         return n.to == this.userId && n.Done == true
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
 .container_fluid {
-  background-color:#b0daf4;
-
   padding: 15px;
   height: 90vh;
 }

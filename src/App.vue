@@ -1,11 +1,10 @@
 <template>
-  <v-app class="grey lighten-3 appFont">
+  <v-app class="light-green lighten-4 appFont">
     <v-content>
       <Navbar />
       <router-view> </router-view>
       <Footer />
     </v-content>
-
   </v-app>
 </template>
 
@@ -17,8 +16,8 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
-  }
+    Footer,
+  },
 }
 </script>
 

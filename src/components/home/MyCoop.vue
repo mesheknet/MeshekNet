@@ -155,7 +155,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false
+      deleteDialog: false,
     }
   },
 
@@ -176,8 +176,8 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
-      'chickCycle'
-    ])
+      'chickCycle',
+    ]),
   },
   methods: {
     setcurrentchickCycle(cycle) {
@@ -215,8 +215,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -226,7 +226,7 @@ export default {
   border-color: rgb(204, 203, 203);
   border-bottom-style: solid;
   border-top-style: solid;
-  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(173, 171, 171, 0.75);
 }
 /*  ------------icon for open the list in condition media-----------   */
 .iconlist {
@@ -235,7 +235,7 @@ export default {
 /*  ------------container for all main grid-----------   */
 .container_fluid {
   display: grid;
-  background-color:#b0daf4;
+
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 1em;
@@ -250,10 +250,10 @@ export default {
   width: 100%;
   min-width: 200px;
   height: 100%;
-  border: 1px solid;
+
   overflow: auto;
   background-color: snow;
-  box-shadow: 5px 10px 8px #888888;
+  box-shadow: 5px 5px 8px #888888;
 }
 
 .container_list_title {
@@ -284,7 +284,7 @@ export default {
   border-bottom-style: solid;
   border-top-style: solid;
   border-color: rgb(204, 203, 203);
-  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(173, 171, 171, 0.75);
 }
 
 .container_list_item_img {
@@ -318,16 +318,13 @@ export default {
   padding-top: 2px;
   width: 100%;
   height: 100%;
-  border: 1px solid;
-  background-color: snow;
-  box-shadow: 5px 10px 8px #888888;
 }
 /*  ------------main grid for content-----------   */
 .container_content {
   grid-column: 2/6;
   grid-row: 1/5;
-  border: 1px solid;
-  box-shadow: 5px 10px 8px #888888;
+
+  box-shadow: 5px 5px 8px #888888;
   height: 100%;
   background-color: snow;
 
@@ -406,7 +403,7 @@ export default {
   width: 100%;
   display: block;
   border-radius: 5px;
-  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(173, 171, 171, 0.75);
   text-transform: uppercase;
 }
 
@@ -439,7 +436,7 @@ export default {
   width: 100%;
   display: block;
   border-radius: 5px;
-  box-shadow: 10px 5px 5px 0px rgba(173, 171, 171, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(173, 171, 171, 0.75);
 }
 .container_content_btndel .button:active {
   box-shadow: none;
@@ -459,7 +456,6 @@ export default {
     top: 250px;
     z-index: 2;
   }
-  
 
   .container_title .siztitle {
     font-size: 35px;

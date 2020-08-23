@@ -1,12 +1,23 @@
 <template>
-  <div>
-    <div class="container">
-      <h1>משק.נט</h1>
-      <h4>ברוך הבא, {{ this.ownerName }}</h4>
-      <h4>{{ this.farmName }}</h4>
-      <h4>כניסה אחרונה למערכת: {{ this.lastSignIn }}</h4>
-      <p></p>
-    </div>
+  <div class="main">
+    <v-container class="mx-auto">
+      <v-layout justify-center>
+        <v-card mx-auto max-width="700">
+          <v-card-title>היי {{ this.ownerName }},</v-card-title>
+          <v-card-text
+            >ברוך הבא למשק.נט. בחר באפשרות המתאימה בסרגל, ונתחיל
+            לעבוד!</v-card-text
+          >
+          <v-row>
+            <v-img
+              src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
+              aspect-ratio="1.7"
+              contain="true"
+            ></v-img
+          ></v-row>
+        </v-card>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -23,11 +34,11 @@ export default {
       currentUser: null,
       farmName: null,
       ownerName: null,
-      loading: true
+      loading: true,
     }
   },
   created() {
-    fb.auth.onAuthStateChanged(user => {
+    fb.auth.onAuthStateChanged((user) => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
         this.setDetails()
@@ -37,13 +48,13 @@ export default {
   mounted() {},
   updated() {},
   methods: {
- 
     setDetails() {
-      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
-      this.ownerName = this.farmOwners.find(
-        obj => obj.userId == this.userId
-      ).name
-    }
+      this.farmName = this.farms.find((obj) => obj.userId == this.userId).name
+      let fullName = this.farmOwners.find((obj) => obj.userId == this.userId)
+        .name
+      let tempStr = fullName.split(' ')
+      this.ownerName = tempStr[0]
+    },
   },
   computed: {
     //get local data from firestore using the store
@@ -57,25 +68,14 @@ export default {
       'crops',
       'cropCycle',
       'currentMessages',
-      'Messages'
+      'Messages',
     ]),
-
-  
-  }
+  },
 }
 </script>
 
-<style>
-.login {
-  max-width: 400px;
-  margin-top: 60px;
-}
-
-.login .h2 {
-  font-size: 2.4em;
-}
-
-.login .field {
-  margin-bottom: 16px;
+<style scoped>
+.main {
+  height: 90vh;
 }
 </style>
