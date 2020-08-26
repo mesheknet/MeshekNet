@@ -84,6 +84,7 @@ export default {
         Done: true
       })
       this.$refs.form.reset()
+      this.dialog = false
     },
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''

@@ -144,7 +144,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false,
+      deleteDialog: false
     }
   },
 
@@ -165,8 +165,8 @@ export default {
       'fields',
       'crops',
       'currentCycle',
-      'cropCycle',
-    ]),
+      'cropCycle'
+    ])
   },
   methods: {
     setCurrentCycle(cycle) {
@@ -197,8 +197,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -436,6 +436,10 @@ export default {
     right: -10px;
     top: 250px;
     z-index: 2;
+  }
+  .Imgch {
+    height: 30%;
+    width: 40%;
   }
 
   .container_title .siztitle {
