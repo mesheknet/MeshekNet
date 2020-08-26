@@ -1,25 +1,32 @@
 <template>
-
-  <v-card class="mx-auto mt-6" max-width="700" tile>
-    <v-card-title> בחר פעולת מנהל לביצוע </v-card-title>
-    <v-card-text>
-      <v-row>
-        <AddCropData />
-      </v-row>
-      <v-row>
-        <editPestCtrl />
-      </v-row>
-      <v-row>
-        <EditChickenType />
-      </v-row>
-      <v-row>
-        <AddDisease />
-      </v-row>
-      <v-row>
-        <AdminMesseg />
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <div class="main">
+    <v-container class="mx-auto">
+      <v-layout row justify-space-around>
+        <v-flex md12>
+          <v-card class="mx-auto mt-6" max-width="700" tile>
+            <v-card-title> בחר פעולת מנהל לביצוע </v-card-title>
+            <v-card-text>
+              <v-row>
+                <AddCropData />
+              </v-row>
+              <v-row>
+                <editPestCtrl />
+              </v-row>
+              <v-row>
+                <EditChickenType />
+              </v-row>
+              <v-row>
+                <AddDisease />
+              </v-row>
+              <v-row>
+                <AdminMesseg />
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -52,3 +59,11 @@ export default {
   },
 }
 </script>
+
+
+
+<style scoped>
+.main {
+  height: 90vh;
+}
+</style>

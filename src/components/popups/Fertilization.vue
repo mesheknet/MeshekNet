@@ -27,7 +27,7 @@
           class="elevation-1"
         >
           <template slot="no-data">
-            <p class="text-right  ">השבוע אין צורך בדישון.</p>
+            <p class="text-right">השבוע אין צורך בדישון.</p>
           </template>
           <template v-slot:item.calcDosage="{ item }">
             <v-chip class="teal darken-2" dark>{{ item.calcDosage }}</v-chip>
@@ -61,19 +61,19 @@ export default {
         {
           text: 'שם הדשן',
           align: 'start',
-          value: 'name'
+          value: 'name',
         },
         { text: 'יצרן', value: 'supplier' },
         { text: 'כמות (ק"ג לדונם לשבוע)', value: 'dosage' },
-        { text: 'כמות לכל החלקה (ק"ג לדונם לשבוע)', value: 'calcDosage' }
-      ]
+        { text: 'כמות לכל החלקה (ק"ג לדונם לשבוע)', value: 'calcDosage' },
+      ],
     }
   },
   methods: {
     //get only fertilizers relevant for this crop
     getCurrentFerts() {
-      this.crops.forEach(obj => {
-        let fert = this.ferts.find(item => obj.fertilization[item.type])
+      this.crops.forEach((obj) => {
+        let fert = this.ferts.find((item) => obj.fertilization[item.type])
         this.currentFerts.push(fert)
       })
       console.log(this.currentFerts)
@@ -81,14 +81,14 @@ export default {
 
     getCurrentCrop() {
       this.currentCrop = this.crops.find(
-        obj => obj.id == this.currentCycle.cropId
+        (obj) => obj.id == this.currentCycle.cropId
       )
     },
 
     createFertList() {
       this.getCurrentCrop()
       this.fertList = []
-      this.ferts.forEach(obj => {
+      this.ferts.forEach((obj) => {
         if (this.currentCrop.fertilization[obj.type][moment().isoWeek() - 2]) {
           this.fertList.push({
             name: obj.name,
@@ -96,18 +96,19 @@ export default {
             dosage: this.currentCrop.fertilization[obj.type][
               moment().isoWeek() - 2
             ],
-            calcDosage:
+            calcDosage: (
               this.currentCrop.fertilization[obj.type][moment().isoWeek() - 2] *
               parseInt(this.currentCycle.fieldArea)
+            ).toFixed(2),
           })
         }
       })
-    }
+    },
   },
   mounted() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['currentCycle', 'crops', 'ferts'])
-  }
+    ...mapGetters(['currentCycle', 'crops', 'ferts']),
+  },
 }
 </script>

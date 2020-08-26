@@ -3,7 +3,7 @@
     <v-content>
       <Navbar />
       <router-view> </router-view>
-      <Footer />
+      <Footer v-if="$route.name != 'Landing'" />
     </v-content>
   </v-app>
 </template>
@@ -19,5 +19,9 @@ export default {
     Footer,
   },
 }
+
+//for app build and upload:
+//npm run build
+//firebase deploy --only hosting
 </script>
 
