@@ -51,7 +51,6 @@
             <v-expansion-panel
               v-for="(Messages, index) in AMessegDone"
               :key="index"
-              @click="setcurrentMess(Messages)"
             >
               <v-expansion-panel-header>
                 <v-col>{{ setOwners(Messages.userid) }} </v-col>
@@ -72,7 +71,13 @@
                   </v-col>
 
                   <v-col cols="4">
-                    <v-btn text color="primary" @click="deleteMessages()"
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="
+                        setcurrentMess(Messages)
+                        deleteMessages()
+                      "
                       >מחק</v-btn
                     >
                   </v-col>
