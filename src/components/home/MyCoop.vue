@@ -17,7 +17,7 @@
         <h1>משק.נט</h1>
         <h4>בחר מחזור תרנגולות או הוסף חדש</h4>
         <h4>ונתחיל בעבודה</h4>
-        ><img
+        <img
           class="Imgch"
           src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2F2dzOInI.gif?alt=media&token=49dcd1f6-379e-48f4-a763-6c3091e7ec12"
         />
@@ -155,7 +155,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false,
+      deleteDialog: false
     }
   },
 
@@ -176,8 +176,8 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
-      'chickCycle',
-    ]),
+      'chickCycle'
+    ])
   },
   methods: {
     setcurrentchickCycle(cycle) {
@@ -215,8 +215,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -456,7 +456,10 @@ export default {
     top: 250px;
     z-index: 2;
   }
-
+  .Imgch {
+    height: 30%;
+    width: 40%;
+  }
   .container_title .siztitle {
     font-size: 35px;
   }

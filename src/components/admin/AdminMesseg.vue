@@ -47,14 +47,12 @@
                 </v-col>
               </v-expansion-panel-content>
             </v-expansion-panel>
-          </v-expansion-panels>
 
-          <v-expansion-panels
-            v-for="(Messages, index) in AMessegDone"
-            :key="index"
-            @click="setcurrentMess(Messages)"
-          >
-            <v-expansion-panel>
+            <v-expansion-panel
+              v-for="(Messages, index) in AMessegDone"
+              :key="index"
+              @click="setcurrentMess(Messages)"
+            >
               <v-expansion-panel-header>
                 <v-col>{{ setOwners(Messages.userid) }} </v-col>
                 <v-col>{{ Messages.title }} </v-col>
@@ -100,7 +98,7 @@ export default {
       loading: false,
       dialog: null,
       dosage: null,
-      vol: null,
+      vol: null
     }
   },
   created() {},
@@ -109,7 +107,7 @@ export default {
       this.$store.commit('setcurrentMessages', Messages)
     },
     setOwners(MessagesUid) {
-      return (this.ownerName = this.farmOwners.find(function (m) {
+      return (this.ownerName = this.farmOwners.find(function(m) {
         return m.userId == MessagesUid
       }).name)
     },
@@ -117,24 +115,24 @@ export default {
     deleteMessages() {
       fb.Messages.doc(this.currentMessages.id).delete()
       this.currentMessages(null)
-    },
+    }
   },
 
   updated() {},
   computed: {
-    AMesseg: function () {
-      return this.Messages.filter(function (m) {
+    AMesseg: function() {
+      return this.Messages.filter(function(m) {
         return m.to == 'admin' && m.Done == false
       })
     },
-    AMessegDone: function () {
-      return this.Messages.filter(function (m) {
+    AMessegDone: function() {
+      return this.Messages.filter(function(m) {
         return m.to == 'admin' && m.Done == true
       })
     },
 
     //get local data from firestore using the store
-    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages']),
-  },
+    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages'])
+  }
 }
 </script>
