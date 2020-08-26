@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+//import moment from 'moment'
 import { mapGetters } from 'vuex'
 const fb = require('@/fb.js')
 
@@ -30,7 +30,6 @@ export default {
   name: 'TransitionPage',
   data() {
     return {
-      lastSignIn: null,
       currentUser: null,
       farmName: null,
       ownerName: null,
@@ -40,7 +39,6 @@ export default {
   created() {
     fb.auth.onAuthStateChanged((user) => {
       if (user) {
-        this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
         this.setDetails()
       }
     })
@@ -55,6 +53,17 @@ export default {
       let tempStr = fullName.split(' ')
       this.ownerName = tempStr[0]
     },
+    // updateUserNotifications(){
+    //   let notification = {
+    //       id: fb.notification.doc().id,
+    //       title: ,
+    //       subject: ,
+    //       mes: ,
+    //       to: //To which user (userid)
+
+    //     }
+    //     this.$store.commit('NewNotifications', notification)
+    // }
   },
   computed: {
     //get local data from firestore using the store
