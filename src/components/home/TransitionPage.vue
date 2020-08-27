@@ -12,7 +12,7 @@
             <v-img
               src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
               aspect-ratio="1.7"
-              contain="true"
+              contain
             ></v-img
           ></v-row>
         </v-card>
@@ -53,17 +53,18 @@ export default {
       let tempStr = fullName.split(' ')
       this.ownerName = tempStr[0]
     },
-    // updateUserNotifications(){
-    //   let notification = {
-    //       id: fb.notification.doc().id,
-    //       title: ,
-    //       subject: ,
-    //       mes: ,
-    //       to: //To which user (userid)
+    updateUserNotifications() {
+      if (this.openWeather.current.temp > 20) console.log('high temp')
+      // let notification = {
+      //     id: fb.notification.doc().id,
+      //     title: ,
+      //     subject: ,
+      //     mes: ,
+      //     to: //To which user (userid)
 
-    //     }
-    //     this.$store.commit('NewNotifications', notification)
-    // }
+      //   }
+      //   this.$store.commit('NewNotifications', notification)
+    },
   },
   computed: {
     //get local data from firestore using the store
@@ -78,6 +79,7 @@ export default {
       'cropCycle',
       'currentMessages',
       'Messages',
+      'openWeather',
     ]),
   },
 }
