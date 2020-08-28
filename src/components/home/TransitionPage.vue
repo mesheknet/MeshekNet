@@ -42,6 +42,7 @@ export default {
         this.setDetails()
       }
     })
+    this.updateUserNotifications()
   },
   mounted() {},
   updated() {},
@@ -54,16 +55,44 @@ export default {
       this.ownerName = tempStr[0]
     },
     updateUserNotifications() {
-      if (this.openWeather.current.temp > 20) console.log('high temp')
-      // let notification = {
-      //     id: fb.notification.doc().id,
-      //     title: ,
-      //     subject: ,
-      //     mes: ,
-      //     to: //To which user (userid)
-
-      //   }
-      //   this.$store.commit('NewNotifications', notification)
+      //high temp notif.
+      if (this.openWeather.current.temp > 30) {
+        let notification = {
+          id: fb.notification.doc().id,
+          title: 'טמפרטורה גבוהה',
+          subject: 'דאג לצינון הלול',
+          mes: 'דאג לצינון הלול. הטמפרטורה כרגע גבוהה מ-30 מעלות צלזיוס.',
+          to: this.userId,
+        }
+        this.$store.commit('NewNotifications', notification)
+      }
+      //strong wind notif.
+      if (this.openWeather.current.wind_speed * 3.6 > 20) {
+        let notification = {
+          id: fb.notification.doc().id,
+          title: 'רוח חזקה במשק',
+          subject: 'לא מומלץ ליישם הדברה היום',
+          mes: 'משבי רוח של מעל 20 קמ"ש. לא מומלץ ליישם הדברה.',
+          to: this.userId,
+        }
+        this.$store.commit('NewNotifications', notification)
+      }
+      //low food amount in silo notif.
+      this.chickCycle.forEach((obj) => {
+        if (obj.currentFood < 500) {
+          let coopName = this.coop.find((item) => item.id == obj.coopId)
+            .coopName
+          console.log(coopName)
+          let notification = {
+            id: fb.notification.doc().id,
+            title: 'כמות תערובת נמוכה',
+            subject: 'נותרו פחות מ-500 ק"ג במיכל בלול ' + coopName,
+            mes: 'דאג להזמנת תערובת בהקדם.',
+            to: this.userId,
+          }
+          this.$store.commit('NewNotifications', notification)
+        }
+      })
     },
   },
   computed: {
@@ -77,6 +106,8 @@ export default {
       'fields',
       'crops',
       'cropCycle',
+      'coop',
+      'chickCycle',
       'currentMessages',
       'Messages',
       'openWeather',
