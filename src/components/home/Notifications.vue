@@ -12,6 +12,7 @@ var NewNotifications = {
 
 <template>
   <div class="container_fluid">
+    <h4 style="text-align:center">התראות חדשות</h4>
     <div>
       <v-container class="mx-auto">
         <v-expansion-panels class="mb-6" v-model="model">
@@ -93,8 +94,13 @@ var NewNotifications = {
               </v-card-subtitle>
             </v-card>
           </div>
+          <div v-if="UidMessages != false || Uidnotifications != false">
+            <v-btn color="red" @click="DoneForAll()"
+              >סמן בוצע לכל ההתראות</v-btn
+            >
+          </div>
         </v-expansion-panels>
-
+        <h4 style="text-align:center">התראות שבוצעו</h4>
         <!-------  for Messages Done ------->
         <v-expansion-panels v-model="model">
           <v-expansion-panel
@@ -177,6 +183,9 @@ var NewNotifications = {
               </v-card-subtitle>
             </v-card>
           </div>
+          <div v-if="UidMessagesDone != false || UidnotificationsDone != false">
+            <v-btn color="red" @click="DelForAll()">מחק את כל ההתראות</v-btn>
+          </div>
         </v-expansion-panels>
       </v-container>
     </div>
@@ -198,11 +207,11 @@ export default {
       farmName: null,
       ownerName: null,
       nodaata: true,
-      loading: true,
+      loading: true
     }
   },
   created() {
-    fb.auth.onAuthStateChanged((user) => {
+    fb.auth.onAuthStateChanged(user => {
       if (user) {
         this.lastSignIn = moment(user.metadata.lastSignInTime).calendar()
         this.setDetails()
@@ -220,7 +229,7 @@ export default {
     },
     UpdateDone() {
       fb.Messages.doc(this.currentMessages.id).update({
-        Done: true,
+        Done: true
       })
     },
     deleteMessages() {
@@ -229,7 +238,7 @@ export default {
     },
     UpdateDonenotifications() {
       fb.notification.doc(this.currentnotifications.id).update({
-        Done: true,
+        Done: true
       })
     },
     deletenotifications() {
@@ -237,14 +246,34 @@ export default {
       this.setcurrentNoti(null)
     },
     setDetails() {
-      this.farmName = this.farms.find((obj) => obj.userId == this.userId).name
+      this.farmName = this.farms.find(obj => obj.userId == this.userId).name
       this.ownerName = this.farmOwners.find(
-        (obj) => obj.userId == this.userId
+        obj => obj.userId == this.userId
       ).name
     },
     close() {
       this.model = []
     },
+    DoneForAll() {
+      let i = 0
+      for (i = 0; i <= this.UidMessages.length; i++)
+        fb.Messages.doc(this.UidMessages[i].id).update({
+          Done: true
+        })
+      for (i = 0; i <= this.Uidnotifications.length; i++)
+        fb.notification.doc(this.Uidnotifications[i].id).update({
+          Done: true
+        })
+    },
+    DelForAll() {
+      let i = 0
+      for (i = 0; i <= this.UidMessagesDone.length; i++)
+        fb.Messages.doc(this.UidMessagesDone[i].id).delete()
+
+      for (i = 0; i <= this.UidnotificationsDone.length; i++)
+        fb.notification.doc(this.UidnotificationsDone[i].id).delete()
+      this.setcurrentMess(null)
+    }
   },
 
   computed: {
@@ -261,32 +290,32 @@ export default {
       'currentMessages',
       'currentnotifications',
       'notifications',
-      'Messages',
+      'Messages'
     ]),
 
-    UidMessages: function () {
-      return this.Messages.filter((m) => {
+    UidMessages: function() {
+      return this.Messages.filter(m => {
         return m.to == this.userId && m.Done == false
       })
     },
 
-    UidMessagesDone: function () {
-      return this.Messages.filter((m) => {
+    UidMessagesDone: function() {
+      return this.Messages.filter(m => {
         return m.to == this.userId && m.Done == true
       })
     },
-    Uidnotifications: function () {
-      return this.notifications.filter((n) => {
+    Uidnotifications: function() {
+      return this.notifications.filter(n => {
         return n.to == this.userId && n.Done == false
       })
     },
 
-    UidnotificationsDone: function () {
-      return this.notifications.filter((n) => {
+    UidnotificationsDone: function() {
+      return this.notifications.filter(n => {
         return n.to == this.userId && n.Done == true
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
