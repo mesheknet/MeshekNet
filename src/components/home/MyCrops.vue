@@ -24,19 +24,25 @@
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="container_content_details" v-if="currentCycle">
         <div class="container_content_details_title">
-          <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }},
-          {{ this.currentCycle.fieldName }}
+          <span>פרטי הגידול:</span><br />{{ this.currentCycle.cropName }}
         </div>
 
+        <div class="container_content_details_title">
+          <span>שם השדה:</span><br />{{ this.currentCycle.fieldName }}
+        </div>
+        <div class="container_content_details_areaSize">
+          <span>גודל השדה:</span><br />{{ this.currentCycle.fieldArea }} דונם
+        </div>
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentCycle.startDate }}
         </div>
-        <div class="container_content_details_dateFinish">
+        <div
+          class="container_content_details_dateFinish"
+          v-if="!this.calcEndDate() == this.currentCycle.startDate"
+        >
           <span>תאריך סיום משוער:</span><br />{{ this.calcEndDate() }}
         </div>
-        <div class="container_content_details_areaSize">
-          <span>גודל השטח:</span><br />{{ this.currentCycle.fieldArea }} דונם
-        </div>
+
         <div class="container_content_details_btnEdit"></div>
       </div>
       <!--  container_content_btn-Secondary grid in container_content Controls btn green -->
@@ -112,7 +118,7 @@
         <div class="container_list_item_title">{{ cycle.cropName }}</div>
         <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
-          {{ cycle.fieldName + ', ' + cycle.fieldArea + ' דונם' }}
+          {{ cycle.startDate + ', ' + cycle.fieldArea + ' דונם' }}
         </div>
       </div>
     </div>
@@ -144,7 +150,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false
+      deleteDialog: false,
     }
   },
 
@@ -165,8 +171,8 @@ export default {
       'fields',
       'crops',
       'currentCycle',
-      'cropCycle'
-    ])
+      'cropCycle',
+    ]),
   },
   methods: {
     setCurrentCycle(cycle) {
@@ -197,8 +203,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    }
-  }
+    },
+  },
 }
 </script>
 

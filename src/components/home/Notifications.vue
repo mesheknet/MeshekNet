@@ -225,7 +225,7 @@ export default {
     },
     deleteMessages() {
       fb.Messages.doc(this.currentMessages.id).delete()
-      this.currentMessages(null)
+      this.setcurrentMess(null)
     },
     UpdateDonenotifications() {
       fb.notification.doc(this.currentnotifications.id).update({
@@ -234,7 +234,7 @@ export default {
     },
     deletenotifications() {
       fb.notification.doc(this.currentnotifications.id).delete()
-      this.currentnotifications(null)
+      this.setcurrentNoti(null)
     },
     setDetails() {
       this.farmName = this.farms.find((obj) => obj.userId == this.userId).name

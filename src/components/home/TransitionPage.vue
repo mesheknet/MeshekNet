@@ -22,7 +22,7 @@
 </template>
 
 <script>
-//import moment from 'moment'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 const fb = require('@/fb.js')
 
@@ -81,7 +81,7 @@ export default {
       this.chickCycle.forEach((obj) => {
         if (obj.currentFood < 500) {
           let coopName = this.coop.find((item) => item.id == obj.coopId)
-            .coopName
+            .CoopName
           console.log(coopName)
           let notification = {
             id: fb.notification.doc().id,
@@ -92,7 +92,36 @@ export default {
           }
           this.$store.commit('NewNotifications', notification)
         }
-      })
+      }),
+        //chickens Newcastle ill treat notification
+        this.chickCycle.forEach((obj) => {
+          if (!obj.lastNotification) {
+            fb.chickCycle.doc(obj.id).update({
+              lastNotification: obj.startDate,
+            })
+          }
+
+          if (
+            moment(obj.lastNotification, 'DD-MM-YYYY').diff(
+              moment(obj.startDate, 'DD-MM-YYYY'),
+              'months'
+            ) >= 3
+          ) {
+            let notification = {
+              id: fb.notification.doc().id,
+              title: 'חיסון למחלת ניוקסל - ערפול',
+              subject:
+                'עליך לבצע ערפול במחזור תרנגולות שהתחיל ב ' + obj.startDate,
+              mes: 'בצע ערפול כנדרש ורשום ביומן המחלות של המחזור.',
+              to: this.userId,
+            }
+            this.$store.commit('NewNotifications', notification)
+
+            fb.chickCycle.doc(obj.id).update({
+              lastNotification: moment().format('L'),
+            })
+          }
+        })
     },
   },
   computed: {

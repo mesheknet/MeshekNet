@@ -60,12 +60,10 @@ export default {
       loading: false,
       dialog: null,
       dosage: null,
-      vol: null
+      vol: null,
     }
   },
-  created() {
-    this.setDetails()
-  },
+  created() {},
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
@@ -75,13 +73,13 @@ export default {
           subject: this.currentMessages.subject,
           mes: this.AdminMessage,
           to: this.currentMessages.userid,
-          PreviousPost: this.currentMessages.mes
+          PreviousPost: this.currentMessages.mes,
         }
       }
 
       this.$store.commit('SendMessage', NewMessage)
       fb.Messages.doc(this.currentMessages.id).update({
-        Done: true
+        Done: true,
       })
       this.$refs.form.reset()
       this.dialog = false
@@ -91,13 +89,13 @@ export default {
     },
     validate() {
       this.$refs.form.validate()
-    }
+    },
   },
 
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages'])
-  }
+    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages']),
+  },
 }
 </script>

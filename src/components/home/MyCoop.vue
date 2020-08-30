@@ -36,9 +36,7 @@
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
         </div>
-        <div class="container_content_details_dateFinish">
-          <span>תאריך סיום:</span><br />{{ this.calcEndDate() }}
-        </div>
+
         <div class="container_content_details_areaSize">
           <span>כמות תרנגולות התחלתית:</span><br />{{
             this.currentchickCycle.quantity
@@ -120,7 +118,7 @@
         <div class="container_list_item_title">{{ cycle.namechickCycle }}</div>
         <!-- container_list_item_Description- Controls the Description within the item -->
         <div class="container_list_item_Description">
-          {{ cycle.quantity + ', ' + cycle.CoopName }}
+          {{ cycle.startDate + ' , ' + cycle.CoopName }}
         </div>
       </div>
     </div>
@@ -137,7 +135,6 @@
 <script>
 const fb = require('@/fb.js')
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import ChickensFood from '@/components/popups/ChickensFood'
 import Diseases from '@/components/popups/Diseases'
 import Eggs from '@/components/popups/Eggs'
@@ -155,7 +152,7 @@ export default {
       windowWidth: window.innerWidth,
       toggle: true,
       activeIndex: null,
-      deleteDialog: false
+      deleteDialog: false,
     }
   },
 
@@ -176,8 +173,8 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
-      'chickCycle'
-    ])
+      'chickCycle',
+    ]),
   },
   methods: {
     setcurrentchickCycle(cycle) {
@@ -197,15 +194,6 @@ export default {
       }
     },
 
-    calcEndDate() {
-      var finishDate = moment(
-        moment(this.currentchickCycle.startDate, 'DD MM YYYY')
-      )
-        .add(this.currentchickCycle.duration, 'w')
-        .format('L')
-      return finishDate
-    },
-
     FirstLetter(string) {
       return string.charAt(0)
     },
@@ -215,8 +203,8 @@ export default {
     },
     togglec(index) {
       this.activeIndex = index
-    }
-  }
+    },
+  },
 }
 </script>
 
