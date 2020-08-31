@@ -121,6 +121,22 @@ export default {
               lastNotification: moment().format('L'),
             })
           }
+        }),
+        //low food amount in silo notif.
+        this.chickCycle.forEach((obj) => {
+          if (obj.currentFood < 500) {
+            let coopName = this.coop.find((item) => item.id == obj.coopId)
+              .CoopName
+            console.log(coopName)
+            let notification = {
+              id: fb.notification.doc().id,
+              title: 'כמות תערובת נמוכה',
+              subject: 'נותרו פחות מ-500 ק"ג במיכל בלול ' + coopName,
+              mes: 'דאג להזמנת תערובת בהקדם.',
+              to: this.userId,
+            }
+            this.$store.commit('NewNotifications', notification)
+          }
         })
     },
   },
