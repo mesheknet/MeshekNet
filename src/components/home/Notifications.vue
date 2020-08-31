@@ -256,10 +256,12 @@ export default {
     },
     DoneForAll() {
       let i = 0
+      if(this.UidMessages!=false)
       for (i = 0; i <= this.UidMessages.length; i++)
         fb.Messages.doc(this.UidMessages[i].id).update({
           Done: true
         })
+        if(this.Uidnotifications!=false)
       for (i = 0; i <= this.Uidnotifications.length; i++)
         fb.notification.doc(this.Uidnotifications[i].id).update({
           Done: true
@@ -267,9 +269,11 @@ export default {
     },
     DelForAll() {
       let i = 0
+      if(this.UidMessagesDone!=false)
       for (i = 0; i <= this.UidMessagesDone.length; i++)
         fb.Messages.doc(this.UidMessagesDone[i].id).delete()
 
+      if(this.UidnotificationsDone!=false)
       for (i = 0; i <= this.UidnotificationsDone.length; i++)
         fb.notification.doc(this.UidnotificationsDone[i].id).delete()
       this.setcurrentMess(null)
