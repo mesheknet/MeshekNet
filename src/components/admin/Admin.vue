@@ -21,6 +21,9 @@
               <v-row>
                 <AdminMesseg />
               </v-row>
+              <v-row>
+                <NotificationsFromAdmin />
+              </v-row>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -36,6 +39,7 @@ import EditChickenType from './EditChickenType'
 import AddDisease from './AddDisease'
 import AddCropData from './AddCropData'
 import AdminMesseg from './AdminMesseg'
+import NotificationsFromAdmin from './NotificationsFromAdmin'
 
 export default {
   name: 'Admin',
@@ -45,6 +49,7 @@ export default {
     AddDisease,
     AddCropData,
     AdminMesseg,
+    NotificationsFromAdmin
   },
   data() {
     return {
