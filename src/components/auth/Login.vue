@@ -47,7 +47,16 @@
                     </v-btn>
                   </v-col>
                   <v-col>
-                    <v-btn block dark color="#558B2F" @click="resetPassword">
+                    <v-btn
+                      :disabled="!valid"
+                      block
+                      dark
+                      color="#558B2F"
+                      @click="
+                        resetPassword
+                        snackbar = true
+                      "
+                    >
                       שכחתי סיסמה
                     </v-btn>
                   </v-col></v-row
@@ -57,6 +66,10 @@
           </v-card>
         </v-flex>
       </v-layout>
+
+      <v-snackbar v-model="snackbar">
+        הודעה לשחזור סיסמה נשלחה לכתובת המייל שלך.
+      </v-snackbar>
     </v-container>
   </div>
 </template>
@@ -71,6 +84,7 @@ export default {
   name: 'Login',
   data() {
     return {
+      snackbar: false,
       email: null,
       password: null,
       feedback: null,
