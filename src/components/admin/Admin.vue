@@ -24,6 +24,9 @@
               <v-row>
                 <NotificationsFromAdmin />
               </v-row>
+               <v-row>
+                <UserManagement />
+              </v-row>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -40,6 +43,7 @@ import AddDisease from './AddDisease'
 import AddCropData from './AddCropData'
 import AdminMesseg from './AdminMesseg'
 import NotificationsFromAdmin from './NotificationsFromAdmin'
+import UserManagement from './UserManagement'
 
 export default {
   name: 'Admin',
@@ -49,7 +53,8 @@ export default {
     AddDisease,
     AddCropData,
     AdminMesseg,
-    NotificationsFromAdmin
+    NotificationsFromAdmin,
+    UserManagement
   },
   data() {
     return {
