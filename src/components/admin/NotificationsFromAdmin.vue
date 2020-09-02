@@ -93,7 +93,7 @@ export default {
       dialog: null,
       Topic:null,
       selectUser:null,
-    NotMessage:null
+      NotMessage:null
     }
   },
   methods: {
@@ -103,10 +103,11 @@ export default {
           title: "התראה מהמנהל",
           subject: this.Topic,
           mes: this.NotMessage,
-          to:this.selectUser.id
+          to: this.selectUser.userId
 
         }
-        this.$store.commit('NewNotifications', AdminNotifications)
+        this.$store.commit('NewNotifications', AdminNotifications )
+        this.$refs.form.reset()
     },
 
     

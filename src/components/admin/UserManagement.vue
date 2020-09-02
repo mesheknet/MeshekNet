@@ -16,6 +16,7 @@
         ניהול משתמשים
       </v-card-title>
 <v-container>
+   <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         
           <v-select
@@ -41,7 +42,7 @@
                 
                 
                 class="mr-4"
-                @click="DelAdmin"
+                @click="CanceledAdmin"
                 
               >
                 בטל מנהל
@@ -52,6 +53,7 @@
                 חזור
               </v-btn>
               </v-row>
+              </v-form>
      </v-container>
     </v-card>
     
@@ -69,30 +71,38 @@ export default {
     return {
       loading: false,
       dialog: null,
-      Topic:null,
-      selectUser:null,
-    NotMessage:null
+      selectUser:null
+    
     }
   },
   methods: {
-    submit() {
-     var AdminNotifications = {
-          id: fb.notification.doc().id,
-          title: "התראה מהמנהל",
-          subject: this.Topic,
-          mes: this.NotMessage,
-          to:this.selectUser.id
-
-        }
-        this.$store.commit('NewNotifications', AdminNotifications)
+    BecomeAdmin() {
+        //  fb.user.doc(this.selectUser.userId).update({
+     //   admin: true,
+      //})
+      for(var i=0;i<this.users.length;i++)
+   if(this.users[i].userId==this.selectUser.userId){
+    fb.user.doc(this.users[i].email).update({
+        admin: true,
+      })
+      this.$refs.form.reset()
+   }
     },
-
+ CanceledAdmin() {
+   for(var i=0;i<this.users.length;i++)
+   if(this.users[i].userId==this.selectUser.userId){
+    fb.user.doc(this.users[i].email).update({
+        admin: false,
+      })
+      this.$refs.form.reset()
+   }
+    },
     
   },
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['farmOwners']),
+    ...mapGetters(['farmOwners','users']),
   },
 }
 </script>

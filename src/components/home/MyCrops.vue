@@ -286,6 +286,7 @@ export default {
 .container_list_item_Description {
   grid-column: 2/4;
   font-weight: 350;
+  font-size: 12px;
 }
 
 .dot {
