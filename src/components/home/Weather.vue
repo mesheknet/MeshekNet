@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="mx-auto">
+    <v-container fluid fill-height class="mx-auto">
       <v-layout row justify-space-around>
         <v-flex md12>
           <v-card class="mx-auto" max-width="700" tile>

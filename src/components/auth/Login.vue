@@ -1,77 +1,75 @@
 <template>
-  <div class="main">
-    <v-container>
-      <v-layout>
-        <v-flex xl2>
-          <v-card class="mx-auto text-center">
-            <v-card-title>
-              <h4 class="green-text darken-3">כניסה למערכת</h4>
-            </v-card-title>
-            <v-card-text>
-              <v-form
-                @keyup.native.enter="login"
-                ref="form"
-                v-model="valid"
-                lazy-validation
+  <v-container fluid fill-height>
+    <v-layout>
+      <v-flex xl2>
+        <v-card class="mx-auto text-center">
+          <v-card-title>
+            <h4 class="green-text darken-3">כניסה למערכת</h4>
+          </v-card-title>
+          <v-card-text>
+            <v-form
+              @keyup.native.enter="login"
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
+              <v-text-field
+                v-model="email"
+                :type="'email'"
+                :rules="emailRules"
+                label="כתובת מייל"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="password"
+                :type="show ? 'text' : 'password'"
+                :append-icon="show ? 'visibility' : 'visibility_off'"
+                @click:append="show = !show"
+                label="סיסמה"
+                :rules="passwordRules"
+                required
+              ></v-text-field>
+              <v-spacer></v-spacer>
+              <p>{{ this.feedback }}</p>
+              <v-row
+                ><v-col>
+                  <v-btn
+                    block
+                    dark
+                    :disabled="!valid"
+                    color="#558B2F"
+                    @click="login"
+                    :loading="loading"
+                  >
+                    היכנס
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    :disabled="!valid"
+                    block
+                    dark
+                    color="#558B2F"
+                    @click="
+                      resetPassword
+                      snackbar = true
+                    "
+                  >
+                    שכחתי סיסמה
+                  </v-btn>
+                </v-col></v-row
               >
-                <v-text-field
-                  v-model="email"
-                  :type="'email'"
-                  :rules="emailRules"
-                  label="כתובת מייל"
-                  required
-                ></v-text-field>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
 
-                <v-text-field
-                  v-model="password"
-                  :type="show ? 'text' : 'password'"
-                  :append-icon="show ? 'visibility' : 'visibility_off'"
-                  @click:append="show = !show"
-                  label="סיסמה"
-                  :rules="passwordRules"
-                  required
-                ></v-text-field>
-                <v-spacer></v-spacer>
-                <p>{{ this.feedback }}</p>
-                <v-row
-                  ><v-col>
-                    <v-btn
-                      block
-                      dark
-                      :disabled="!valid"
-                      color="#558B2F"
-                      @click="login"
-                      :loading="loading"
-                    >
-                      היכנס
-                    </v-btn>
-                  </v-col>
-                  <v-col>
-                    <v-btn
-                      :disabled="!valid"
-                      block
-                      dark
-                      color="#558B2F"
-                      @click="
-                        resetPassword
-                        snackbar = true
-                      "
-                    >
-                      שכחתי סיסמה
-                    </v-btn>
-                  </v-col></v-row
-                >
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-
-      <v-snackbar v-model="snackbar">
-        הודעה לשחזור סיסמה נשלחה לכתובת המייל שלך.
-      </v-snackbar>
-    </v-container>
-  </div>
+    <v-snackbar v-model="snackbar">
+      הודעה לשחזור סיסמה נשלחה לכתובת המייל שלך.
+    </v-snackbar>
+  </v-container>
 </template>
 
 <script>
@@ -226,9 +224,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.main {
-  height: 90vh;
-}
-</style>

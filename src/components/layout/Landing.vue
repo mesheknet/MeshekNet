@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <v-container fluid fill-height>
     <div class="landing">
       <v-parallax
         src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FIMG_3134.JPG?alt=media&token=0e3acfb6-1f6c-4bf0-a91c-c5e3134d46f4"
@@ -30,7 +30,7 @@
         </v-row>
       </v-parallax>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

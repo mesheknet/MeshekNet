@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <v-container class="mx-auto">
+    <v-container fluid class="mx-auto">
       <v-layout row justify-space-around>
         <v-flex md12>
           <v-card class="mx-auto mt-6" max-width="700" tile>
@@ -24,7 +24,7 @@
               <v-row>
                 <NotificationsFromAdmin />
               </v-row>
-               <v-row>
+              <v-row>
                 <UserManagement />
               </v-row>
             </v-card-text>
@@ -54,7 +54,7 @@ export default {
     AddCropData,
     AdminMesseg,
     NotificationsFromAdmin,
-    UserManagement
+    UserManagement,
   },
   data() {
     return {
@@ -70,10 +70,3 @@ export default {
 }
 </script>
 
-
-
-<style scoped>
-.main {
-  height: 90vh;
-}
-</style>

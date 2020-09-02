@@ -1,24 +1,22 @@
 <template>
-  <div class="main">
-    <v-container class="mx-auto">
-      <v-layout justify-center>
-        <v-card mx-auto max-width="700">
-          <v-card-title>היי {{ this.ownerName }},</v-card-title>
-          <v-card-text
-            >ברוך הבא למשק.נט. בחר באפשרות המתאימה בסרגל, ונתחיל
-            לעבוד!</v-card-text
-          >
-          <v-row>
-            <v-img
-              src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
-              aspect-ratio="1.7"
-              contain
-            ></v-img
-          ></v-row>
-        </v-card>
-      </v-layout>
-    </v-container>
-  </div>
+  <v-container fluid class="mx-auto">
+    <v-layout justify-center>
+      <v-card mx-auto max-width="700" max-height="400">
+        <v-card-title>היי {{ this.ownerName }},</v-card-title>
+        <v-card-text
+          >ברוך הבא למשק.נט. בחר באפשרות המתאימה בסרגל, ונתחיל
+          לעבוד!</v-card-text
+        >
+        <v-row>
+          <v-img
+            src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2FmeshekNet_logo.png?alt=media&token=77731a26-1333-40ad-ad50-77a6b53c9080"
+            aspect-ratio="1.7"
+            contain
+          ></v-img
+        ></v-row>
+      </v-card>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -185,8 +183,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.main {
-  height: 90vh;
-}
-</style>
+
