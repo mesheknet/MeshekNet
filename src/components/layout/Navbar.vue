@@ -118,7 +118,8 @@ export default {
 
 li .router-link-exact-active {
   background-color: rgb(30, 85, 41);
-  text-decoration-line: underline;
+  
+  border-bottom: double;
 }
 
 @media screen and (max-width: 759px) {
