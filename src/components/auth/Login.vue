@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout>
-      <v-flex xl2>
-        <v-card class="mx-auto text-center">
+  <v-container fluid fill-height class="mx-auto">
+    <v-layout row>
+      <v-flex md12>
+        <v-card class="mt-6 text-center">
           <v-card-title>
             <h4 class="green-text darken-3">כניסה למערכת</h4>
           </v-card-title>
