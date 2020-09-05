@@ -12,7 +12,7 @@ var NewNotifications = {
 
 <template>
   <v-container class="mx-auto" fluid justify-center>
-    <h4 style="text-align: center;"> התראות חדשות</h4>
+    <h4 style="text-align: center;">התראות חדשות</h4>
     <v-expansion-panels class="mx-auto" v-model="model">
       <!-------  for Messages  ------->
       <v-expansion-panel v-for="(Messages, index) in UidMessages" :key="index">

@@ -108,7 +108,6 @@ export default {
 <style scoped>
 .container_fluid {
   padding: 15px;
-  height: 90vh;
 }
 .container_content {
   width: 800px;

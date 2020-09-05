@@ -7,7 +7,7 @@
         v-on="on"
         min-width="200"
       >
-        עריכת יישומי הדברה<v-icon right>&#x2622;</v-icon>
+        עריכת יישומי הדברה<v-icon right>fas fa-skull-crossbones</v-icon>
       </v-btn>
     </template>
 
