@@ -7,7 +7,7 @@
         v-on="on"
         min-width="200"
       >
-        עריכת זני תרנגולות<v-icon right>&#x2622;</v-icon>
+        עריכת זני תרנגולות<v-icon right>fas fa-feather-alt</v-icon>
       </v-btn>
     </template>
 

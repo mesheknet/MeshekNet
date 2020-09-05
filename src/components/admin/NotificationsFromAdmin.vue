@@ -7,7 +7,7 @@
         v-on="on"
         min-width="200"
       >
-        שליחת התראות<v-icon right>&#x2622;</v-icon>
+        שליחת התראות<v-icon right>fas fa-bell</v-icon>
       </v-btn>
     </template>
 
@@ -15,9 +15,8 @@
       <v-card-title class="green lighten-3" primary-title>
         שליחת התראות
       </v-card-title>
-<v-container>
-      <v-row>
-        
+      <v-container>
+        <v-row>
           <v-select
             v-model="selectUser"
             :items="farmOwners"
@@ -25,58 +24,42 @@
             item-text="name"
             return-object
           ></v-select>
-      
-          
-        
         </v-row>
         <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field
+          <v-text-field
             v-model="Topic"
             :counter="20"
             :rules="nameRules"
             label="נושא"
             required
           ></v-text-field>
-        <v-row >
-       
-
-          
-              <v-col cols="12">
-                <v-textarea
-                  solo
-                  auto-grow
-                  label="התראה"
-                  row-height="35"
-                  v-model="NotMessage"
-                ></v-textarea>
-              </v-col>
-            
-
-        </v-row>
-      <v-row >
-          <v-btn
-
-                  
-                :disabled="!valid"
-                color="success"
-                class="mr-4"
-                @click="submit"
-                
-              >
-                שלח
-              </v-btn>
-          <v-btn color="error" class="mr-4" @click="dialog = false">
-                חזור
-              </v-btn>
-            
-          
-          
-        
-      </v-row>
-      </v-form>
-     </v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-textarea
+                solo
+                auto-grow
+                label="התראה"
+                row-height="35"
+                v-model="NotMessage"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-btn
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              @click="submit"
+            >
+              שלח
+            </v-btn>
+            <v-btn color="error" class="mr-4" @click="dialog = false">
+              חזור
+            </v-btn>
+          </v-row>
+        </v-form>
+      </v-container>
     </v-card>
-    
   </v-dialog>
 </template>
 
@@ -91,26 +74,23 @@ export default {
     return {
       loading: false,
       dialog: null,
-      Topic:null,
-      selectUser:null,
-      NotMessage:null
+      Topic: null,
+      selectUser: null,
+      NotMessage: null,
     }
   },
   methods: {
     submit() {
-     var AdminNotifications = {
-          id: fb.notification.doc().id,
-          title: "התראה מהמנהל",
-          subject: this.Topic,
-          mes: this.NotMessage,
-          to: this.selectUser.userId
-
-        }
-        this.$store.commit('NewNotifications', AdminNotifications )
-        this.$refs.form.reset()
+      var AdminNotifications = {
+        id: fb.notification.doc().id,
+        title: 'התראה מהמנהל',
+        subject: this.Topic,
+        mes: this.NotMessage,
+        to: this.selectUser.userId,
+      }
+      this.$store.commit('NewNotifications', AdminNotifications)
+      this.$refs.form.reset()
     },
-
-    
   },
   updated() {},
   computed: {

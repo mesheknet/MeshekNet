@@ -7,7 +7,7 @@
         v-on="on"
         min-width="200"
       >
-        ניהול משתמשים<v-icon right>&#x2622;</v-icon>
+        ניהול משתמשים <v-icon right>fas fa-users-cog</v-icon>
       </v-btn>
     </template>
 
