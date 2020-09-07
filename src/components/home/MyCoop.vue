@@ -85,6 +85,39 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-btn fab  @click="doneDialog = true">
+           <v-icon color="green">fa fa-check</v-icon></v-btn
+        >
+        <v-dialog v-model="doneDialog" max-width="500px">
+          <v-card>
+            <v-card-title style="font-size: 20px;"
+              >האם אתה בטוח שברצונך לסיים מחזור תרנגולות זה?</v-card-title
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                dark
+                color="#4caf50"
+                style="font-size: 15px;"
+                text
+                @click="
+                  SignPerformed()
+                  doneDialog = false
+                "
+                >כן</v-btn
+              >
+              <v-btn
+                dark
+                color="#f70810"
+                style="font-size: 15px;"
+                text
+                @click="deleteDialog = false"
+                >לא</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
     <!--  container_list- main grid in container_fluid,  Controls the crop list on the right -->
@@ -110,9 +143,14 @@
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
+          <div v-if="cycle.done==false">
           <span class="dot"
             ><h4>{{ FirstLetter(cycle.namechickCycle) }}</h4></span
           >
+          </div>
+          <div v-if="cycle.done==true">
+             <v-icon color="green">fa fa-check</v-icon>
+          </div>
         </div>
         <!-- container_list_item_title- Controls the title within the item -->
         <div class="container_list_item_title">{{ cycle.namechickCycle }}</div>
@@ -153,6 +191,7 @@ export default {
       toggle: true,
       activeIndex: null,
       deleteDialog: false,
+       doneDialog: false,
     }
   },
 
@@ -204,6 +243,14 @@ export default {
     togglec(index) {
       this.activeIndex = index
     },
+    SignPerformed(){
+      if (this.currentchickCycle) {
+        fb.chickCycle.doc(this.currentchickCycle.id).update({
+        done: true,
+        })
+        this.setcurrentchickCycle(null)
+      }
+    }
   },
 }
 </script>

@@ -86,6 +86,7 @@ export const store = new Vuex.Store({
       let ref = fb.cropCycle.doc()
       ref.set({
         id: ref.id,
+        done: false,
         cropId: state.selectedCrop.id,
         cropName: state.selectedCrop.name,
         duration: state.selectedCrop.duration,
@@ -182,6 +183,7 @@ export const store = new Vuex.Store({
       let ref = fb.chickCycle.doc()
       ref.set({
         id: ref.id,
+        done: false,
         chickId: state.selectedchickCycle.id,
         namechickCycle: state.selectedchickCycle.name,
         farmId: state.farmId,
