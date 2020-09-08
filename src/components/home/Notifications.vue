@@ -291,24 +291,42 @@ export default {
     UidMessages: function () {
       return this.Messages.filter((m) => {
         return m.to == this.userId && m.Done == false
-      })
+      }).sort(
+        (a, b) =>
+          moment(a.startDate, 'DD-MM-YYYY') - moment(b.startDate, 'DD-MM-YYYY')
+      )
     },
 
     UidMessagesDone: function () {
       return this.Messages.filter((m) => {
         return m.to == this.userId && m.Done == true
-      })
+      }).sort(
+        (a, b) =>
+          moment(a.startDate, 'DD-MM-YYYY') - moment(b.startDate, 'DD-MM-YYYY')
+      )
     },
     Uidnotifications: function () {
-      return this.notifications.filter((n) => {
-        return n.to == this.userId && n.Done == false
-      })
+      return this.notifications
+        .filter((n) => {
+          return n.to == this.userId && n.Done == false
+        })
+        .sort(
+          (a, b) =>
+            moment(a.startDate, 'DD-MM-YYYY') -
+            moment(b.startDate, 'DD-MM-YYYY')
+        )
     },
 
     UidnotificationsDone: function () {
-      return this.notifications.filter((n) => {
-        return n.to == this.userId && n.Done == true
-      })
+      return this.notifications
+        .filter((n) => {
+          return n.to == this.userId && n.Done == true
+        })
+        .sort(
+          (a, b) =>
+            moment(a.startDate, 'DD-MM-YYYY') -
+            moment(b.startDate, 'DD-MM-YYYY')
+        )
     },
   },
 }

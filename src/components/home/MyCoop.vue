@@ -14,7 +14,6 @@
     <div class="container_content">
       <!--  container_content_details- Secondary grid in container_content Controls right side  -->
       <div class="BeforeClicking" v-if="currentchickCycle == null">
-        <h1>משק.נט</h1>
         <h4>בחר מחזור תרנגולות או הוסף חדש</h4>
         <h4>ונתחיל בעבודה</h4>
         <img
@@ -36,7 +35,12 @@
         <div class="container_content_details_dateStart">
           <span>תאריך התחלה:</span><br />{{ this.currentchickCycle.startDate }}
         </div>
-
+        <div
+          class="container_content_details_dateFinish"
+          v-if="this.currentchickCycle.done"
+        >
+          <span>תאריך סיום:</span><br />{{ this.currentchickCycle.endDate }}
+        </div>
         <div class="container_content_details_areaSize">
           <span>כמות תרנגולות התחלתית:</span><br />{{
             this.currentchickCycle.quantity
@@ -86,8 +90,8 @@
           </v-card>
         </v-dialog>
 
-        <v-btn fab  @click="doneDialog = true">
-           <v-icon color="green">fa fa-check</v-icon></v-btn
+        <v-btn fab @click="doneDialog = true">
+          <v-icon color="green">fa fa-check</v-icon></v-btn
         >
         <v-dialog v-model="doneDialog" max-width="500px">
           <v-card>
@@ -143,13 +147,13 @@
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
-          <div v-if="cycle.done==false">
-          <span class="dot"
-            ><h4>{{ FirstLetter(cycle.namechickCycle) }}</h4></span
-          >
+          <div v-if="cycle.done == false">
+            <span class="dot"
+              ><h4>{{ FirstLetter(cycle.namechickCycle) }}</h4></span
+            >
           </div>
-          <div v-if="cycle.done==true">
-             <v-icon color="green">fa fa-check</v-icon>
+          <div v-if="cycle.done == true">
+            <v-icon color="green">fa fa-check</v-icon>
           </div>
         </div>
         <!-- container_list_item_title- Controls the title within the item -->
@@ -172,6 +176,7 @@
 
 <script>
 const fb = require('@/fb.js')
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import ChickensFood from '@/components/popups/ChickensFood'
 import Diseases from '@/components/popups/Diseases'
@@ -191,7 +196,7 @@ export default {
       toggle: true,
       activeIndex: null,
       deleteDialog: false,
-       doneDialog: false,
+      doneDialog: false,
     }
   },
 
@@ -243,14 +248,15 @@ export default {
     togglec(index) {
       this.activeIndex = index
     },
-    SignPerformed(){
+    SignPerformed() {
       if (this.currentchickCycle) {
         fb.chickCycle.doc(this.currentchickCycle.id).update({
-        done: true,
+          done: true,
+          endDate: moment().format('L'),
         })
         this.setcurrentchickCycle(null)
       }
-    }
+    },
   },
 }
 </script>

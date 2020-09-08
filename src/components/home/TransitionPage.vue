@@ -81,7 +81,7 @@ export default {
         }
         //low food amount in silo notif.
         this.chickCycle.forEach((obj) => {
-          if (obj.currentFood < 500) {
+          if (obj.currentFood < 500 && obj.done == false) {
             let coopName = this.coop.find((item) => item.id == obj.coopId)
               .CoopName
             let notification = {
@@ -96,7 +96,7 @@ export default {
         }),
           //chickens Newcastle ill treat notification
           this.chickCycle.forEach((obj) => {
-            if (!obj.lastNotification) {
+            if (!obj.lastNotification && obj.done == false) {
               fb.chickCycle.doc(obj.id).update({
                 lastNotification: obj.startDate,
               })
@@ -125,39 +125,41 @@ export default {
           }),
           //irrigation and fertilization notif.
           this.cropCycle.forEach((obj) => {
-            this.crops.forEach((item) => {
-              if (obj.cropId == item.id) {
-                let weatherStation = parseInt(
-                  this.farms.find((item) => item.id == this.farmId)
-                    .weatherStation
-                )
-                if (item.irrigation[weatherStation][moment().isoWeek() - 2]) {
-                  let notification = {
-                    id: fb.notification.doc().id,
-                    title: 'השקיה - ' + item.name,
-                    subject: 'נדרשת השקיה השבוע',
-                    mes: 'אנא הכנס לפרטי הגידול על מנת לקבל פרטים נוספים',
-                    to: this.userId,
+            if (obj.done == false) {
+              this.crops.forEach((item) => {
+                if (obj.cropId == item.id) {
+                  let weatherStation = parseInt(
+                    this.farms.find((item) => item.id == this.farmId)
+                      .weatherStation
+                  )
+                  if (item.irrigation[weatherStation][moment().isoWeek() - 2]) {
+                    let notification = {
+                      id: fb.notification.doc().id,
+                      title: 'השקיה - ' + item.name,
+                      subject: 'נדרשת השקיה השבוע',
+                      mes: 'אנא הכנס לפרטי הגידול על מנת לקבל פרטים נוספים',
+                      to: this.userId,
+                    }
+                    this.$store.commit('NewNotifications', notification)
                   }
-                  this.$store.commit('NewNotifications', notification)
-                }
-                if (
-                  item.fertilization.Nitrogen[moment().isoWeek() - 2] ||
-                  item.fertilization.Phosphorus[moment().isoWeek() - 2] ||
-                  item.fertilization.Potassium[moment().isoWeek() - 2] ||
-                  item.fertilization.Urean[moment().isoWeek() - 2]
-                ) {
-                  let notification = {
-                    id: fb.notification.doc().id,
-                    title: 'דישון - ' + item.name,
-                    subject: 'נדרש דישון השבוע',
-                    mes: 'אנא הכנס לפרטי הגידול על מנת לקבל פרטים נוספים',
-                    to: this.userId,
+                  if (
+                    item.fertilization.Nitrogen[moment().isoWeek() - 2] ||
+                    item.fertilization.Phosphorus[moment().isoWeek() - 2] ||
+                    item.fertilization.Potassium[moment().isoWeek() - 2] ||
+                    item.fertilization.Urean[moment().isoWeek() - 2]
+                  ) {
+                    let notification = {
+                      id: fb.notification.doc().id,
+                      title: 'דישון - ' + item.name,
+                      subject: 'נדרש דישון השבוע',
+                      mes: 'אנא הכנס לפרטי הגידול על מנת לקבל פרטים נוספים',
+                      to: this.userId,
+                    }
+                    this.$store.commit('NewNotifications', notification)
                   }
-                  this.$store.commit('NewNotifications', notification)
                 }
-              }
-            })
+              })
+            }
           })
       }
     },

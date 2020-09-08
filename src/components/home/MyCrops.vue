@@ -13,7 +13,6 @@
     <!--  container_content- main grid in container_fluid,  Controls left side under title -->
     <div class="container_content">
       <div class="BeforeClicking" v-if="currentCycle == null">
-        <h1>משק.נט</h1>
         <h4>בחר גידול או הוסף חדש</h4>
         <h4>ונתחיל בעבודה</h4>
         <img
@@ -87,13 +86,13 @@
           </v-card>
         </v-dialog>
 
-          <v-btn fab  @click="doneDialog = true">
-           <v-icon color="green">fa fa-check</v-icon></v-btn
+        <v-btn fab @click="doneDialog = true">
+          <v-icon color="green">fa fa-check</v-icon></v-btn
         >
         <v-dialog v-model="doneDialog" max-width="500px">
           <v-card>
             <v-card-title style="font-size: 20px;"
-              >האם אתה בטוח שברצונך לסיים מחזור תרנגולות זה?</v-card-title
+              >האם אתה בטוח שברצונך לסיים מחזור גידול זה?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -143,13 +142,13 @@
       >
         <!-- container_list_item_img and dot-Controls the creation of the circle in each item and takes the first letter -->
         <div class="container_list_item_img">
-           <div v-if="cycle.done==false">
-          <span class="dot"
-            ><h4>{{ FirstLetter(cycle.cropName) }}</h4></span
-          >
-           </div>
-            <div v-if="cycle.done==true">
-             <v-icon color="green">fa fa-check</v-icon>
+          <div v-if="cycle.done == false">
+            <span class="dot"
+              ><h4>{{ FirstLetter(cycle.cropName) }}</h4></span
+            >
+          </div>
+          <div v-if="cycle.done == true">
+            <v-icon color="green">fa fa-check</v-icon>
           </div>
         </div>
         <!-- container_list_item_title- Controls the title within the item -->
@@ -225,10 +224,10 @@ export default {
         this.setCurrentCycle(null)
       }
     },
-    SignPerformed(){
+    SignPerformed() {
       if (this.currentCycle) {
         fb.cropCycle.doc(this.currentCycle.id).update({
-        done: true,
+          done: true,
         })
         this.setCurrentCycle(null)
       }
