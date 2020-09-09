@@ -20,7 +20,7 @@
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
           <v-row>
-            <v-col>
+            <v-col cols="8">
               <v-select
                 v-model="selectedCoop"
                 :items="coop"
@@ -30,7 +30,7 @@
                 return-object
               ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="2">
               <v-btn
                 @click="addCoop = true"
                 class="ma-2"
@@ -42,7 +42,7 @@
                 <v-icon dark>add</v-icon>
               </v-btn>
             </v-col>
-            <v-col>
+            <v-col cols="2">
               <v-btn
                 v-if="selectedCoop"
                 @click="deleteCoop"
