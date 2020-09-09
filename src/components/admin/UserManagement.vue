@@ -58,6 +58,7 @@ export default {
   components: {},
   data() {
     return {
+      valid: true,
       snackbar: false,
       loading: false,
       dialog: null,

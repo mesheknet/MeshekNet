@@ -90,8 +90,7 @@
           </v-card>
         </v-dialog>
 
-        <v-btn fab @click="doneDialog = true
-        ">
+        <v-btn fab @click="doneDialog = true">
           <v-icon color="green">fa fa-check</v-icon></v-btn
         >
         <v-dialog v-model="doneDialog" max-width="500px">
@@ -109,7 +108,6 @@
                 @click="
                   SignPerformed()
                   doneDialog = false
-                  
                 "
                 >כן</v-btn
               >
@@ -118,7 +116,7 @@
                 color="#f70810"
                 style="font-size: 15px;"
                 text
-                @click="deleteDialog = false"
+                @click="doneDialog = false"
                 >לא</v-btn
               >
             </v-card-actions>
@@ -135,12 +133,11 @@
         בחר מחזור תרנגולות
       </div>
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
-      
+
       <div
         class="container_list_item"
         v-for="(cycle, index) in chickCycle"
         :key="index"
-        
         @click="
           toggle = !toggle
           setcurrentchickCycle(cycle)
@@ -204,7 +201,9 @@ export default {
     }
   },
 
-  created() {this.chickCycles()},
+  created() {
+    this.$store.dispatch('chickCycles')
+  },
   updated() {},
 
   mounted() {
@@ -223,18 +222,10 @@ export default {
       'currentchickCycle',
       'chickCycle',
     ]),
-     
   },
   methods: {
     setcurrentchickCycle(cycle) {
       this.$store.commit('setcurrentchickCycle', cycle)
-    },
-     chickCycles() {
-       let temp=this.chickCycle
-      this.chickCycle = temp.sort(
-        (a, b) =>
-        (a.done === b.done)? 0 : b.done? -1 : 1
-      )
     },
 
     //get current cycle data
@@ -246,6 +237,7 @@ export default {
     deletechickCycle() {
       if (this.currentchickCycle) {
         fb.chickCycle.doc(this.currentchickCycle.id).delete()
+        this.$store.dispatch('chickCycles')
         this.setcurrentchickCycle(null)
       }
     },
@@ -262,12 +254,18 @@ export default {
     },
     SignPerformed() {
       if (this.currentchickCycle) {
-        fb.chickCycle.doc(this.currentchickCycle.id).update({
-          done: true,
-          endDate: moment().format('L'),
-        })
-        this.setcurrentchickCycle(null)
-        this.chickCycles()
+        fb.chickCycle
+          .doc(this.currentchickCycle.id)
+          .update({
+            done: true,
+            endDate: moment().format('L'),
+          })
+          .then(() => {
+            this.$store.dispatch('chickCycles')
+          })
+          .then(() => {
+            this.setcurrentchickCycle(null)
+          })
       }
     },
   },

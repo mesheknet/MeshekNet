@@ -112,7 +112,7 @@
                 color="#f70810"
                 style="font-size: 15px;"
                 text
-                @click="deleteDialog = false"
+                @click="doneDialog = false"
                 >לא</v-btn
               >
             </v-card-actions>
@@ -192,7 +192,9 @@ export default {
     }
   },
 
-  created() {},
+  created() {
+    this.$store.dispatch('cropCycles')
+  },
   updated() {},
 
   mounted() {
@@ -220,16 +222,23 @@ export default {
     deleteCycle() {
       if (this.currentCycle) {
         fb.cropCycle.doc(this.currentCycle.id).delete()
-
+        this.$store.dispatch('cropCycles')
         this.setCurrentCycle(null)
       }
     },
     SignPerformed() {
       if (this.currentCycle) {
-        fb.cropCycle.doc(this.currentCycle.id).update({
-          done: true,
-        })
-        this.setCurrentCycle(null)
+        fb.cropCycle
+          .doc(this.currentCycle.id)
+          .update({
+            done: true,
+          })
+          .then(() => {
+            this.$store.dispatch('cropCycles')
+          })
+          .then(() => {
+            this.setCurrentCycle(null)
+          })
       }
     },
 

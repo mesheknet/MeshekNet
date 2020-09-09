@@ -20,7 +20,7 @@
       <v-card-text>
         <v-form class="px-3" ref="form" v-model="valid" lazy-validation>
           <v-row>
-            <v-col>
+            <v-col cols="8">
               <v-select
                 v-model="selectedField"
                 :items="fields"
@@ -30,7 +30,7 @@
                 return-object
               ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="2">
               <v-btn
                 @click="addField = true"
                 class="ma-2"
@@ -42,7 +42,7 @@
                 <v-icon dark>add</v-icon>
               </v-btn>
             </v-col>
-            <v-col>
+            <v-col cols="2">
               <v-btn
                 v-if="selectedField"
                 @click="deleteField"
@@ -198,10 +198,10 @@ export default {
           farmId: this.farmId,
         }
 
-        //this.$store.commit('addNewField', newField)
         this.$store.commit('addCropCycle', NewCrop)
-        //console.log(this.fields.find(x => x.id == this.tempFieldId))
 
+        //sort done chick cycles
+        this.$store.dispatch('cropCycles')
         this.loading = false
         this.dialog = false
         this.$refs.form.reset()

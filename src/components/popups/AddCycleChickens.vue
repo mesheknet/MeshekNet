@@ -200,10 +200,10 @@ export default {
           farmId: this.farmId,
         }
 
-        // this.$store.commit('addNewField', newCycle)
         this.$store.commit('addchickCycle', newCycle)
-        //console.log(this.fields.find(x => x.id == this.tempFieldId))
 
+        //sort done chick cycles
+        this.$store.dispatch('chickCycles')
         this.loading = false
         this.dialog = false
         this.$refs.form.reset()

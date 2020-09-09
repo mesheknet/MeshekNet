@@ -29,7 +29,6 @@
           <v-text-field
             v-model="Topic"
             :counter="20"
-            :rules="nameRules"
             label="נושא"
             required
           ></v-text-field>
@@ -72,6 +71,7 @@ export default {
   components: {},
   data() {
     return {
+      valid: true,
       loading: false,
       dialog: null,
       Topic: null,

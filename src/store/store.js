@@ -38,12 +38,12 @@ export const store = new Vuex.Store({
     selectedCrop: {},
     selectedField: {},
     currentCycle: {},
-    currentMessages:{},
+    currentMessages: {},
     startDate: null,
     cropLog: [],
-    Messages:{},
-    notifications:{},
-    currentnotifications:{},
+    Messages: {},
+    notifications: {},
+    currentnotifications: {},
 
     //for coop
     coop: [],
@@ -120,21 +120,21 @@ export const store = new Vuex.Store({
         userid: state.userId,
         to: NewMessage.to,
         Done: false,
-        PreviousPost:NewMessage.PreviousPost,
+        PreviousPost: NewMessage.PreviousPost,
         startDate: moment().format('L')
       })
     },
-      NewNotifications(state, NewNotifications) {
-        let ref = fb.notification.doc()
-        ref.set({
-          id: ref.id,
-          title: NewNotifications.title,
-          subject: NewNotifications.subject,
-          mes: NewNotifications.mes,
-          to: NewNotifications.to,
-          Done: false,
-          startDate: moment().format('L')
-        })
+    NewNotifications(state, NewNotifications) {
+      let ref = fb.notification.doc()
+      ref.set({
+        id: ref.id,
+        title: NewNotifications.title,
+        subject: NewNotifications.subject,
+        mes: NewNotifications.mes,
+        to: NewNotifications.to,
+        Done: false,
+        startDate: moment().format('L')
+      })
     },
 
     //for coop
@@ -226,7 +226,7 @@ export const store = new Vuex.Store({
         idDrug: state.selectedDrug.id,
         idTypeTreatment: state.selectedTypeTreatment.id,
         idDisease: state.selectedDisease.id,
-        NameDrugSupplier:state.selectedDrug.Supplier,
+        NameDrugSupplier: state.selectedDrug.Supplier,
         DrugQuantity: state.selectedDrug.Quantity
       })
     },
@@ -243,7 +243,7 @@ export const store = new Vuex.Store({
         idDrug: state.selectedTret.idDrug,
         idTypeTreatment: state.selectedTret.idTypeTreatment,
         idDisease: state.selectedTret.idDisease,
-        NameDrugSupplier:state.selectedTret.NameDrugSupplier,
+        NameDrugSupplier: state.selectedTret.NameDrugSupplier,
         DrugQuantity: state.selectedTret.DrugQuantity,
         startDate: moment(state.startDate).format('L')
       })
@@ -364,7 +364,7 @@ export const store = new Vuex.Store({
           }
         )
     },
-     bindMessages: firestoreAction(({ bindFirestoreRef }) => {
+    bindMessages: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('Messages', fb.Messages)
     }),
@@ -438,7 +438,23 @@ export const store = new Vuex.Store({
           state.currentchickCycle.id
         )
       )
-    })
+    }),
+
+    //sort done cycles to the bottom of the list
+
+    chickCycles({ state }) {
+      let temp = state.chickCycle
+      state.chickCycle = temp.sort((a, b) =>
+        a.done === b.done ? 0 : b.done ? -1 : 1
+      )
+    },
+
+    cropCycles({ state }) {
+      let temp = state.cropCycle
+      state.cropCycle = temp.sort((a, b) =>
+        a.done === b.done ? 0 : b.done ? -1 : 1
+      )
+    }
   },
 
   getters: {
@@ -544,8 +560,7 @@ export const store = new Vuex.Store({
     currentChickCycle: state => {
       return state.currentchickCycle
     },
-    
-    
+
     selectedCoop: state => {
       return state.selectedCoop
     },
