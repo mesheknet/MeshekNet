@@ -90,7 +90,8 @@
           </v-card>
         </v-dialog>
 
-        <v-btn fab @click="doneDialog = true">
+        <v-btn fab @click="doneDialog = true
+        ">
           <v-icon color="green">fa fa-check</v-icon></v-btn
         >
         <v-dialog v-model="doneDialog" max-width="500px">
@@ -108,6 +109,7 @@
                 @click="
                   SignPerformed()
                   doneDialog = false
+                  
                 "
                 >כן</v-btn
               >
@@ -133,10 +135,12 @@
         בחר מחזור תרנגולות
       </div>
       <!--  container_list_item-Secondary grid in ccontainer_list Controls Creation item in the list -->
+      
       <div
         class="container_list_item"
         v-for="(cycle, index) in chickCycle"
         :key="index"
+        
         @click="
           toggle = !toggle
           setcurrentchickCycle(cycle)
@@ -200,7 +204,7 @@ export default {
     }
   },
 
-  created() {},
+  created() {this.chickCycles()},
   updated() {},
 
   mounted() {
@@ -219,10 +223,18 @@ export default {
       'currentchickCycle',
       'chickCycle',
     ]),
+     
   },
   methods: {
     setcurrentchickCycle(cycle) {
       this.$store.commit('setcurrentchickCycle', cycle)
+    },
+     chickCycles() {
+       let temp=this.chickCycle
+      this.chickCycle = temp.sort(
+        (a, b) =>
+        (a.done === b.done)? 0 : b.done? -1 : 1
+      )
     },
 
     //get current cycle data
@@ -255,6 +267,7 @@ export default {
           endDate: moment().format('L'),
         })
         this.setcurrentchickCycle(null)
+        this.chickCycles()
       }
     },
   },
