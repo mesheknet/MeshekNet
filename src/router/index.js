@@ -19,6 +19,7 @@ const routes = [
     name: 'Notifications',
     component: Notifications,
     meta: {
+      title: 'משק.נט - התראות',
       reqAuth: true
     }
   },
@@ -27,6 +28,7 @@ const routes = [
     name: 'TransitionPage',
     component: TransitionPage,
     meta: {
+      title: 'ברוך הבא למשק.נט',
       reqAuth: true
     }
   },
@@ -35,6 +37,7 @@ const routes = [
     name: 'Signup',
     component: Signup,
     meta: {
+      title: 'משק.נט - הרשמה למערכת',
       reqAuth: false
     }
   },
@@ -43,6 +46,7 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
+      title: 'משק.נט - כניסה למערכת',
       reqAuth: false
     }
   },
@@ -51,6 +55,7 @@ const routes = [
     name: 'Landing',
     component: Landing,
     meta: {
+      title: 'ברוך הבא למשק.נט',
       reqAuth: false
     }
   },
@@ -59,6 +64,7 @@ const routes = [
     name: 'Weather',
     component: Weather,
     meta: {
+      title: 'משק.נט - מזג אויר ',
       reqAuth: false
     }
   },
@@ -68,6 +74,7 @@ const routes = [
     name: 'MyCrops',
     component: MyCrops,
     meta: {
+      title: 'משק.נט - הגידולים שלי',
       reqAuth: true
     }
   },
@@ -77,6 +84,7 @@ const routes = [
     name: 'MyCoop',
     component: MyCoop,
     meta: {
+      title: 'משק.נט - הלול שלי',
       reqAuth: true
     }
   },
@@ -85,6 +93,7 @@ const routes = [
     name: 'Contact',
     component: Contact,
     meta: {
+      title: 'משק.נט - צור קשר',
       reqAuth: true
     }
   },
@@ -93,6 +102,7 @@ const routes = [
     name: 'Admin',
     component: Admin,
     meta: {
+      title: 'משק.נט - מנהל מערכת',
       reqAuth: true
     }
   }
@@ -115,6 +125,11 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
 })
 
 export default router
