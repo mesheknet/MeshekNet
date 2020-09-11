@@ -28,6 +28,12 @@
             required
           ></v-textarea>
 
+          <v-file-input
+            v-model="files"
+            label="העלאת תמונה"
+            prepend-icon="fas fa-camera"
+          ></v-file-input>
+
           <v-btn
             :disabled="!valid"
             color="success"
@@ -37,9 +43,7 @@
             שלח
           </v-btn>
 
-          <v-btn color="error" class="mr-4" @click="reset">
-            נקה הכל
-          </v-btn>
+          <v-btn color="error" class="mr-4" @click="reset"> נקה הכל </v-btn>
         </v-form>
       </v-container>
     </div>
@@ -58,6 +62,7 @@ export default {
 
   data() {
     return {
+      files: null,
       valid: true,
       Topic: null,
       nameRules: [
@@ -75,6 +80,8 @@ export default {
   },
   methods: {
     submit() {
+      console.log(this.files)
+
       if (this.$refs.form.validate()) {
         var NewMessage = {
           id: fb.Messages.doc().id,
@@ -85,7 +92,6 @@ export default {
           to: 'admin',
         }
       }
-
       this.$store.commit('SendMessage', NewMessage)
       this.$refs.form.reset()
     },
