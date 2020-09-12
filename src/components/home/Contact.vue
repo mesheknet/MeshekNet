@@ -27,23 +27,42 @@
             row-height="15"
             required
           ></v-textarea>
+          <v-layout>
+            <v-row>
+              <v-col>
+                <v-file-input
+                  accept=".jpg"
+                  label="בחר תמונה"
+                  v-model="chosenFile"
+                >
+                </v-file-input>
+              </v-col>
+              <v-col>
+                <v-btn @click="onUpload">העלאה</v-btn>
+              </v-col>
+            </v-row>
 
-          <v-file-input
-            v-model="files"
-            label="העלאת תמונה"
-            prepend-icon="fas fa-camera"
-          ></v-file-input>
+            <v-progress-linear
+              v-if="uploadValue > 0"
+              v-model="uploadValue"
+            ></v-progress-linear>
+            <div v-if="picture != null">
+              <img class="preview" :src="picture" />
+            </div>
+          </v-layout>
 
           <v-btn
             :disabled="!valid"
             color="success"
-            class="mr-4"
+            class="mr-4 mt-4"
             @click="submit"
           >
             שלח
           </v-btn>
 
-          <v-btn color="error" class="mr-4" @click="reset"> נקה הכל </v-btn>
+          <v-btn color="error" class="mr-4 mt-4" @click="reset">
+            נקה הכל
+          </v-btn>
         </v-form>
       </v-container>
     </div>
@@ -52,6 +71,7 @@
 
 <script>
 const fb = require('@/fb.js')
+import firebase from 'firebase'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 
@@ -62,7 +82,10 @@ export default {
 
   data() {
     return {
-      files: null,
+      chosenFile: null,
+      imageData: null,
+      picture: null,
+      uploadValue: 0,
       valid: true,
       Topic: null,
       nameRules: [
@@ -90,6 +113,7 @@ export default {
           mes: this.mes,
           PreviousPost: null,
           to: 'admin',
+          imgURL: this.picture,
         }
       }
       this.$store.commit('SendMessage', NewMessage)
@@ -103,6 +127,30 @@ export default {
     },
     reset() {
       this.$refs.form.reset()
+    },
+
+    onUpload() {
+      this.picture = null
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.chosenFile.name}`)
+        .put(this.chosenFile)
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        },
+        (error) => {
+          console.log(error.message)
+        },
+        () => {
+          this.uploadValue = 100
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url
+          })
+        }
+      )
     },
   },
   computed: {
@@ -124,5 +172,8 @@ export default {
   box-shadow: 5px 5px 8px #888888;
   height: 100%;
   background-color: snow;
+}
+.preview {
+  height: 150px;
 }
 </style>
