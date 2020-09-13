@@ -16,9 +16,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="green lighten-3" primary-title>
-        מזון
-      </v-card-title>
+      <v-card-title class="green lighten-3" primary-title> מזון </v-card-title>
 
       <v-card-text>
         <h5>הערכת כמות מזון במיכל: {{ getCurrentFood() }} קילוגרם</h5>
@@ -163,11 +161,14 @@ export default {
       )
 
       //calc remainig days till next fill
-      this.remainingFoodDays = (
-        parseInt(this.getCurrentFood()) /
-        (parseInt(this.currentChickCycle.currentChickens) * dailyFood)
-      ).toFixed(0)
-
+      if (this.getCurrentFood() == 0) {
+        this.remainingFoodDays = 0
+      } else {
+        this.remainingFoodDays = (
+          parseInt(this.getCurrentFood()) /
+          (parseInt(this.currentChickCycle.currentChickens) * dailyFood)
+        ).toFixed(0)
+      }
       //update currentFood based on time passed since last login
       let lastLogin = moment(this.currentUser[0].lastLogin, 'DD/MM/YYYY')
       let daysFromLastLogin = moment().diff(lastLogin, 'days')
@@ -177,15 +178,12 @@ export default {
 
       //in case of multiple logins in one day, do not reduce the food from currentFood
 
-      if (this.getCurrentFood() - foodToReduce < 0) {
+      fb.chickCycle.doc(this.currentChickCycle.id).update({
+        currentFood: parseInt(this.getCurrentFood() - foodToReduce).toFixed(0),
+      })
+      if (this.getCurrentFood() < 0) {
         fb.chickCycle.doc(this.currentChickCycle.id).update({
           currentFood: 0,
-        })
-      } else {
-        fb.chickCycle.doc(this.currentChickCycle.id).update({
-          currentFood: parseInt(this.getCurrentFood() - foodToReduce).toFixed(
-            0
-          ),
         })
       }
 
@@ -201,8 +199,7 @@ export default {
         .doc(this.currentChickCycle.id)
         .update({
           currentFood:
-            parseInt(this.currentChickCycle.currentFood) +
-            parseInt(this.lastFill),
+            parseInt(this.getCurrentFood()) + parseInt(this.lastFill),
         })
         .then(() => {
           var fillDateData = this.cycleData.find(

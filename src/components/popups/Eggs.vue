@@ -16,9 +16,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="green lighten-3" primary-title>
-        הטלה
-      </v-card-title>
+      <v-card-title class="green lighten-3" primary-title> הטלה </v-card-title>
       <v-card-text>
         <v-btn text class="ma-2" color="success" @click="addEggs = true"
           >הוסף רישום הטלה
@@ -217,9 +215,9 @@ export default {
     //create values and lables for the sparkline component (graph), get only 7 last values using slice
     createSparklineLists() {
       let filteredEggDataList = this.eggDataList.slice(
-        Math.max(this.eggDataList.length - 7, 1)
+        Math.max(this.eggDataList.length - 6, 0)
       )
-      console.log(filteredEggDataList)
+
       this.eggDataLables = []
       this.eggDataValues = []
       filteredEggDataList.forEach((item) => {

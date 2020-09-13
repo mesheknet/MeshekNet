@@ -27,29 +27,37 @@
             row-height="15"
             required
           ></v-textarea>
-          <v-layout>
-            <v-row>
-              <v-col>
-                <v-file-input
-                  accept=".jpg"
-                  label="בחר תמונה"
-                  v-model="chosenFile"
-                >
-                </v-file-input>
-              </v-col>
-              <v-col>
-                <v-btn @click="onUpload">העלאה</v-btn>
-              </v-col>
-            </v-row>
 
+          <v-row>
+            <v-col>
+              <v-file-input
+                accept=".jpg"
+                label="בחר תמונה"
+                v-model="chosenFile"
+                prepend-icon="fas fa-camera"
+              >
+              </v-file-input>
+            </v-col>
+            <v-col>
+              <v-btn
+                fab
+                @click="onUpload"
+                color="blue-grey"
+                class="ma-2 white--text"
+              >
+                <v-icon dark>fas fa-cloud-upload-alt</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-progress-linear
               v-if="uploadValue > 0"
               v-model="uploadValue"
             ></v-progress-linear>
-            <div v-if="picture != null">
-              <img class="preview" :src="picture" />
-            </div>
-          </v-layout>
+          </v-row>
+          <v-row v-if="picture != null">
+            <img class="preview" :src="picture" />
+          </v-row>
 
           <v-btn
             :disabled="!valid"
@@ -64,6 +72,7 @@
             נקה הכל
           </v-btn>
         </v-form>
+        <v-snackbar v-model="snackbar"> ההודעה נשלחה בהצלחה. </v-snackbar>
       </v-container>
     </div>
   </div>
@@ -82,6 +91,7 @@ export default {
 
   data() {
     return {
+      snackbar: false,
       chosenFile: null,
       imageData: null,
       picture: null,
@@ -103,8 +113,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.files)
-
       if (this.$refs.form.validate()) {
         var NewMessage = {
           id: fb.Messages.doc().id,
@@ -118,6 +126,7 @@ export default {
       }
       this.$store.commit('SendMessage', NewMessage)
       this.$refs.form.reset()
+      this.snackbar = true
     },
     formattedDate() {
       return this.startDate ? moment(this.startDate).format('L') : ''

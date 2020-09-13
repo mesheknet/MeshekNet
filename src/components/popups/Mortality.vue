@@ -16,9 +16,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="green lighten-3" primary-title>
-        תמותה
-      </v-card-title>
+      <v-card-title class="green lighten-3" primary-title> תמותה </v-card-title>
       <v-card-text>
         <v-btn text class="ma-2" color="success" @click="addDeath = true"
           >הוסף רישום תמותה

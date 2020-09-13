@@ -121,7 +121,8 @@ export const store = new Vuex.Store({
         to: NewMessage.to,
         Done: false,
         PreviousPost: NewMessage.PreviousPost,
-        startDate: moment().format('L')
+        startDate: moment().format('L'),
+        imgURL: NewMessage.imgURL
       })
     },
     NewNotifications(state, NewNotifications) {
