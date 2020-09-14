@@ -29,6 +29,7 @@
               v-for="(Messages, index) in AMesseg"
               :key="index"
               @click="setcurrentMess(Messages)"
+              multiple
             >
               <v-expansion-panel-header expand-icon="fa fa-exclamation">
                 <v-col>{{ setOwners(Messages.userid) }} </v-col>
@@ -41,7 +42,22 @@
                 <v-row>
                   {{ Messages.mes }}
                 </v-row>
-
+                <v-row v-if="Messages.imgURL">
+                  <v-expansion-panels focusable class="mb-6">
+                    <v-expansion-panel multiple>
+                      <v-expansion-panel-header>
+                       לחץ להצגת תמונה מצורפת
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <img
+                          :src="Messages.imgURL"
+                          height="100%"
+                          width="100%"
+                        />
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-row>
                 <v-col cols="4">
                   <MessageFromAdmin />
                 </v-col>
@@ -64,6 +80,18 @@
               <v-expansion-panel-content>
                 <v-row>
                   {{ Messages.mes }}
+                </v-row>
+                <v-row v-if="Messages.imgURL">
+                  <v-expansion-panels focusable class="mb-6">
+                    <v-expansion-panel multiple>
+                      <v-expansion-panel-header>
+                        לחץ להצגת תמונה מצורפת
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <img :src="Messages.imgURL" height="100" width="500" />
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
                 </v-row>
                 <v-row>
                   <v-col cols="4">
@@ -105,7 +133,7 @@ export default {
       loading: false,
       dialog: null,
       dosage: null,
-      vol: null,
+      vol: null
     }
   },
   created() {},
@@ -114,7 +142,7 @@ export default {
       this.$store.commit('setcurrentMessages', Messages)
     },
     setOwners(MessagesUid) {
-      return (this.ownerName = this.farmOwners.find(function (m) {
+      return (this.ownerName = this.farmOwners.find(function(m) {
         return m.userId == MessagesUid
       }).name)
     },
@@ -125,24 +153,24 @@ export default {
     },
     close() {
       this.model = []
-    },
+    }
   },
 
   updated() {},
   computed: {
-    AMesseg: function () {
-      return this.Messages.filter(function (m) {
+    AMesseg: function() {
+      return this.Messages.filter(function(m) {
         return m.to == 'admin' && m.Done == false
       })
     },
-    AMessegDone: function () {
-      return this.Messages.filter(function (m) {
+    AMessegDone: function() {
+      return this.Messages.filter(function(m) {
         return m.to == 'admin' && m.Done == true
       })
     },
 
     //get local data from firestore using the store
-    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages']),
-  },
+    ...mapGetters(['Messages', 'userId', 'farmOwners', 'currentMessages'])
+  }
 }
 </script>

@@ -74,6 +74,7 @@ export default {
           mes: this.AdminMessage,
           to: this.currentMessages.userid,
           PreviousPost: this.currentMessages.mes,
+          imgURL:null
         }
       }
 
