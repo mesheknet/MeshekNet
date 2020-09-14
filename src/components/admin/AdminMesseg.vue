@@ -88,7 +88,7 @@
                         לחץ להצגת תמונה מצורפת
                       </v-expansion-panel-header>
                       <v-expansion-panel-content>
-                        <img :src="Messages.imgURL" height="100" width="500" />
+                        <img :src="Messages.imgURL" height="100%" width="100%" />
                       </v-expansion-panel-content>
                     </v-expansion-panel>
                   </v-expansion-panels>
