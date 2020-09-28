@@ -95,7 +95,7 @@ var NewNotifications = {
     </v-expansion-panels>
     <h4 style="text-align: center;">התראות שבוצעו</h4>
     <!-------  for Messages Done ------->
-    <v-expansion-panels v-model="model" class="mx-auto">
+    <v-expansion-panels v-model="model1" class="mx-auto">
       <v-expansion-panel
         v-for="(Messages, index) in UidMessagesDone"
         :key="index"
@@ -193,6 +193,7 @@ export default {
   data() {
     return {
       model: [],
+      model1: [],
       lastSignIn: null,
       currentUser: null,
       farmName: null,
