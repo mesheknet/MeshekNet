@@ -11,7 +11,7 @@
       </v-btn>
     </template>
 
-    <v-card>
+    <v-card justify-space-around>
       <v-card-title class="green lighten-3" primary-title>
         ניהול משתמשים
       </v-card-title>
@@ -28,11 +28,22 @@
           </v-row>
           <v-row>
             <v-btn color="success" class="mr-4" @click="BecomeAdmin">
-              הפוך למנהל
+             הפוך למנהל מערכת
             </v-btn>
-
+          </v-row>
+          <v-row>
+            <v-btn color="success" class="mr-4" @click="BecomeAgriculturalGuide">
+           הפוך למדריך חקלאי
+            </v-btn>
+          </v-row>
+          <v-row>
+            <v-btn color="success" class="mr-4" @click="Becomeveterinarian">
+             הפוך לוטרינר
+            </v-btn>
+          </v-row>
+          <v-row>
             <v-btn class="mr-4" @click="CanceledAdmin">
-              בטל מנהל
+              בטל ניהול
             </v-btn>
           </v-row>
           <v-row>
@@ -71,7 +82,27 @@ export default {
         (item) => item.userId == this.selectUser.userId
       ).email
       fb.user.doc(uEmail).update({
-        admin: true,
+        role: 'admin',
+      })
+      this.snackbar = true
+      this.$refs.form.reset()
+    },
+     Becomeveterinarian() {
+      let uEmail = this.users.find(
+        (item) => item.userId == this.selectUser.userId
+      ).email
+      fb.user.doc(uEmail).update({
+        role: 'veterinarian',
+      })
+      this.snackbar = true
+      this.$refs.form.reset()
+    },
+     BecomeAgriculturalGuide() {
+      let uEmail = this.users.find(
+        (item) => item.userId == this.selectUser.userId
+      ).email
+      fb.user.doc(uEmail).update({
+        role: 'AgriculturalGuide',
       })
       this.snackbar = true
       this.$refs.form.reset()
@@ -81,11 +112,12 @@ export default {
         (item) => item.userId == this.selectUser.userId
       ).email
       fb.user.doc(uEmail).update({
-        admin: false,
+        role: 'Regular',
       })
       this.snackbar = true
       this.$refs.form.reset()
     },
+
   },
   updated() {},
   computed: {

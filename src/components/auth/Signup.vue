@@ -132,6 +132,7 @@ export default {
               .then((cred) => {
                 this.userId = cred.user.uid
                 ref.set({
+                  role: 'Regular',
                   email: this.email,
                   userId: this.userId,
                   farmId: refFarm.id,

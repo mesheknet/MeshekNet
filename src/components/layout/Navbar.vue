@@ -44,7 +44,7 @@
       >
         <ul>
           <li><a class="white-text" @click="logout">התנתק</a></li>
-          <li v-if="isAdmin()">
+          <li v-if="isAdmin()||isveterinarian()||isAgriculturalGuide()">
             <router-link class="white-text" :to="{ name: 'Admin' }"
               >מנהל מערכת</router-link
             >
@@ -85,7 +85,14 @@ export default {
       nav.contains('active') ? nav.remove('active') : nav.add('active')
     },
     isAdmin() {
-      return this.users.find((obj) => obj.userId == this.userId).admin
+      return this.users.find((obj) => obj.userId == this.userId).role=='admin'
+    },
+    isveterinarian() {
+      return this.users.find((obj) => obj.userId == this.userId).role=='veterinarian'
+    },
+    
+     isAgriculturalGuide() {
+      return this.users.find((obj) => obj.userId == this.userId).role=='AgriculturalGuide'
     },
   },
   computed: {

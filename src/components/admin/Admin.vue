@@ -5,16 +5,16 @@
         <v-card class="mx-auto mt-6" max-width="700" tile>
           <v-card-title> בחר פעולת מנהל לביצוע </v-card-title>
           <v-card-text>
-            <v-row>
+            <v-row v-if="isAdmin()||isAgriculturalGuide()">
               <AddCropData />
             </v-row>
-            <v-row>
+            <v-row  v-if="isAdmin()||isAgriculturalGuide()">
               <editPestCtrl />
             </v-row>
-            <v-row>
+            <v-row v-if="isAdmin()||isveterinarian()">
               <EditChickenType />
             </v-row>
-            <v-row>
+            <v-row v-if="isAdmin()||isveterinarian()">
               <AddDisease />
             </v-row>
             <v-row>
@@ -23,7 +23,7 @@
             <v-row>
               <NotificationsFromAdmin />
             </v-row>
-            <v-row>
+            <v-row v-if="isAdmin()">
               <UserManagement />
             </v-row>
           </v-card-text>
@@ -59,11 +59,22 @@ export default {
       dialog: null,
     }
   },
-  methods: {},
+  methods: {
+    isAdmin() {
+      return this.users.find((obj) => obj.userId == this.userId).role=='admin'
+    },
+    isveterinarian() {
+      return this.users.find((obj) => obj.userId == this.userId).role=='veterinarian'
+    },
+    
+     isAgriculturalGuide() {
+      return this.users.find((obj) => obj.userId == this.userId).role=='AgriculturalGuide'
+    },
+  },
   updated() {},
   computed: {
     //get local data from firestore using the store
-    ...mapGetters(['userId']),
+    ...mapGetters(['userId', 'users']),
   },
 }
 </script>
