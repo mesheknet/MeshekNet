@@ -283,7 +283,7 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef(
         'cropCycle',
-        fb.cropCycle.where('farmId', '==', state.farmId)
+        fb.cropCycle.where('farmId', '==', state.farmId).orderBy('done')
       )
     }),
     bindFields: firestoreAction(({ state, bindFirestoreRef }) => {
@@ -384,7 +384,7 @@ export const store = new Vuex.Store({
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef(
         'chickCycle',
-        fb.chickCycle.where('farmId', '==', state.farmId)
+        fb.chickCycle.where('farmId', '==', state.farmId).orderBy('done')
       )
     }),
     bindcoop: firestoreAction(({ state, bindFirestoreRef }) => {

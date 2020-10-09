@@ -203,7 +203,7 @@ export default {
         this.$store.commit('addchickCycle', newCycle)
 
         //sort done chick cycles
-        this.$store.dispatch('chickCycles')
+        this.$store.dispatch('bindchickCycle')
         this.loading = false
         this.dialog = false
         this.$refs.form.reset()
