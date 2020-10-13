@@ -193,7 +193,7 @@ export default {
   },
 
   created() {
-   
+   this.$store.dispatch('bindCropCyclee')
   },
   updated() {},
 
@@ -222,7 +222,7 @@ export default {
     deleteCycle() {
       if (this.currentCycle) {
         fb.cropCycle.doc(this.currentCycle.id).delete()
-        this.$store.dispatch('bindCropCycle')
+        this.$store.dispatch('bindCropCyclee')
         this.setCurrentCycle(null)
       }
     },
@@ -234,7 +234,7 @@ export default {
             done: true,
           })
           .then(() => {
-          this.$store.dispatch('bindCropCycle')
+          this.$store.dispatch('bindCropCyclee')
           })
           .then(() => {
             this.setCurrentCycle(null)

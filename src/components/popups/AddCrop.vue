@@ -201,7 +201,7 @@ export default {
         this.$store.commit('addCropCycle', NewCrop)
 
         //sort done chick cycles
-        this.$store.dispatch('bindCropCycle')
+        this.$store.dispatch('bindCropCyclee')
         this.loading = false
         this.dialog = false
         this.$refs.form.reset()

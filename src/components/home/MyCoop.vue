@@ -202,7 +202,7 @@ export default {
   },
 
   created() {
-    
+    this.$store.dispatch('bindchickCyclee')
   },
   updated() {},
 
@@ -237,7 +237,7 @@ export default {
     deletechickCycle() {
       if (this.currentchickCycle) {
         fb.chickCycle.doc(this.currentchickCycle.id).delete()
-        this.$store.dispatch('bindchickCycle')
+        this.$store.dispatch('bindchickCyclee')
         this.setcurrentchickCycle(null)
       }
     },
@@ -261,7 +261,7 @@ export default {
             endDate: moment().format('L'),
           })
           .then(() => {
-            this.$store.dispatch('bindchickCycle')
+            this.$store.dispatch('bindchickCyclee')
           })
           .then(() => {
             this.setcurrentchickCycle(null)
