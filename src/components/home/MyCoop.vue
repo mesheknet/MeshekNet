@@ -18,7 +18,7 @@
         <h4>ונתחיל בעבודה</h4>
         <img
           class="Imgch"
-          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/app%20base%20files%2F2dzOInI.gif?alt=media&token=49dcd1f6-379e-48f4-a763-6c3091e7ec12"
+          src="https://firebasestorage.googleapis.com/v0/b/mesheknetapp.appspot.com/o/40404-min.jpg?alt=media&token=66c784a2-1c31-4297-8637-a472077f997f"
         />
       </div>
       <div class="container_content_details" v-if="currentchickCycle">
