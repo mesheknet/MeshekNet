@@ -55,6 +55,8 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
+                  prev-icon="fas fa-arrow-left"
+                  next-icon="fas fa-arrow-right"
                   locale="he-il"
                   v-model="fillDate"
                   @input="dateMenu = false"
