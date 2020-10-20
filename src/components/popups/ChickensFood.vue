@@ -7,6 +7,7 @@
         color="light green"
         v-on="on"
         @click="
+        getCurrentFood()
           calcFood()
           createFoodData()
         "
@@ -19,7 +20,7 @@
       <v-card-title class="green lighten-3" primary-title> מזון </v-card-title>
 
       <v-card-text>
-        <h5>הערכת כמות מזון במיכל: {{ getCurrentFood() }} קילוגרם</h5>
+        <h5>הערכת כמות מזון במיכל: {{ this.currentFood }} קילוגרם</h5>
         <h5>מילוי נדרש בעוד {{ this.remainingFoodDays }} ימים בקירוב</h5>
 
         <v-btn text class="ma-2" color="success" @click="addFill = true"
@@ -153,23 +154,26 @@ export default {
       itemsPerPage: 5,
       nextIcon: 'navigate_next',
       prevIcon: 'navigate_before',
+      currentFood: null
     }
   },
   methods: {
     calcFood() {
+
+
       let dailyFood = parseFloat(
         this.Chickens.find((item) => item.id == this.currentChickCycle.chickId)
           .DayAverageFood
       )
 
       //calc remainig days till next fill
-      if (this.getCurrentFood() == 0) {
+      if ( this.currentFood == 0) {
         this.remainingFoodDays = 0
       } else {
-        this.remainingFoodDays = (
-          parseInt(this.getCurrentFood()) /
+        this.remainingFoodDays =parseInt((
+           this.currentFood /
           (parseInt(this.currentChickCycle.currentChickens) * dailyFood)
-        ).toFixed(0)
+        ).toFixed(0))
       }
       //update currentFood based on time passed since last login
       let lastLogin = moment(this.currentUser[0].lastLogin, 'DD/MM/YYYY')
@@ -181,9 +185,9 @@ export default {
       //in case of multiple logins in one day, do not reduce the food from currentFood
 
       fb.chickCycle.doc(this.currentChickCycle.id).update({
-        currentFood: parseInt(this.getCurrentFood() - foodToReduce).toFixed(0),
+        currentFood: parseInt( (this.currentFood - foodToReduce.toFixed(0))),
       })
-      if (this.getCurrentFood() < 0) {
+      if ( this.currentFood < 0) {
         fb.chickCycle.doc(this.currentChickCycle.id).update({
           currentFood: 0,
         })
@@ -196,12 +200,13 @@ export default {
     //add silo fill record to daily data, if not exist -> create new daily data object
     addNewFill() {
       //add last fill to total amount of food
+let res = this.currentFood+ parseInt(this.lastFill)
 
       fb.chickCycle
         .doc(this.currentChickCycle.id)
         .update({
           currentFood:
-            parseInt(this.getCurrentFood()) + parseInt(this.lastFill),
+          res,
         })
         .then(() => {
           var fillDateData = this.cycleData.find(
@@ -228,7 +233,7 @@ export default {
               .update({
                 foodFill: this.lastFill,
               })
-              .then(() => this.createFoodData())
+              .then(() => this.updateData())
           }
         })
     },
@@ -239,11 +244,7 @@ export default {
         currentLogin: moment().format('L'),
       })
     },
-    getCurrentFood() {
-      return this.chickCycle.find(
-        (item) => item.id == this.currentChickCycle.id
-      ).currentFood
-    },
+  
 
     //create a list contains only needed data for this component
     createFoodData() {
@@ -254,8 +255,22 @@ export default {
         (a, b) => moment(a.date, 'DD-MM-YYYY') - moment(b.date, 'DD-MM-YYYY')
       )
     },
+
+       getCurrentFood() {
+      this.currentFood=  this.allchickCycle.find(
+        (item) => item.id == this.currentChickCycle.id
+      ).currentFood
+     
+    },
+
+    async updateData(){
+      await this.createFoodData()
+      await this.getCurrentFood()
+      await this.calcFood()
+      this.dialog=false
+    }
   },
-  loaded() {},
+  updated() {},
   computed: {
     //get local data from firestore using the store
     ...mapGetters([
@@ -266,12 +281,14 @@ export default {
       'Chickens',
       'currentChickCycle',
       'chickCycle',
+      'allchickCycle',
       'cycleData',
       'Chickens',
     ]),
     formattedDate() {
       return this.fillDate ? moment(this.fillDate).format('L') : ''
     },
+    
   },
 }
 </script>
