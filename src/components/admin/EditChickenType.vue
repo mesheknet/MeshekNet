@@ -15,7 +15,7 @@
       <v-card-title class="green lighten-3" primary-title>
         עריכת זני תרנגולות
       </v-card-title>
-
+<v-card-text>
       <v-row>
         <v-col>
           <v-select
@@ -53,29 +53,38 @@
         </v-col>
       </v-row>
       <v-row v-if="addChicken">
+        <v-row>
         <v-text-field
           label="שם סוג התרנגולת"
           v-model="NameChicken"
         ></v-text-field>
+        </v-row>
+        <v-row>
         <v-col>
           <v-text-field
-            label="כמות ביצים ממצועת"
+            label="כמות ביצים ממוצעת"
             v-model="EggsAvg"
           ></v-text-field>
         </v-col>
+        </v-row>
+        <v-row>
         <v-col>
           <v-text-field
-            label="כמות צריכת אוכל ממצועת"
+            label="כמות צריכת אוכל ממוצעת"
             v-model="FoodAvg"
           ></v-text-field>
         </v-col>
-
+</v-row>
+<v-row>
         <v-col>
           <v-btn text @click="addNewChicken()" class="ma-2" color="success"
             >הוסף</v-btn
           >
         </v-col>
       </v-row>
+</v-row>
+
+      </v-card-text>
       <v-card-actions>
         <v-btn :loading="loading" block @click="dialog = false" color="success"
           >עדכן תרנגולות</v-btn

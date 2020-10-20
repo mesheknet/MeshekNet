@@ -29,7 +29,8 @@
         </div>
         <div class="container_content_details_kind">
           <span>כמות תרנגולות נוכחית:</span><br />{{
-            this.currentchickCycle.currentChickens
+this.allchickCycle.find((item)=> item.id == currentchickCycle.id).currentChickens
+            
           }}
         </div>
         <div class="container_content_details_dateStart">
@@ -220,6 +221,7 @@ export default {
       'coop',
       'Chickens',
       'currentchickCycle',
+      'allchickCycle',
       'chickCycle',
     ]),
   },

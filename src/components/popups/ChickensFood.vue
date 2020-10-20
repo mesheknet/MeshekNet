@@ -236,6 +236,7 @@ let res = this.currentFood+ parseInt(this.lastFill)
               .then(() => this.updateData())
           }
         })
+        this.dialog=false
     },
 
     updateLoginData() {
@@ -257,17 +258,16 @@ let res = this.currentFood+ parseInt(this.lastFill)
     },
 
        getCurrentFood() {
-      this.currentFood=  this.allchickCycle.find(
+      this.currentFood = this.allchickCycle.find(
         (item) => item.id == this.currentChickCycle.id
       ).currentFood
      
     },
 
-    async updateData(){
-      await this.createFoodData()
-      await this.getCurrentFood()
-      await this.calcFood()
-      this.dialog=false
+     updateData(){
+       this.createFoodData()
+       this.getCurrentFood()
+       this.calcFood()
     }
   },
   updated() {},

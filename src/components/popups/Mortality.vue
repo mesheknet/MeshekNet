@@ -172,14 +172,17 @@ export default {
       itemsPerPage: 5,
       nextIcon: 'navigate_next',
       prevIcon: 'navigate_before',
+      currentChickens: null
     }
   },
   methods: {
     //add new daily death to the database, and reduce from currentChickens amount in chickCycle
     addEntry() {
+
+      this.getCurrentChickens()
       fb.chickCycle.doc(this.currentChickCycle.id).update({
         currentChickens:
-          parseInt(this.currentChickCycle.currentChickens) -
+          this.currentChickens -
           parseInt(this.deathAmount),
       })
       var DateData = this.cycleData.find(
@@ -207,7 +210,9 @@ export default {
             dailyDeath: this.deathAmount,
           })
           .then(() => this.createDeathData())
-          .then(() => this.createSparklineLists())
+          .then(() => this.createSparklineLists()).then(()=>{
+            this.initCycleData()
+          })
       }
     },
 
@@ -233,6 +238,16 @@ export default {
         this.deathDataValues.push(parseInt(item.dailyDeath))
       })
     },
+//get current cycle data
+    initCycleData() {
+       this.$store.dispatch('bindallchickCycle')
+       
+    },
+getCurrentChickens(){
+this.currentChickens = this.allchickCycle.find((item)=> item.id == this.currentChickCycle.id).currentChickens
+}
+
+
   },
   updated() {},
   computed: {
@@ -243,6 +258,7 @@ export default {
       'currentUser',
       'Chickens',
       'currentChickCycle',
+      'allchickCycle',
       'cycleData',
       'Chickens',
     ]),
